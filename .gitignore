@@ -1,0 +1,6 @@
+__pycache__/
+*.aux
+*.log
+*.out
+*.toc
+mathematics/algebra/twelve-state-composition-tensor/paper.pdf

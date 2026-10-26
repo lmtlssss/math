@@ -1,0 +1,35 @@
+name: Publish tensor note
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Fetch the selected revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh repo clone "$GITHUB_REPOSITORY" "$RUNNER_TEMP/paper-source"
+          git -C "$RUNNER_TEMP/paper-source" checkout --detach "$GITHUB_SHA"
+      - name: Install typesetting dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends texlive-xetex texlive-latex-extra fonts-noto-core
+      - name: Verify and typeset
+        run: |
+          cd "$RUNNER_TEMP/paper-source/mathematics/algebra/twelve-state-composition-tensor"
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+          export FORCE_SOURCE_DATE=1
+          make paper
+      - name: Publish version 1.0.0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create tensor-note-v1.0.0 \
+            "$RUNNER_TEMP/paper-source/mathematics/algebra/twelve-state-composition-tensor/paper.pdf" \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "Exact nonnegative rank of a twelve-state composition tensor" \
+            --notes "lmtlssss🜐 · 26 October 2026 · Version 1.0.0. The paper, full certificate, and exact verifier are published under Mathematics / Algebra. The PDF was built after the certificate passed verification at this revision."
