@@ -1,0 +1,469 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape A twelve-state composition tensor}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\supp}{supp}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\ind}{\mathbf 1}
+\hypersetup{pdftitle={Exact nonnegative rank of a twelve-state composition tensor},
+ pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: algebra and nonnegative tensor rank},
+ pdfkeywords={nonnegative tensor rank, transformation monoid, rectangle partition, fooling set}}
+\title{\LARGE Exact nonnegative rank of a\protect\\twelve-state composition tensor}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{26 October 2026}
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+\begin{abstract}
+We determine the nonnegative rank of the composition tensor of a specified
+transformation monoid on four points. The monoid has twelve elements, and
+its tensor has 144 nonzero coefficients. An explicit partition into 35
+rectangles gives a nonnegative rank-one decomposition. A matching set of
+35 incompatible entries proves the lower bound. The same entries also
+specify determinant-one minors in the twelve output slices. Consequently,
+the nonnegative tensor rank is exactly 35 over both the real and rational
+numbers. The complete multiplication table, decomposition, lower-bound
+certificates and an exact verifier are supplied.
+\end{abstract}
+
+\noindent\textit{Mathematics Subject Classification (2020).}
+15A69; 15B48, 20M20.\par
+\noindent\textit{Keywords.} Nonnegative tensor rank; transformation monoid;
+rectangle partition; fooling set.
+
+\section{The question}
+
+A composition table records one output for each ordered pair of inputs.
+The number of recorded products need not equal the number of rank-one
+terms required to express the table. Here the distinction can be resolved
+exactly: 144 products admit a decomposition into 35 nonnegative terms,
+and every nonnegative decomposition requires at least 35 terms.
+
+The object is the twelve-element monoid $S$ defined in Section~\ref{sec:monoid}.
+Write its product as $m_i*m_j=m_{M(i,j)}$, and define
+\begin{equation}\label{eq:tensor}
+ C_{ijk}=\ind_{\{M(i,j)=k\}},\qquad 0\leq i,j,k<12.
+\end{equation}
+Thus $C\in\{0,1\}^{12\times12\times12}$. For each $k$, let $A_k$ be the
+matrix with entries $(A_k)_{ij}=C_{ijk}$.
+
+\begin{theorem}\label{thm:main}
+The tensor $C$ has nonnegative rank $35$. Its output slices satisfy
+\begin{equation}\label{eq:ranks}
+\bigl(\rank_+(A_0),\ldots,\rank_+(A_{11})\bigr)
+=(3,2,3,2,1,5,4,2,5,3,2,3).
+\end{equation}
+Each slice has the same ordinary matrix rank as its nonnegative rank.
+An optimal decomposition of $C$ uses only $0$--$1$ factor vectors.
+\end{theorem}
+
+Nonnegative matrix rank is treated in Cohen and Rothblum~\cite{cohen1993};
+nonnegative tensor rank is studied in Qi, Comon and Lim~\cite{qi2016}.
+The rectangle-covering and fooling-set bounds used below are standard
+support bounds; see Fiorini et al.~\cite{fiorini2013}. The contribution of
+this note is the exact calculation and explicit certificates for $S$.
+
+\section{The monoid}\label{sec:monoid}
+
+Let $X=\{0,1,2,3\}$. A tuple $(a_0,a_1,a_2,a_3)$ denotes the map
+$x\mapsto a_x$ on $X$. Consider the following twelve maps.
+
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{r l @ {\qquad\qquad} r l}
+\toprule
+$i$ & $m_i$ & $i$ & $m_i$\\
+\midrule
+0 & (0,0,0,0) & 6 & (1,1,2,2) \\
+1 & (0,0,0,1) & 7 & (1,1,2,3) \\
+2 & (0,1,1,1) & 8 & (2,2,2,2) \\
+3 & (0,1,2,2) & 9 & (2,2,2,3) \\
+4 & (0,1,2,3) & 10 & (2,3,3,3) \\
+5 & (1,1,1,1) & 11 & (3,3,3,3) \\
+\bottomrule
+\end{tabular}
+\caption{The elements of $S$, in lexicographic order.}\label{tab:maps}
+\end{table}
+
+We use the chronological convention
+\begin{equation}\label{eq:composition}
+ m_i*m_j=m_j\circ m_i.
+\end{equation}
+In particular, the row index acts first. The identity is $m_4$.
+The six maps $m_1,m_2,m_3,m_7,m_9,m_{10}$ generate $S$ as a monoid.
+
+For completeness, the other five nonidentity elements are obtained by
+\[
+\begin{aligned}
+ m_0&=m_1*m_1,\quad m_5=m_1*m_7,\quad m_6=m_3*m_7,\\
+ m_8&=m_9*m_3,\qquad m_{11}=m_9*m_{10}.
+\end{aligned}
+\]
+The multiplication table in Appendix~\ref{app:table} shows closure.
+Associativity follows from composition of functions, so these data define
+the monoid without reference to an external presentation.
+
+\section{Reduction to output slices}
+
+For an entrywise nonnegative tensor $T$, its nonnegative rank is the least
+$r$ for which
+\begin{equation}\label{eq:rank}
+ T=\sum_{\ell=1}^{r}u_\ell\otimes v_\ell\otimes w_\ell,
+ \qquad u_\ell,v_\ell,w_\ell\geq0.
+\end{equation}
+The corresponding matrix definition uses sums of nonnegative rank-one
+matrices. Zero summands may be removed.
+
+The single-output condition in~\eqref{eq:tensor} has a useful consequence.
+
+\begin{lemma}[Output-slice confinement]\label{lem:slices}
+Let $f:I\times J\to K$ be a function between finite sets, and let
+$T_{ijk}=\ind_{\{f(i,j)=k\}}$. Write $T_k=(T_{ijk})_{i,j}$. Then
+\begin{equation}\label{eq:slice-sum}
+ \rank_+(T)=\sum_{k\in K}\rank_+(T_k).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Take a nonzero summand $u\otimes v\otimes w$ in a nonnegative decomposition
+of $T$. Choose $i,j$ with $u_i v_j>0$. If $w$ were positive at two distinct
+indices $k,k'$, the summand would be positive at both $(i,j,k)$ and
+$(i,j,k')$. One of these entries is zero in $T$. Nonnegative summands
+cannot cancel, so this is impossible. Hence $w$ is supported at a single
+index $k$.
+
+Every summand therefore belongs to one output slice. If $r_k$ summands
+belong to slice $k$, they give a nonnegative matrix decomposition of $T_k$,
+so $r_k\geq\rank_+(T_k)$. Summing gives the lower bound
+in~\eqref{eq:slice-sum}. Conversely, choose a minimum nonnegative
+decomposition of each $T_k$ and attach the coordinate vector $e_k$ to
+each term. Their sum is a decomposition of $T$ with
+$\sum_k\rank_+(T_k)$ terms.
+\end{proof}
+
+The lemma concerns the zero pattern of a function tensor. Associativity
+is not needed. It also shows why a lower bound established separately
+in each output slice can be added without assuming disjoint factors.
+
+\section{The upper bound}
+
+For nonempty $L,R\subseteq\{0,\ldots,11\}$, call $L\times R$ a
+\emph{$k$-rectangle} when $M(i,j)=k$ for every $i\in L$, $j\in R$.
+Let $\chi_L\in\{0,1\}^{12}$ denote the characteristic vector of $L$.
+Such a rectangle gives the nonnegative rank-one tensor
+$\chi_L\otimes\chi_R\otimes e_k$.
+
+Table~\ref{tab:rectangles} lists 35 rectangles. Within each output slice
+they are disjoint, and together they cover all 144 ordered input pairs.
+Equivalently, the table gives the identity
+\begin{equation}\label{eq:decomposition}
+ C=\sum_{(k,L,R)\in\mathcal P}\chi_L\otimes\chi_R\otimes e_k,
+ \qquad |\mathcal P|=35.
+\end{equation}
+Each coefficient can be read directly from the multiplication table:
+for any $(i,j)$, exactly one listed rectangle contains that pair, and its
+output label is $M(i,j)$.
+
+For example, the rectangles with output $0$ are
+\[
+ \{0\}\times\{2,3,4\},\quad
+ \{0,1,2,3,5,6,8\}\times\{0,1\},\quad
+ \{4,7,9,10,11\}\times\{0\}.
+\]
+Their supports partition $A_0$. The other eleven slices are recorded in
+the same form. The numbers of rectangles by slice are exactly the entries
+of~\eqref{eq:ranks}. This proves the required upper bounds.
+
+\section{The lower bound}
+
+For a fixed output $k$, let $F_k$ be a set of positions $(i,j)$ with
+$M(i,j)=k$. Call it a \emph{fooling set} if every two distinct positions
+$(i,j),(u,v)\in F_k$ satisfy
+\begin{equation}\label{eq:fooling}
+ M(i,v)\ne k\quad\text{or}\quad M(u,j)\ne k.
+\end{equation}
+
+\begin{lemma}\label{lem:fooling}
+If $F_k$ is a fooling set, then $\rank_+(A_k)\geq |F_k|$.
+\end{lemma}
+
+\begin{proof}
+The positive support of a nonzero nonnegative rank-one matrix $uv^T$
+is $\supp(u)\times\supp(v)$, a rectangle. A summand in a nonnegative
+decomposition of $A_k$ must have its support inside the support of $A_k$.
+If it covered both $(i,j)$ and $(u,v)$ from $F_k$, it would also be
+positive at both crossed positions $(i,v)$ and $(u,j)$, contradicting
+\eqref{eq:fooling}. Thus each summand covers at most one element of $F_k$.
+Every element must be covered by some summand, proving the bound.
+\end{proof}
+
+The twelve fooling sets in Table~\ref{tab:witnesses} have sizes
+\[
+ 3,2,3,2,1,5,4,2,5,3,2,3.
+\]
+For example, $F_0=\{(0,2),(1,1),(4,0)\}$. All three positions have output
+$0$. The crossed entries $M(1,2)=1$, $M(4,2)=2$ and $M(4,1)=1$ establish
+the three required incompatibilities. The remaining checks use the
+same condition and the displayed multiplication table.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+The rectangle partitions give $\rank_+(A_k)\leq r_k$, where $r_k$ is the
+$k$th entry of~\eqref{eq:ranks}. Table~\ref{tab:witnesses} and
+Lemma~\ref{lem:fooling} give $\rank_+(A_k)\geq r_k$.
+Lemma~\ref{lem:slices} now yields
+\[
+ \rank_+(C)=\sum_{k=0}^{11}r_k=35.
+\]
+The decomposition~\eqref{eq:decomposition} uses $0$--$1$ vectors.
+
+To obtain the ordinary slice ranks, retain the order of the pairs in
+Table~\ref{tab:witnesses}. If $F_k=((i_1,j_1),\ldots,(i_{r_k},j_{r_k}))$,
+form
+\[
+ B_k=\bigl(\ind_{\{M(i_s,j_t)=k\}}\bigr)_{1\leq s,t\leq r_k}.
+\]
+The row indices are distinct, as are the column indices. Direct evaluation
+from Table~\ref{tab:multiplication} gives $\det B_k=1$ for every $k$.
+Hence $r_k\leq\rank(A_k)\leq\rank_+(A_k)=r_k$.
+\end{proof}
+
+The determinant calculation gives a second lower-bound certificate. For
+instance, the witnesses for output $5$ specify
+\[
+ B_5=\begin{pmatrix}
+ 1&1&0&0&0\\
+ 0&1&0&0&0\\
+ 1&1&1&1&0\\
+ 0&1&0&1&0\\
+ 0&1&0&1&1
+ \end{pmatrix},\qquad \det B_5=1.
+\]
+Either the fooling-set checks or the minor determinants, together with
+the rectangle partitions and Lemma~\ref{lem:slices}, proves the value 35.
+
+\begin{corollary}\label{cor:rational}
+The nonnegative rank of $C$ over $\Q$ is also 35.
+\end{corollary}
+\begin{proof}
+The real lower bound applies to every rational decomposition, and
+\eqref{eq:decomposition} has integer factor vectors.
+\end{proof}
+
+\section{Bilinear form and verification}
+
+For $a,b\in\R^{12}$, define
+\[
+ p_k(a,b)=\sum_{M(i,j)=k}a_i b_j.
+\]
+The decomposition gives the polynomial identity
+\begin{equation}\label{eq:bilinear}
+ p_k(a,b)=\sum_{(k,L,R)\in\mathcal P}
+       \left(\sum_{i\in L}a_i\right)
+       \left(\sum_{j\in R}b_j\right).
+\end{equation}
+It uses 35 products of linear forms across all outputs. Among bilinear
+decompositions with nonnegative coefficients in the two input factors
+and the output factor, 35 is minimal. The identity itself holds for
+signed inputs as well. The lower bound concerns nonnegative
+factorizations; the unrestricted real and complex tensor ranks are
+separate questions.
+
+The supplementary file \texttt{certificate.json} contains the maps,
+generators, multiplication table, rectangles and ordered witness pairs.
+The program \texttt{verify.py} reconstructs the multiplication table from
+the maps, checks the generated monoid, and verifies all 1,728 tensor
+coefficients. It then checks every fooling-set condition and computes
+the twelve witness determinants over the rational numbers. It uses
+only the Python standard library. From this paper's directory, run
+\begin{verbatim}
+python3 verify.py
+\end{verbatim}
+The proof is the finite construction and lower bound displayed here.
+The verifier checks their transcription and arithmetic; it requires
+neither a search procedure nor an optimisation solver.
+
+\appendix
+\clearpage
+\section{Multiplication table}\label{app:table}
+
+Each entry is the index $M(i,j)$ determined by $m_j\circ m_i$.
+The row acts first. In particular, row $4$ and column $4$ give the
+identity operation.
+
+\begin{table}[ht]
+\centering
+\small
+\setlength{\tabcolsep}{5.1pt}
+\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{r|rrrrrrrrrrrr}
+\toprule
+$i\backslash j$ & 0&1&2&3&4&5&6&7&8&9&10&11\\
+\midrule
+0 & 0 & 0 & 0 & 0 & 0 & 5 & 5 & 5 & 8 & 8 & 8 & 11 \\
+1 & 0 & 0 & 1 & 1 & 1 & 5 & 5 & 5 & 8 & 8 & 9 & 11 \\
+2 & 0 & 0 & 2 & 2 & 2 & 5 & 5 & 5 & 8 & 8 & 10 & 11 \\
+3 & 0 & 0 & 2 & 3 & 3 & 5 & 6 & 6 & 8 & 8 & 10 & 11 \\
+4 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
+5 & 0 & 0 & 5 & 5 & 5 & 5 & 5 & 5 & 8 & 8 & 11 & 11 \\
+6 & 0 & 0 & 5 & 6 & 6 & 5 & 6 & 6 & 8 & 8 & 11 & 11 \\
+7 & 0 & 1 & 5 & 6 & 7 & 5 & 6 & 7 & 8 & 9 & 11 & 11 \\
+8 & 0 & 0 & 5 & 8 & 8 & 5 & 8 & 8 & 8 & 8 & 11 & 11 \\
+9 & 0 & 1 & 5 & 8 & 9 & 5 & 8 & 9 & 8 & 9 & 11 & 11 \\
+10 & 0 & 2 & 5 & 8 & 10 & 5 & 8 & 10 & 8 & 10 & 11 & 11 \\
+11 & 0 & 5 & 5 & 8 & 11 & 5 & 8 & 11 & 8 & 11 & 11 & 11 \\
+\bottomrule
+\end{tabular}
+\caption{The multiplication table of $S$.}\label{tab:multiplication}
+\end{table}
+
+\section{Lower-bound certificate}\label{app:lower}
+
+Within each row of the following table, the pairs are ordered. This
+order defines both the fooling set $F_k$ and the minor $B_k$ used in the
+proof. The final two columns give its size and determinant.
+
+\begin{table}[ht]
+\centering
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{r l r r}
+\toprule
+$k$ & Ordered pairs in $F_k$ & $r_k$ & $\det B_k$\\
+\midrule
+0 & $(0,2),\,(1,1),\,(4,0)$ & 3 & $1$ \\
+1 & $(1,2),\,(4,1)$ & 2 & $1$ \\
+2 & $(2,3),\,(3,2),\,(10,1)$ & 3 & $1$ \\
+3 & $(3,4),\,(4,3)$ & 2 & $1$ \\
+4 & $(4,4)$ & 1 & $1$ \\
+5 & $(0,6),\,(3,5),\,(5,3),\,(6,2),\,(11,1)$ & 5 & $1$ \\
+6 & $(3,7),\,(4,6),\,(6,4),\,(7,3)$ & 4 & $1$ \\
+7 & $(4,7),\,(7,4)$ & 2 & $1$ \\
+8 & $(0,10),\,(1,9),\,(4,8),\,(8,4),\,(9,3)$ & 5 & $1$ \\
+9 & $(1,10),\,(4,9),\,(9,4)$ & 3 & $1$ \\
+10 & $(2,10),\,(10,4)$ & 2 & $1$ \\
+11 & $(0,11),\,(5,10),\,(11,4)$ & 3 & $1$ \\
+\midrule
+ & Total & 35 & \\
+\bottomrule
+\end{tabular}
+\caption{Matching lower bounds for the twelve slices.}\label{tab:witnesses}
+\end{table}
+
+\clearpage
+\section{The 35-term decomposition}\label{app:upper}
+
+A row $(k,L,R)$ represents $\chi_L\otimes\chi_R\otimes e_k$.
+The rows partition all 144 nonzero coefficients of $C$.
+
+\small
+\renewcommand{\arraystretch}{0.95}
+\begin{longtable}{r l l}
+\caption{The rectangle partition.}\label{tab:rectangles}\\
+\toprule
+$k$ & $L$ & $R$\\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\textit{Table \thetable\ continued.}}\\
+\toprule
+$k$ & $L$ & $R$\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+0 & $\{0\}$ & $\{2,3,4\}$ \\
+0 & $\{0,1,2,3,5,6,8\}$ & $\{0,1\}$ \\
+0 & $\{4,7,9,10,11\}$ & $\{0\}$ \\
+\addlinespace[0pt]
+1 & $\{1\}$ & $\{2,3,4\}$ \\
+1 & $\{4,7,9\}$ & $\{1\}$ \\
+\addlinespace[0pt]
+2 & $\{2\}$ & $\{2,3,4\}$ \\
+2 & $\{3,4\}$ & $\{2\}$ \\
+2 & $\{10\}$ & $\{1\}$ \\
+\addlinespace[0pt]
+3 & $\{3\}$ & $\{3,4\}$ \\
+3 & $\{4\}$ & $\{3\}$ \\
+\addlinespace[0pt]
+4 & $\{4\}$ & $\{4\}$ \\
+\addlinespace[0pt]
+5 & $\{3,4\}$ & $\{5\}$ \\
+5 & $\{5\}$ & $\{2,3,4\}$ \\
+5 & $\{0,1,2,5\}$ & $\{5,6,7\}$ \\
+5 & $\{11\}$ & $\{1\}$ \\
+5 & $\{6,7,8,9,10,11\}$ & $\{2,5\}$ \\
+\addlinespace[0pt]
+6 & $\{4\}$ & $\{6\}$ \\
+6 & $\{6\}$ & $\{3,4\}$ \\
+6 & $\{3,6\}$ & $\{6,7\}$ \\
+6 & $\{7\}$ & $\{3,6\}$ \\
+\addlinespace[0pt]
+7 & $\{7\}$ & $\{4\}$ \\
+7 & $\{4,7\}$ & $\{7\}$ \\
+\addlinespace[0pt]
+8 & $\{0\}$ & $\{10\}$ \\
+8 & $\{0,1,2,3,5,6\}$ & $\{8,9\}$ \\
+8 & $\{4,7\}$ & $\{8\}$ \\
+8 & $\{8\}$ & $\{4,7,9\}$ \\
+8 & $\{8,9,10,11\}$ & $\{3,6,8\}$ \\
+\addlinespace[0pt]
+9 & $\{1\}$ & $\{10\}$ \\
+9 & $\{9\}$ & $\{4,7\}$ \\
+9 & $\{4,7,9\}$ & $\{9\}$ \\
+\addlinespace[0pt]
+10 & $\{2,3,4\}$ & $\{10\}$ \\
+10 & $\{10\}$ & $\{4,7,9\}$ \\
+\addlinespace[0pt]
+11 & $\{0,1,2,3,4\}$ & $\{11\}$ \\
+11 & $\{11\}$ & $\{4,7,9\}$ \\
+11 & $\{5,6,7,8,9,10,11\}$ & $\{10,11\}$ \\
+\end{longtable}
+\normalsize
+
+{\small
+\begin{thebibliography}{9}
+\bibitem{cohen1993}
+J.~E.~Cohen and U.~G.~Rothblum,
+Nonnegative ranks, decompositions, and factorizations of nonnegative matrices,
+\textit{Linear Algebra and its Applications} \textbf{190} (1993), 149--168.
+\href{https://doi.org/10.1016/0024-3795(93)90224-C}{doi:10.1016/0024-3795(93)90224-C}.
+
+\bibitem{fiorini2013}
+S.~Fiorini, V.~Kaibel, K.~Pashkovich and D.~O.~Theis,
+Combinatorial bounds on nonnegative rank and extended formulations,
+\textit{Discrete Mathematics} \textbf{313} (2013), no.~1, 67--83.
+\href{https://doi.org/10.1016/j.disc.2012.09.015}{doi:10.1016/j.disc.2012.09.015}.
+
+\bibitem{qi2016}
+Y.~Qi, P.~Comon and L.-H.~Lim,
+Semialgebraic geometry of nonnegative tensor rank,
+\textit{SIAM Journal on Matrix Analysis and Applications} \textbf{37} (2016),
+no.~4, 1556--1580.
+\href{https://doi.org/10.1137/16M1063708}{doi:10.1137/16M1063708}.
+\end{thebibliography}}
+\end{document}
