@@ -4,7 +4,7 @@
 26 October 2026 · Version 1.0.0  
 Mathematics / Algebra · MSC 2020: 15A69; 15B48, 20M20
 
-[Paper (PDF)](https://github.com/lmtlssss/academic/releases/download/tensor-note-v1.0.0/paper.pdf) · [LaTeX source](paper.tex) · [Certificate](certificate.json) · [Verifier](verify.py)
+[Paper (PDF)](https://github.com/lmtlssss/math/releases/download/tensor-note-v1.0.0/paper.pdf) · [LaTeX source](paper.tex) · [Certificate](certificate.json) · [Verifier](verify.py)
 
 ## Result
 
