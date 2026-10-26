@@ -24,7 +24,7 @@ jobs:
             printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt
           fi
           sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update -qq
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends texlive-xetex texlive-latex-extra fonts-noto-core
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends texlive-xetex texlive-latex-extra texlive-fonts-recommended fonts-noto-core
       - name: Verify and typeset
         run: |
           cd "$RUNNER_TEMP/paper-source/mathematics/algebra/twelve-state-composition-tensor"
