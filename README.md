@@ -22,3 +22,10 @@ Three initial bits determine every preimage of a cyclic Boolean–modular map. T
 27 October 2026 · Version 1.0.0
 
 An explicit twenty-term signed construction for the twelve-state tensor. The real rank lies between 18 and 20. The exact nonnegative tensor-power rank is 35^q, and the signed construction uses at most 20^q products. DOI: [10.5281/zenodo.23695066](https://doi.org/10.5281/zenodo.23695066).
+
+## Mathematics · Exact counting
+
+[Exact Counting for a Boolean–Modular Equation with Bounded Tap Span](mathematics/discrete-mathematics/bounded-tap-span-counting/)  
+27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23697063](https://doi.org/10.5281/zenodo.23697063)
+
+A fixed tap span gives a finite nonlinear frontier for exact count-and-witness solving. The manuscript proves the state bound and cyclic closure, with a 256-bit example containing 5,784,112,988,160 solutions.
