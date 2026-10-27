@@ -32,6 +32,10 @@ jobs:
           fi
           tar -xJf "$TAR"
           "$RUNNER_TEMP/blender-5.2.2-linux-x64/blender" -b --factory-startup --python-expr "import bpy; assert bpy.app.version[:3]==(5,2,2); print('BLENDER522_VERIFIED')"
+      - name: Install Mesa headless rendering libraries
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install libegl1 libgl1 libgl1-mesa-dri libgbm1 libx11-6 libxi6 libxrender1 libxfixes3 libxkbcommon0 libsm6 libxext6 libxxf86vm1 xvfb
       - name: Render nine original scenes at 3840 pixels and update release cover assets
         env:
           GH_TOKEN: ${{ github.token }}
@@ -55,7 +59,7 @@ jobs:
             mkdir -p "input/$slug" "output/$slug"
             gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "$blend" --dir "input/$slug"
             test -s "input/$slug/$blend"
-            "$BLENDER" -b --python .github/scripts/render_minefield_4k.py -- "input/$slug/$blend" "output/$slug/00-cover.png" "$slug"
+            LIBGL_ALWAYS_SOFTWARE=1 xvfb-run -a "$BLENDER" -b --python .github/scripts/render_minefield_4k.py -- "input/$slug/$blend" "output/$slug/00-cover.png" "$slug"
             test -s "output/$slug/00-cover.png"
             test -s "output/$slug/00-cover.json"
             if [ "$legacy" != "00-cover.png" ]; then
