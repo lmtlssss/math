@@ -1,0 +1,93 @@
+{
+  "complete_fibers": 65532,
+  "solver_calls": 196596,
+  "forward_evaluations": 65532,
+  "signature_set_comparisons": 1020,
+  "fibonacci_maxima": [
+    {
+      "width": 1,
+      "maximum": 1
+    },
+    {
+      "width": 2,
+      "maximum": 2
+    },
+    {
+      "width": 3,
+      "maximum": 3
+    },
+    {
+      "width": 4,
+      "maximum": 5
+    },
+    {
+      "width": 5,
+      "maximum": 8
+    },
+    {
+      "width": 6,
+      "maximum": 13
+    },
+    {
+      "width": 7,
+      "maximum": 21
+    },
+    {
+      "width": 8,
+      "maximum": 34
+    },
+    {
+      "width": 9,
+      "maximum": 55
+    },
+    {
+      "width": 10,
+      "maximum": 89
+    },
+    {
+      "width": 11,
+      "maximum": 144
+    },
+    {
+      "width": 12,
+      "maximum": 233
+    },
+    {
+      "width": 13,
+      "maximum": 377
+    },
+    {
+      "width": 14,
+      "maximum": 610
+    },
+    {
+      "width": 15,
+      "maximum": 987
+    },
+    {
+      "width": 16,
+      "maximum": 1597
+    }
+  ],
+  "figure_members": [
+    15,
+    22,
+    98,
+    106,
+    113,
+    115,
+    123,
+    140,
+    141,
+    194,
+    209,
+    219,
+    230,
+    238,
+    240,
+    247,
+    255
+  ],
+  "all_match": true,
+  "seconds": 24.74202365800005
+}
