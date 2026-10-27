@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: Exact publication slug or all
         type: choice
+        required: true
         default: all
         options: [all, tensor, three-bit, signed-tensor, short-frontier, affine-carry, two-stage-addition, cascaded-addition, binary-algebra, ordered-carry]
 permissions:
@@ -12,61 +12,62 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
-    strategy:
-      fail-fast: false
-      max-parallel: 5
-      matrix:
-        include:
-          - { slug: tensor, tag: tensor-note-v1.0.0, blend: twelve-state-tensor-rank35.blend, original_cover: twelve-state-tensor-rank35-render.png }
-          - { slug: three-bit, tag: three-bit-note-v1.0.0, blend: three-bit-boundary.blend, original_cover: three-bit-boundary.png }
-          - { slug: signed-tensor, tag: signed-tensor-note-v1.0.0, blend: twenty-signed-products.blend, original_cover: 00-cover.png }
-          - { slug: short-frontier, tag: short-frontier-note-v1.0.0, blend: bounded-tap-span.blend, original_cover: 00-cover.png }
-          - { slug: affine-carry, tag: affine-carry-note-v1.0.0, blend: affine-carry.blend, original_cover: 00-cover.png }
-          - { slug: two-stage-addition, tag: addition-state-note-v1.0.0, blend: two-stage-addition.blend, original_cover: 00-cover.png }
-          - { slug: cascaded-addition, tag: cascade-carry-note-v1.0.0, blend: cascaded-addition.blend, original_cover: 00-cover.png }
-          - { slug: binary-algebra, tag: binary-algebra-note-v1.0.0, blend: binary-algebra.blend, original_cover: 00-cover.png }
-          - { slug: ordered-carry, tag: shared-input-note-v1.0.0, blend: shared-input-carry.blend, original_cover: 00-cover.png }
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - name: Install native Blender
-        run: |
-          sudo apt-get -o Acquire::Retries=2 update -qq
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=2 install -y --no-install-recommends blender
-          blender -b --factory-startup --python-expr "import bpy; print('NATIVE_BLENDER_VERSION',bpy.app.version_string)"
-      - name: Download released editable scene
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ matrix.tag }}
-          BLEND: ${{ matrix.blend }}
-          SLUG: ${{ matrix.slug }}
+      - name: Install Blender 5.2.2 from official verified release
         run: |
           set -euo pipefail
-          mkdir -p "input/$SLUG" "output/$SLUG"
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BLEND" --dir "input/$SLUG"
-          test -s "input/$SLUG/$BLEND"
-      - name: Render and verify 4K dimensions
-        env:
-          SLUG: ${{ matrix.slug }}
-          BLEND: ${{ matrix.blend }}
-        run: |
-          blender -b --python .github/scripts/render_minefield_4k.py -- "input/$SLUG/$BLEND" "output/$SLUG/00-cover.png" "$SLUG"
-      - name: Replace GitHub cover; preserve paper and figure source
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ matrix.tag }}
-          ORIGINAL_COVER: ${{ matrix.original_cover }}
-          SLUG: ${{ matrix.slug }}
-        run: |
-          set -euo pipefail
-          if [ "$ORIGINAL_COVER" != "00-cover.png" ]; then
-            cp "output/$SLUG/00-cover.png" "output/$SLUG/$ORIGINAL_COVER"
-            gh release upload "$TAG" "output/$SLUG/$ORIGINAL_COVER" --repo "$GITHUB_REPOSITORY" --clobber
+          cd "$RUNNER_TEMP"
+          BASE=https://download.blender.org/release/Blender5.2
+          TAR=blender-5.2.2-linux-x64.tar.xz
+          curl -fL --retry 3 --retry-delay 4 --connect-timeout 30 -o "$TAR" "$BASE/$TAR"
+          curl -fL --retry 3 --retry-delay 4 -o blender-5.2.2.sha256 "$BASE/blender-5.2.2.sha256"
+          grep "$TAR" blender-5.2.2.sha256 | sed 's/^.*: / /' > blender-linux.sha256 || true
+          if [ -s blender-linux.sha256 ] && grep -Eq '^[a-f0-9]{64}[[:space:]]' blender-linux.sha256; then
+            sha256sum -c blender-linux.sha256
+          else
+            echo 'Unexpected checksum format; refusing to run unchecked binary'
+            exit 1
           fi
-          gh release upload "$TAG" "output/$SLUG/00-cover.png" --repo "$GITHUB_REPOSITORY" --clobber
-          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '[.assets[]|select(.name=="00-cover.png")|{name,size}]'
+          tar -xJf "$TAR"
+          "$RUNNER_TEMP/blender-5.2.2-linux-x64/blender" -b --factory-startup --python-expr "import bpy; assert bpy.app.version[:3]==(5,2,2); print('BLENDER522_VERIFIED')"
+      - name: Render nine original scenes at 3840 pixels and update release cover assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ inputs.target }}
+        run: |
+          set -euo pipefail
+          BLENDER="$RUNNER_TEMP/blender-5.2.2-linux-x64/blender"
+          cat > "$RUNNER_TEMP/releases.tsv" <<'RELEASES'
+          tensor tensor-note-v1.0.0 twelve-state-tensor-rank35.blend twelve-state-tensor-rank35-render.png
+          three-bit three-bit-note-v1.0.0 three-bit-boundary.blend three-bit-boundary.png
+          signed-tensor signed-tensor-note-v1.0.0 twenty-signed-products.blend 00-cover.png
+          short-frontier short-frontier-note-v1.0.0 bounded-tap-span.blend 00-cover.png
+          affine-carry affine-carry-note-v1.0.0 affine-carry.blend 00-cover.png
+          two-stage-addition addition-state-note-v1.0.0 two-stage-addition.blend 00-cover.png
+          cascaded-addition cascade-carry-note-v1.0.0 cascaded-addition.blend 00-cover.png
+          binary-algebra binary-algebra-note-v1.0.0 binary-algebra.blend 00-cover.png
+          ordered-carry shared-input-note-v1.0.0 shared-input-carry.blend 00-cover.png
+          RELEASES
+          while read -r slug tag blend legacy; do
+            if [ "$TARGET" != "all" ] && [ "$TARGET" != "$slug" ]; then continue; fi
+            mkdir -p "input/$slug" "output/$slug"
+            gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "$blend" --dir "input/$slug"
+            test -s "input/$slug/$blend"
+            "$BLENDER" -b --python .github/scripts/render_minefield_4k.py -- "input/$slug/$blend" "output/$slug/00-cover.png" "$slug"
+            test -s "output/$slug/00-cover.png"
+            test -s "output/$slug/00-cover.json"
+            if [ "$legacy" != "00-cover.png" ]; then
+              cp "output/$slug/00-cover.png" "output/$slug/$legacy"
+              gh release upload "$tag" "output/$slug/$legacy" --repo "$GITHUB_REPOSITORY" --clobber
+            fi
+            gh release upload "$tag" "output/$slug/00-cover.png" --repo "$GITHUB_REPOSITORY" --clobber
+            gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '[.assets[]|select(.name=="00-cover.png")|{name,size}]'
+            echo "FINISHED_NATIVE4K $slug $tag"
+          done < "$RUNNER_TEMP/releases.tsv"
       - uses: actions/upload-artifact@v4
         with:
-          name: minefield-native-4k-${{ matrix.slug }}
-          path: output/${{ matrix.slug }}/
+          name: minefield-native-4k-${{ inputs.target }}
+          path: output/
           if-no-files-found: error
