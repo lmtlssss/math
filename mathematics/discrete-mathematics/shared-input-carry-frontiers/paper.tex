@@ -1,0 +1,339 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\itshape Ordered carry frontiers for parallel addition}
+\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\bits}{\{0,1\}}
+\newcommand{\andb}{\mathbin{\&}}
+\DeclareMathOperator{\rank}{rank}
+\hypersetup{pdftitle={Ordered Carry Frontiers for Parallel Addition},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: arithmetic automata and exact counting},pdfkeywords={shared input, carry states, finite automata, exact counting, masked addition}}
+\title{\LARGE Ordered Carry Frontiers\\for Parallel Addition}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{27 October 2026\\[3pt]\small\href{https://doi.org/10.5281/zenodo.23702847}{10.5281/zenodo.23702847}}
+\begin{document}
+\maketitle\thispagestyle{plain}
+\begin{abstract}
+Fix $m$ offsets and add the same radix-$B$ word to every offset.
+At a cut after $i$ digits, the exact number of reachable joint carry states is
+one plus the number of distinct nonzero offset residues modulo $B^i$.
+The states form a chain, so their number is at most
+$\min\{m+1,B^i\}$. This bound is attained and gives the minimum number of
+residual states that preserve every remaining output digit.
+For binary words, the ordered states support exact counting under arbitrary
+input and output bit masks. Stable partition and monotone sweeps construct
+all transitions in $O(wm)$ arithmetic operations. The counter also returns
+the least satisfying word. Thus 32 parallel additions have at most
+33 carry states at a cut, although a general vector of 32 independent carries
+has $2^{32}$ values. Exact source and independent whole-input comparisons
+accompany the proofs.
+\end{abstract}
+\noindent\textit{Keywords.} Carry propagation; shared-input addition;
+residual states; finite-state counting; bit masks.
+
+\section{Parallel sums and their residual functions}
+Fix integers $B\geq2$, $w\geq1$, and $m\geq1$.
+Let $\alpha_1,\ldots,\alpha_m\in\{0,\ldots,B^w-1\}$ be fixed offsets.
+The variable input is one word $x\in\{0,\ldots,B^w-1\}$, shared by all sums
+\begin{equation}\label{eq:sums}
+ y_j(x)=(x+\alpha_j)\bmod B^w,\qquad 1\leq j\leq m.
+\end{equation}
+Each addition starts with carry zero. We process the input digits from least
+to most significant. At a cut $i$, put
+\begin{equation}\label{eq:carry}
+ M_i=B^i,\qquad a_{j,i}=\alpha_j\bmod M_i,\qquad
+ u=x\bmod M_i,\qquad
+ c_{j,i}(u)=\left\lfloor\frac{u+a_{j,i}}{M_i}\right\rfloor.
+\end{equation}
+Every carry is either zero or one, at every radix.
+The joint carry vector is $C_i(u)=(c_{1,i}(u),\ldots,c_{m,i}(u))$.
+
+For $i<w$, a lower prefix $u$ defines a residual function of the upper
+input word $v\in\{0,\ldots,B^{w-i}-1\}$:
+\begin{equation}\label{eq:residual}
+ R_{i,u}(v)_j=
+ \left(\left\lfloor\frac{\alpha_j}{M_i}\right\rfloor
+       +v+c_{j,i}(u)\right)\bmod B^{w-i}.
+\end{equation}
+This function returns the upper $w-i$ digits of every sum.
+The lower output digits are already consumed. A residual state must retain
+exactly the distinctions that can affect the remaining outputs.
+
+\section{Exact carry width}
+Let $d_i$ be the number of distinct nonzero members of
+$\{a_{1,i},\ldots,a_{m,i}\}$. Let $q_i$ be the number of joint carry
+vectors attained by $u\in\{0,\ldots,M_i-1\}$.
+
+\begin{theorem}\label{thm:width}
+For every cut $0\leq i\leq w$,
+\begin{equation}\label{eq:width}
+ \boxed{q_i=1+d_i\leq\min\{m+1,B^i\}.}
+\end{equation}
+The vectors $C_i(u)$ form a chain under componentwise order as $u$ increases.
+For every $i<w$, these vectors are exactly the equivalence classes of the
+residual functions in~\eqref{eq:residual}. Consequently, $q_i$ states are
+necessary and sufficient to retain every future output.
+\end{theorem}
+
+\begin{proof}
+An offset with $a_{j,i}=0$ has carry zero for every prefix.
+Every other offset has one threshold,
+\begin{equation}\label{eq:threshold}
+ \theta_{j,i}=M_i-a_{j,i},\qquad
+ c_{j,i}(u)=\ind\{u\geq\theta_{j,i}\}.
+\end{equation}
+The distinct thresholds lie in $\{1,\ldots,M_i-1\}$.
+Write them as $\theta_1<\cdots<\theta_{d_i}$, and add
+$\theta_0=0$, $\theta_{d_i+1}=M_i$.
+The carry vector is constant on each nonempty integer interval
+\[
+ I_{i,r}=[\theta_r,\theta_{r+1})\cap\mathbb Z,
+ \qquad 0\leq r\leq d_i.
+\]
+At each internal threshold, at least one component changes from zero to one.
+No component changes back. The $d_i+1$ intervals therefore have different
+vectors, in chain order. This proves the count and upper bounds.
+
+Equal carry vectors give equal residual functions by~\eqref{eq:residual}.
+For unequal vectors, choose a component $j$ where they differ.
+At $v=0$, the corresponding residual values differ by one modulo
+$B^{w-i}$. Since $i<w$, this modulus is at least two, so the values differ.
+The residual functions are distinct. Any deterministic summary preserving
+all these responses must distinguish all $q_i$ classes.
+\end{proof}
+
+\begin{corollary}\label{cor:sharp}
+The upper bound in~\eqref{eq:width} is sharp. At a prescribed cut, choose
+$\min\{m,B^i-1\}$ distinct nonzero offset residues and repeat residues as
+needed. At a nonterminal cut, the minimum fixed-length residual label has
+$\lceil\log_2q_i\rceil$ bits.
+\end{corollary}
+
+The label count presumes the offsets and cut are known.
+At the terminal cut $i=w$, the carry vectors remain as counted in
+\eqref{eq:width}. If only modular outputs are required, there are no
+remaining digits and all terminal states can be accepted together.
+If the outgoing carry vector is retained, its $q_w$ values remain distinct.
+Input restrictions can remove reachable classes. They cannot add new ones.
+
+For two offsets, the possible vectors are $00,10,11$ or $00,01,11$,
+according to their low-residue order. Equal residues leave only equal carries.
+For 32 offsets, at most 33 vectors occur. Six bits suffice for their rank;
+choices with 33 distinct states require six bits.
+These labels describe the carry interface, not the input word or the full
+vector of sum outputs.
+
+\section{Constructing the binary transitions}
+We now take $B=2$. Retain a threshold for every offset, using
+$\theta_{j,i}=M_i$ when $a_{j,i}=0$.
+The state label $r$ is the interval index in the proof above.
+Define the switch rank $s_{j,i}$ by
+\begin{equation}\label{eq:switch}
+ c_{j,i}=\ind\{r\geq s_{j,i}\}.
+\end{equation}
+For a zero residue, set $s_{j,i}=q_i$, so that this carry is always zero.
+Repeated thresholds share a switch rank.
+
+Let $e_j$ be bit $i$ of $\alpha_j$, and let $b$ be the next input bit.
+The ordinary addition equations are
+\begin{equation}\label{eq:transition}
+ z_j=e_j\oplus b\oplus c_{j,i},\qquad
+ c_{j,i+1}=\left\lfloor\frac{e_j+b+c_{j,i}}2\right\rfloor.
+\end{equation}
+Here $z_j$ is output bit $i$. Thus a state and an input bit determine the
+output bits and the next state.
+
+\begin{lemma}\label{lem:stable}
+Given the current ordered thresholds, the next ordered thresholds and both
+state-transition maps can be constructed in $O(m)$ arithmetic operations.
+\end{lemma}
+\begin{proof}
+The next threshold is
+\begin{equation}\label{eq:threshold-update}
+ \theta_{j,i+1}=\theta_{j,i}+(1-e_j)M_i.
+\end{equation}
+All thresholds with $e_j=1$ lie in $[1,M_i]$.
+All with $e_j=0$ lie in $[M_i+1,2M_i]$.
+Within each group the old order is preserved. A stable partition, with
+$e_j=1$ first, therefore constructs the next order in linear time.
+One scan identifies distinct internal thresholds and assigns switch ranks.
+The value $2M_i$ represents a zero residue and is not an internal threshold.
+
+For state $r$, use its left endpoint $u=\theta_r$ as a representative.
+After reading $b$, the new lower input word is $u+bM_i$.
+Every prefix in the same old interval has the same successor by
+\eqref{eq:transition}. The representative therefore determines its successor.
+For fixed $b$, these representatives increase with $r$.
+A simultaneous scan through them and the next thresholds locates every
+successor in $O(q_i+q_{i+1})=O(m)$ operations.
+Repeat the scan for the other input bit.
+\end{proof}
+
+At cut zero, every threshold is one and the only state is the zero vector.
+Lemma~\ref{lem:stable} constructs all subsequent layers without a table of
+$2^m$ carry vectors or a comparison sort at each cut.
+
+\section{Exact counting with bit masks}
+For each sum, fix a mask $\mu_j$ and a target $\tau_j$ with
+$\tau_j\andb\neg\mu_j=0$. We count the words satisfying
+\begin{equation}\label{eq:masks}
+ y_j(x)\andb\mu_j=\tau_j\quad(1\leq j\leq m),\qquad
+ x\andb\mu_0=\tau_0.
+\end{equation}
+The input mask is optional; zero imposes no input restriction.
+All masks and targets have width $w$.
+
+For a proposed next bit $b$, every specified output bit requires
+\begin{equation}\label{eq:required}
+ c_{j,i}=e_j\oplus b\oplus (\tau_j)_i.
+\end{equation}
+A required carry one means $r\geq s_{j,i}$, and a required carry zero means
+$r<s_{j,i}$. The allowed state labels form one interval, possibly empty:
+\begin{equation}\label{eq:interval}
+ \begin{aligned}
+ \ell_b&=\max\bigl(\{0\}\cup\{s_{j,i}:c_{j,i}\text{ is required to be }1\}\bigr),\\
+ h_b&=\min\bigl(\{q_i-1\}\cup\{s_{j,i}-1:c_{j,i}\text{ is required to be }0\}\bigr).
+ \end{aligned}
+\end{equation}
+Only masked output positions contribute to these sets.
+The input mask can suppress either proposed bit altogether.
+
+\begin{theorem}\label{thm:count}
+The solution count of~\eqref{eq:masks}, and the least satisfying word when
+one exists, can be computed in $O(wm)$ operations on integers of
+$O(w+\log(m+1))$ bits. There are at most
+\begin{equation}\label{eq:attempts}
+ 2\sum_{i=0}^{w-1}q_i\leq2w(m+1)
+\end{equation}
+state-transition attempts. Streaming storage uses $O(m)$ such integers,
+including the input description. A conservative elementary bit-operation
+bound is $O(wm(w+\log(m+1)))$.
+\end{theorem}
+
+\begin{proof}
+Maintain one exact counter $n_i(r)$ per state.
+Its value is the number of lower input prefixes that satisfy all restrictions
+in positions below $i$ and reach state $r$.
+Initially $n_0(0)=1$.
+For each $b\in\bits$, compute the interval~\eqref{eq:interval} and the
+successor map from Lemma~\ref{lem:stable}.
+For every allowed $r$, add $n_i(r)$ to its successor's counter.
+
+Each prefix has exactly one state and exactly one next input bit.
+Every accepted extension satisfies the new mask bits by
+\eqref{eq:required}. Conversely, every legal extension passes this test.
+This proves the counter invariant by induction, with neither omission nor
+duplicate counting. Summing the terminal counters gives the exact count.
+
+Alongside each positive counter, retain the least prefix attaining it.
+For a fixed state, all such prefixes have the same possible suffixes.
+Replacing a prefix by the least one preserves validity and cannot increase
+the resulting complete word. Each transition extends this stored prefix by
+$b2^i$, and a successor retains the smaller of the candidates it receives.
+Induction proves that the minimum terminal witness is the least solution.
+
+Each layer needs a constant number of scans over offsets and states.
+The threshold construction, mask bounds, and two transitions therefore cost
+$O(m)$ arithmetic operations. Counters and witnesses have at most $w+1$ bits;
+thresholds have at most $w+1$ bits, and indices need $O(\log(m+1))$ bits.
+Two counter layers, two witness layers, and the threshold arrays suffice.
+The stated time and storage bounds follow. Recording all layer traces is an
+optional additional output and uses additional storage.
+\end{proof}
+
+The constructor and counter are included in the bound. It is not a bound
+only for querying an already built graph. The mask constraints are local to
+individual bit positions; unrestricted additional predicates need their own
+state and evaluation cost. The result is a counting and witness algorithm,
+not an enumeration of every satisfying word.
+
+\section{Examples and exact verification}
+At cut eight, choose offsets $(13,45,93,157,221)$ in nine-bit words.
+The five thresholds are $35,99,163,211,243$.
+All 256 lower prefixes lie in six classes of sizes
+\[
+ 35,\quad64,\quad64,\quad48,\quad32,\quad13.
+\]
+In the given offset order, the carry vectors are
+$00000,00001,00011,00111,01111,11111$.
+Every vector gives a different final-digit response. The figure source
+records every prefix-to-class incidence.
+
+A separate fixed example uses 32 offsets at width 256 and at most two specified
+output positions per offset. The exact solver counts
+\[
+ 291507445114675457594661599285981859699083240676748846694400
+\]
+solutions. It constructs 8,290 nonterminal source states and attempts
+16,580 transitions; its maximum layer width is 33.
+A separately written ripple counter, whose keys are full carry vectors,
+returns the same count and least witness. Complete offsets, masks, targets
+and witness are supplied in \texttt{evidence/verification.json}.
+The example illustrates the proved representation and counting bounds;
+it supplies no comparison of processor speed or electrical cost.
+
+The finite verification uses direct integer addition as its small-domain
+oracle. It checks 30,792 prefix panels and 211,326 prefixes, including
+repeated and zero offset residues. First-suffix outputs distinguish all
+41,560 checked pairs of residual states. In 3,840 complete masked queries,
+all 785,664 input words are evaluated directly. Counts and least witnesses
+agree with both implementations. A further 168 queries cover word widths
+16 through 1,024 and two through 64 parallel sums. Every comparison passes.
+The general results follow from the preceding proofs; these checks qualify
+the implementation rather than replace those proofs.
+
+\section{Relation to existing methods}
+Ordered decision diagrams merge prefixes with identical residual
+behavior~\cite{bryant}. Finite automata for arithmetic constraints on binary
+representations are also established~\cite{wolper}.
+The present construction specializes those methods to fixed translations
+of one shared word. Its explicit threshold order gives the exact layer
+width, a matching residual-state lower bound, and a uniform linear-layer
+construction for masked counting.
+
+The common-input assumption is central. Independent input words do not
+have the common threshold variable in~\eqref{eq:threshold}.
+Cascaded addition with independently variable incoming carries has a
+different response-function classification~\cite{cascade}.
+Here the offsets are parameters, and one word is the common variable.
+The stated bounds concern this arithmetic family and its specified outputs.
+
+\section*{Reproducibility}
+\texttt{frontier.py} contains the ordered solver. \texttt{verify.py} contains
+the direct-input oracle, the independent full-vector counter, and the
+whole-input experiments. \texttt{visual/build\_scene.py} builds the diagram
+from \texttt{evidence/figure.json} in native Blender.
+The manuscript and figure are licensed CC BY 4.0; the executable source
+is licensed MIT. The source and figure accompany the DOI-linked release.
+
+\begin{thebibliography}{9}
+\bibitem{bryant}
+R. E. Bryant, Graph-based algorithms for Boolean function manipulation,
+\textit{IEEE Transactions on Computers} C-35(8) (1986), 677--691.
+\href{https://doi.org/10.1109/TC.1986.1676819}{doi:10.1109/TC.1986.1676819}.
+\bibitem{wolper}
+P. Wolper and B. Boigelot, An automata-theoretic approach to Presburger
+arithmetic constraints, in \textit{Static Analysis}, LNCS 983,
+Springer, 1995, pp. 21--32.
+\href{https://doi.org/10.1007/3-540-60360-3_30}{doi:10.1007/3-540-60360-3\_30}.
+\bibitem{cascade}
+lmtlssss{\authorsymbol 🜐}, \textit{Exact Counts of Sum-and-Carry Functions
+for Cascaded Addition}, 2026.
+\href{https://doi.org/10.5281/zenodo.23700193}{doi:10.5281/zenodo.23700193}.
+\end{thebibliography}
+\end{document}
