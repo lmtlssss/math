@@ -1,0 +1,213 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\newfontfamily\authorsymbol{Noto Sans Symbols}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\itshape A three-bit boundary}\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\B}{\{0,1\}}
+\newcommand{\xor}{\mathbin{\oplus}}
+\DeclareMathOperator{\ROR}{ROR}
+\DeclareMathOperator{\Maj}{Maj}
+\hypersetup{pdftitle={A Three-Bit Boundary for Cyclic Boolean–Modular Inversion},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: finite-state inversion},pdfkeywords={Boolean functions, modular arithmetic, cyclic recurrence, exact inversion}}
+\title{\LARGE A Three-Bit Boundary for\\Cyclic Boolean--Modular Inversion}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{27 October 2026}
+\begin{document}
+\maketitle\thispagestyle{plain}
+\begin{abstract}
+For fixed $w$-bit words $c$ and $k$, consider the map
+$F_{c,k}(x)=((\ROR_1x\xor\ROR_3x)+(x\land c)+k)\bmod 2^w$.
+For every $w\ge4$, each inverse fiber is determined by at most eight choices of the first three input bits. A carry recurrence reconstructs each candidate in $w$ local bit updates, and three closure equations select exactly the preimages. We prove completeness, uniqueness within each boundary choice, and a sharp bound of eight preimages. An explicit family attains the bound at every width divisible by seven. Replacing the third rotation by a rotation of $r$ positions gives an analogous $r$-bit boundary and a $2^r w$ update bound.
+\end{abstract}
+\noindent\textit{Keywords.} Boolean functions; modular arithmetic; cyclic recurrence; finite-state inversion.
+
+\section{The map and its boundary}
+Identify a word $x\in\{0,\ldots,2^w-1\}$ with its bits
+\[
+ x=\sum_{i=0}^{w-1}x_i2^i,\qquad x_i\in\B.
+\]
+Bit zero is the least significant bit. Right rotation is defined by
+$(\ROR_jx)_i=x_{(i+j)\bmod w}$. The symbols $\xor$ and $\land$ denote bitwise XOR and AND; addition is integer addition reduced modulo $2^w$.
+
+For fixed words $c,k$, put
+\begin{equation}\label{eq:map}
+ F_{c,k}(x)=\bigl((\ROR_1x\xor\ROR_3x)+(x\land c)+k\bigr)\bmod 2^w.
+\end{equation}
+The inversion problem is to list the entire fiber $F_{c,k}^{-1}(y)$ for a supplied target $y$, including the empty fiber. The mask, constant and target are all part of the input.
+
+\begin{theorem}[Three-bit boundary]\label{thm:main}
+Let $w\ge4$. For every $c,k,y\in\{0,\ldots,2^w-1\}$, projection onto $(x_0,x_1,x_2)$ is injective on $F_{c,k}^{-1}(y)$. Every member of the fiber is recovered by the recurrence in Section~\ref{sec:recurrence}, followed by its three closure checks. Exhausting the eight boundary choices uses at most $8w$ local bit updates. In particular,
+\begin{equation}\label{eq:bound}
+ |F_{c,k}^{-1}(y)|\le8.
+\end{equation}
+\end{theorem}
+
+The bound concerns this specified cyclic map. Its input length can grow while the unresolved boundary remains three bits. The arithmetic constant $k$ is removed by one modular subtraction. The remaining choices belong to the boundary, rather than to the full word.
+
+\section{Carry propagation and closure}\label{sec:recurrence}
+Set $t=(y-k)\bmod 2^w$. For a cyclic word $x$, define
+\[
+ q_i=x_{i+1}\xor x_{i+3},\qquad b_i=x_ic_i,
+\]
+with indices of $x$ interpreted modulo $w$. Equation~\eqref{eq:map} becomes $q+b=t\pmod{2^w}$. If $u_i$ is the carry entering position $i$, then
+\begin{equation}\label{eq:add}
+ q_i+b_i+u_i=t_i+2u_{i+1},\qquad u_0=0.
+\end{equation}
+All four symbols on the right and left, except the integer sum, are bits. The outgoing carry $u_w$ is discarded by the modulus.
+
+Taking parity in~\eqref{eq:add} determines the next input bit:
+\begin{align}
+ x_{i+3}&=t_i\xor x_{i+1}\xor(x_ic_i)\xor u_i,
+ \label{eq:forced}\\
+ u_{i+1}&=\left\lfloor
+ \frac{(x_{i+1}\xor x_{i+3})+x_ic_i+u_i}{2}
+ \right\rfloor.
+ \label{eq:carry}
+\end{align}
+The second expression is equivalently $\Maj(q_i,b_i,u_i)$.
+
+Choose a seed $s=(s_0,s_1,s_2)\in\B^3$. Set $x_j=s_j$ for $0\le j<3$ and $u_0=0$. Apply~\eqref{eq:forced}--\eqref{eq:carry} for $i=0,\ldots,w-1$, initially treating $x_0,\ldots,x_{w+2}$ as a linear sequence. Each step uses bits already present and appends one new bit. Accept the seed precisely when
+\begin{equation}\label{eq:closure}
+ (x_w,x_{w+1},x_{w+2})=(s_0,s_1,s_2).
+\end{equation}
+For an accepted seed, return $\sum_{i=0}^{w-1}x_i2^i$.
+There is no additional condition on $u_w$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Fix a seed. At step $i$, the bits $x_i,x_{i+1}$ and the carry $u_i$ are known. Equation~\eqref{eq:forced} therefore gives a unique $x_{i+3}$. The numerator in~\eqref{eq:carry} lies in $\{0,1,2,3\}$ and has parity $t_i$. Thus the resulting carry is a bit and~\eqref{eq:add} holds. Induction gives a unique path of $w$ steps for the seed.
+
+Suppose the path satisfies~\eqref{eq:closure}. All references to appended bits then agree with the cyclic interpretation of the first $w$ bits. Multiplying~\eqref{eq:add} by $2^i$ and summing gives
+\[
+ q+b=t+2^wu_w,
+\]
+because the intermediate carry terms cancel and $u_0=0$. Hence $q+b=t\pmod{2^w}$, and the returned word satisfies $F_{c,k}(x)=y$.
+
+Conversely, let $x$ be a preimage. Its ordinary binary addition has the carries in~\eqref{eq:add}. Start from its first three bits. Parity forces the next bit at every step, and the integer sum forces the next carry. The constructed path is therefore the cyclic extension of $x$ and satisfies all three closure equations. Every preimage is returned.
+
+Two accepted seeds cannot return the same word because that word retains its first three bits. The fiber thus contains at most one word per seed. There are eight seeds and $w$ updates per seed, proving the claims.
+\end{proof}
+
+\subsection{Cost and state}
+A local update consists of a fixed number of Boolean operations on the state
+\[
+ (x_i,x_{i+1},x_{i+2},u_i)\in\B^4.
+\]
+For supplied bits $(c_i,t_i)$, it moves deterministically to
+$(x_{i+1},x_{i+2},x_{i+3},u_{i+1})$.
+The carry is initially known; only the first three coordinates are chosen.
+At termination the three word coordinates must return to their initial values,
+while the carry coordinate is unrestricted.
+
+Converting the inputs to bit arrays and subtracting $k$ take $O(w)$ bit work. Keeping one candidate path requires $O(w)$ bits. At most eight output words are written, so their total length is at most $8w$ bits. The complete algorithm therefore takes $O(w)$ bit work and $O(w)$ storage in a sequential bit-array model. The number $8w$ counts the propagation updates alone, rather than language instructions or elapsed time.
+
+\section{Sharpness and a seven-cycle}\label{sec:sharp}
+The fiber bound is attained at arbitrarily large widths. Put $m_w=2^w-1$.
+
+\begin{theorem}[An exact extremal family]\label{thm:sharp}
+For $w\ge4$,
+\begin{equation}\label{eq:extremal}
+ |F_{m_w,0}^{-1}(m_w)|=
+ \begin{cases}8,&7\mid w,\\1,&7\nmid w.\end{cases}
+\end{equation}
+When $7\nmid w$, the unique preimage is $m_w$.
+\end{theorem}
+
+\begin{proof}
+Here $c_i=t_i=1$. Starting with $u_0=0$, equations~\eqref{eq:forced}--\eqref{eq:carry} give
+\[
+ x_{i+3}=1\xor x_{i+1}\xor x_i,\qquad u_{i+1}=0.
+\]
+Indeed $q_i=1\xor x_i$ and $b_i=x_i$, so $q_i+b_i=1$.
+Set $z_i=x_i\xor1$. The bit recurrence becomes
+\begin{equation}\label{eq:linear}
+ z_{i+3}=z_{i+1}\xor z_i.
+\end{equation}
+Its three-bit state map is $T(a,b,d)=(b,d,a\xor b)$. The zero state is fixed, and all seven nonzero states form the cycle
+\[
+ 100\to001\to010\to101\to011\to111\to110\to100.
+\]
+The digits in this display are in state order, not integer significance order. Thus $T^w(s)=s$ holds for all eight states when $7\mid w$, and only for the zero state otherwise. Translating back from $z$ to $x$ and applying~\eqref{eq:closure} proves~\eqref{eq:extremal}. The zero $z$ sequence corresponds to $x=m_w$.
+\end{proof}
+
+For example, take $w=7$ and $c=y=127$, $k=0$. The complete fiber is
+\begin{equation}\label{eq:example}
+ F_{127,0}^{-1}(127)=\{11,22,44,49,69,88,98,127\}.
+\end{equation}
+The following table supplies a direct arithmetic certificate. Each row sums to $127$.
+\begin{center}
+\begin{tabular}{rcr}
+\toprule
+$x$ & $x_6x_5\cdots x_0$ & $\ROR_1x\xor\ROR_3x$\\
+\midrule
+11 & 0001011 & 116\\
+22 & 0010110 & 105\\
+44 & 0101100 & 83\\
+49 & 0110001 & 78\\
+69 & 1000101 & 58\\
+88 & 1011000 & 39\\
+98 & 1100010 & 29\\
+127 & 1111111 & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+Since the mask is all ones, $x\land127=x$. The eight words have distinct three-bit prefixes. Consequently any injective binary label for the members of every fiber must allow at least three bits in the worst case. This is a bound on solution labels, rather than a lower bound for every inversion algorithm.
+
+\section{A larger cyclic boundary}
+The same derivation applies when the largest rotation is $r$.
+
+\begin{proposition}\label{prop:general}
+Let $2\le r<w$, and define
+\[
+ F^{(r)}_{c,k}(x)=
+ \bigl((\ROR_1x\xor\ROR_rx)+(x\land c)+k\bigr)\bmod2^w.
+\]
+Projection onto $(x_0,\ldots,x_{r-1})$ is injective on each fiber. An exact inverse enumerates $2^r$ seeds and uses at most $2^r w$ local updates.
+\end{proposition}
+
+\begin{proof}
+With $t=(y-k)\bmod2^w$, the parity recurrence is
+\[
+ x_{i+r}=t_i\xor x_{i+1}\xor(x_ic_i)\xor u_i.
+\]
+Because $r\ge2$, all bits on the right are known when the left side is appended. The outgoing carry is determined by the same two-input addition. Run $w$ steps and impose
+$(x_w,\ldots,x_{w+r-1})=(x_0,\ldots,x_{r-1})$.
+The soundness, completeness and distinct-seed arguments in Theorem~\ref{thm:main} apply verbatim.
+\end{proof}
+
+For fixed $r$ this is linear work in $w$. When $r$ varies, the displayed algorithm is exponential in the boundary length $r$. The proposition supplies a constructive upper bound; it does not assert that this bound is optimal for other rotations.
+
+\section{Relation to finite-state methods}
+Klimov and Shamir study T-functions, whose low output bits depend only on low input bits~\cite{klimovshamir}. Daum's narrow T-functions and solution graphs make explicit how bounded carried state supports exact equation solving~\cite{daum}. Boundary conditioning belongs to that established approach.
+
+The rotations in~\eqref{eq:map} introduce dependencies on later bits. Choosing three boundary bits resolves the cycle; the carry then determines the remaining bits. This note records the complete inverse for that map, the eight-element fiber bound, and the periodic family proving sharpness.
+
+\section{Executable verification}
+The supplied \texttt{inverse.py} uses explicit bit arrays. An independent quotient--remainder reference in \texttt{verify.py} agrees on all $87{,}296$ complete fibers for every mask and target at widths $4$ through $8$, with $k=0$. Nonzero $k$ translates the target by subtraction.
+
+A further $768$ queries cover widths $9$ through $1024$, non-byte-aligned words and nonzero constants. They compare a separately written rolling-state solver and verify every returned word. Another $112$ queries check Proposition~\ref{prop:general} against full enumeration. The eight-preimage example and its branch traces are included. These checks supplement the general proof.
+
+Run \texttt{python3 verify.py} to reproduce the checks. The source package also contains the native Blender illustration generated from the eight paths of~\eqref{eq:example}.
+
+\begin{thebibliography}{9}
+\bibitem{klimovshamir}
+A.~Klimov and A.~Shamir,
+\emph{New applications of T-functions in block ciphers and hash functions},
+Fast Software Encryption, LNCS 3557, Springer, 2005, pp.~18--31.
+\href{https://doi.org/10.1007/11502760_2}{doi:10.1007/11502760\_2}.
+\bibitem{daum}
+M.~Daum,
+\emph{Narrow T-functions},
+Cryptology ePrint Archive, Paper 2005/016, 2005.
+\url{https://eprint.iacr.org/2005/016}.
+\end{thebibliography}
+\end{document}

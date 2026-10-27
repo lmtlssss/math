@@ -1,0 +1,48 @@
+name: Publish three-bit note
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Fetch selected revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh repo clone "$GITHUB_REPOSITORY" "$RUNNER_TEMP/paper-source"
+          git -C "$RUNNER_TEMP/paper-source" checkout --detach "$GITHUB_SHA"
+      - name: Install typesetting
+        timeout-minutes: 8
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt
+          fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then
+            printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt
+          fi
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update -qq
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends texlive-xetex texlive-latex-extra texlive-fonts-recommended fonts-noto-core
+      - name: Verify and typeset
+        run: |
+          cd "$RUNNER_TEMP/paper-source/mathematics/discrete-mathematics/three-bit-cyclic-inversion"
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+          export FORCE_SOURCE_DATE=1
+          make verify
+          make paper
+      - name: Publish PDF
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create three-bit-note-v1.0.0 \
+            "$RUNNER_TEMP/paper-source/mathematics/discrete-mathematics/three-bit-cyclic-inversion/paper.pdf" \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "A Three-Bit Boundary for Cyclic Boolean–Modular Inversion" \
+            --notes "lmtlssss🜐 · Version 1.0.0. Complete inverse, sharp eight-preimage bound, periodic extremal family, and exact verifier. DOI: 10.5281/zenodo.23680529. Mathematics / Discrete mathematics."
+      - name: Retain build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: three-bit-note-pdf
+          path: ${{ runner.temp }}/paper-source/mathematics/discrete-mathematics/three-bit-cyclic-inversion/paper.pdf
