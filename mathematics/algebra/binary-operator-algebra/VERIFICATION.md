@@ -4,14 +4,14 @@ The 27 October 2026 publication pass independently reconstructed the source
 certificate and completed the declared full-map experiment.
 
 The coordinate-row verifier and the column construction agree on the explicit
-polynomial rank-one identity. The two cyclic bases have rank32. All four
+polynomial rank-one identity. The two cyclic bases have rank 32. All four
 inverse-matrix products equal identity. The rank-one matrix is nilpotent.
 
-The retained short-word certificate has1024 different words and independent
-matrix images. Full enumeration of2047 words through length10 gives cumulative
+The retained short-word certificate has 1,024 different words and independent
+matrix images. Full enumeration of 2,047 words through length ten gives cumulative
 dimensions 1,3,7,15,31,63,127,255,510,991,1024. Each elementary matrix is
 synthesized by the short-word basis and by the rank-one basis. Both methods
-reconstruct all1024 elementary matrices and64 additional complete binary maps.
+reconstruct all 1,024 elementary matrices and 64 additional complete binary maps.
 The experiment rejects five deliberately altered certificates.
 
 The historical source basis was read and compared before this publication.
