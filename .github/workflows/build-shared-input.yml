@@ -1,0 +1,68 @@
+name: Build ordered carry paper
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publication:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install typesetting and native Blender
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt; fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt; fi
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update -qq
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends texlive-xetex texlive-latex-extra texlive-fonts-recommended fonts-noto-core fonts-dejavu-core poppler-utils blender python3-pil
+      - name: Verify whole inputs and compile manuscript
+        run: |
+          cd mathematics/discrete-mathematics/shared-input-carry-frontiers
+          python3 verify.py --output evidence/verification.json
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct)"
+          export FORCE_SOURCE_DATE=1
+          xelatex -interaction=nonstopmode -halt-on-error paper.tex
+          xelatex -interaction=nonstopmode -halt-on-error paper.tex
+          pdfinfo paper.pdf
+          pdftotext -layout paper.pdf evidence/cloud-paper-text.txt
+          pdftoppm -scale-to 1400 -png paper.pdf evidence/cloud-page
+      - name: Render exact native Blender figure
+        run: |
+          cd mathematics/discrete-mathematics/shared-input-carry-frontiers
+          mkdir -p release
+          FIGURE_OUTPUT="$PWD/release" blender -b -t 2 --python visual/build_scene.py
+          test -s release/00-cover.png
+          test -s release/shared-input-carry.blend
+          cp paper.pdf release/paper.pdf
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile,ZIP_DEFLATED
+          import hashlib,json
+          from PIL import Image
+          r=Path('.');out=r/'release'
+          cover=Image.open(out/'00-cover.png').convert('RGB')
+          cover.save(out/'00-cover.png',optimize=True,compress_level=9)
+          names=['paper.tex','paper.pdf','frontier.py','verify.py','README.md','VERIFICATION.md','VERIFICATION_PLAN.md','Makefile','LICENSE.md','CITATION.bib','CITATION.cff','visual/build_scene.py','evidence/verification.json','evidence/figure.json','evidence/PRIOR_ART.md']
+          with ZipFile(out/'source-and-proof.zip','w',ZIP_DEFLATED,compresslevel=9) as z:
+              for n in names:z.write(r/n,'ordered-carry-frontiers/'+n)
+              z.write(out/'00-cover.png','ordered-carry-frontiers/visual/00-cover.png')
+              z.write(out/'render-receipt.json','ordered-carry-frontiers/evidence/render-receipt.json')
+          files=['00-cover.png','paper.pdf','source-and-proof.zip','shared-input-carry.blend']
+          manifest={n:{'bytes':(out/n).stat().st_size,'sha256':hashlib.sha256((out/n).read_bytes()).hexdigest(),'md5':hashlib.md5((out/n).read_bytes()).hexdigest()} for n in files}
+          (out/'MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Stage only this paper as a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          D=mathematics/discrete-mathematics/shared-input-carry-frontiers/release
+          gh release create shared-input-note-v1.0.0 "$D/paper.pdf" "$D/00-cover.png" "$D/source-and-proof.zip" "$D/shared-input-carry.blend" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "Ordered Carry Frontiers for Parallel Addition" --notes "lmtlssss🜐 · Version 1.0.0. Exact carry-state count, residual minimality, stable transitions and an exact masked counter. DOI: 10.5281/zenodo.23702847."
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ordered-carry-publication
+          path: |
+            mathematics/discrete-mathematics/shared-input-carry-frontiers/release/
+            mathematics/discrete-mathematics/shared-input-carry-frontiers/evidence/verification.json
+            mathematics/discrete-mathematics/shared-input-carry-frontiers/evidence/cloud-paper-text.txt
+            mathematics/discrete-mathematics/shared-input-carry-frontiers/evidence/cloud-page-*.png

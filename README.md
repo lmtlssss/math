@@ -57,3 +57,10 @@ An exact all-stage, arbitrary-radix count and constructive minimum-length functi
 27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23701587](https://doi.org/10.5281/zenodo.23701587)
 
 Two sparse binary operators span the full 32-by-32 matrix algebra with products of length at most ten. Ten is the minimum possible bound. A polynomial rank-one identity gives a second constructive proof.
+
+## Mathematics · Arithmetic automata
+
+[Ordered Carry Frontiers for Parallel Addition](mathematics/discrete-mathematics/shared-input-carry-frontiers/)  
+27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23702847](https://doi.org/10.5281/zenodo.23702847)
+
+Shared-input sums have a sharp ordered carry frontier of at most m+1 states. Exact residual minimality and a linear-layer construction give an exact counter and least witness for arbitrary input and output bit masks.
