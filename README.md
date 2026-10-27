@@ -36,3 +36,10 @@ A fixed tap span gives a finite nonlinear frontier for exact count-and-witness s
 27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23697726](https://doi.org/10.5281/zenodo.23697726)
 
 For any invertible binary-linear map, the complete Boolean–modular inverse is a disjoint union of affine cells. Two carry automata give a Fibonacci signature bound and exact one-cell families.
+
+## Mathematics · Exact arithmetic states
+
+[Exact State Complexity of Two-Stage Addition](mathematics/discrete-mathematics/two-stage-addition/)  
+27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23698617](https://doi.org/10.5281/zenodo.23698617)
+
+Three fixed radix-B operands define exactly 5B-4 complete two-carry response functions. Explicit normal forms attain the optimal fixed-length code, with a 35-bit code for 32-bit words and a distinct 42-bit independently queryable byte-stage contract.
