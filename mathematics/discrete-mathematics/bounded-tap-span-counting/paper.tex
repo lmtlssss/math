@@ -1,0 +1,331 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{microtype,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\itshape Exact counting with bounded tap span}
+\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\B}{\{0,1\}}
+\newcommand{\maj}{\operatorname{Maj}}
+\newcommand{\rot}{\operatorname{ROR}}
+\newcommand{\shr}{\operatorname{SHR}}
+\newcommand{\bits}[2]{#1_{#2}}
+\title{\LARGE Exact Counting for a Boolean--Modular Equation\\with Bounded Tap Span}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{27 October 2026}
+\hypersetup{pdftitle={Exact Counting for a Boolean–Modular Equation with Bounded Tap Span},pdfauthor={lmtlssss🜐},pdfsubject={Exact counting, finite-state algorithms and modular arithmetic},pdfkeywords={bounded frontier, modular arithmetic, exact counting, bit rotation, carry propagation}}
+\begin{document}
+\maketitle\thispagestyle{plain}
+\begin{abstract}
+Let $L_w(x)=\rot_{r_1}(x)\oplus\rot_{r_2}(x)\oplus\shr_s(x)$, where
+$0<s<r_1<r_2<w$. We count all solutions of
+$L_w(a+D)+L_w(a)=S$ modulo $2^w$ and recover one solution when the count is positive.
+Set $h=r_2-s$. For each cyclic boundary, the last $h$ input bits and one entering
+carry determine every legal continuation. The output carry follows from the target
+and the input difference. An exact dynamic program therefore uses at most
+$w2^{2h+2}$ nonterminal states. For fixed $h$, this count is linear in $w$;
+straightforward arbitrary-precision arithmetic gives a quadratic bit-operation bound.
+The proof includes cyclic closure and unique coverage. Exact implementations and
+complete small-width comparisons accompany a 256-bit example with
+$5{,}784{,}112{,}988{,}160$ solutions.
+\end{abstract}
+\noindent\textit{Keywords.} Exact counting; finite-state computation; modular arithmetic;
+bit rotation; carry propagation.
+
+\section{The equation and the parameter}
+Identify a $w$-bit word with an integer in $\{0,\ldots,2^w-1\}$.
+Bit $a_0$ is the least significant bit. Write $R_r=\rot_r$ for cyclic right
+rotation and $H_s=\shr_s$ for logical right shift. Thus
+\[
+ (R_ra)_i=a_{(i+r)\bmod w},\qquad
+ (H_sa)_i=\begin{cases}a_{i+s},&i+s<w,\\0,&i+s\geq w.\end{cases}
+\]
+Fix integers $0<s<r_1<r_2<w$ and define
+\begin{equation}\label{eq:map}
+ L_w=R_{r_1}\oplus R_{r_2}\oplus H_s,
+ \qquad h=r_2-s,\qquad d=r_2-r_1.
+\end{equation}
+In particular, $1\leq d<h<w$. For supplied words $D,S$, the required set is
+\begin{equation}\label{eq:fiber}
+ \mathcal A(D,S)=\{a:L_w((a+D)\bmod 2^w)+L_w(a)\equiv S\pmod{2^w}\}.
+\end{equation}
+The output consists of $|\mathcal A(D,S)|$ and one member when the set is nonempty.
+The linear map $L_w$ need not be invertible.
+
+Finite-state methods for arithmetic with carries are established.
+Mouha et al. developed the differential analysis of S-functions
+\cite{mouha2011}; Velichkov et al. treated rotation within that framework
+\cite{velichkov2011}. The contribution here is an explicit sufficient state
+for \eqref{eq:fiber}, together with its boundary conditions and a parameterized
+counting bound. The proof does not claim a new general dynamic-programming principle.
+
+\Needspace{11\baselineskip}
+\begin{theorem}\label{thm:main}
+For the parameters in \eqref{eq:map}, there is an exact count-and-witness algorithm
+for \eqref{eq:fiber} with at most
+\begin{equation}\label{eq:bound}
+ N(w,h)=w\,2^{2h+2}
+\end{equation}
+nonterminal state visits and at most $2N(w,h)$ candidate transitions.
+Initialization requires $O(h2^{h+1}+w)$ elementary work. A direct implementation
+uses $O(w^2 2^{2h+2})$ bit operations and $O(w^2 2^{h+1})$ bits of storage.
+These bounds include exact counts and a witness, but not an explicit list of all solutions.
+\end{theorem}
+
+The exponent depends on the tap span $h$, not directly on $w$.
+For fixed $h$, the number of states is linear in the word length.
+If $h$ grows with $w$, the same formula retains its exponential dependence on $h$.
+The proof of Theorem~\ref{thm:main} occupies Sections~2--5.
+
+\section{The two carry equations}
+Put $b=(a+D)\bmod 2^w$ and let $t_j$ be the carry into input position $j$.
+For $0\leq j<w$,
+\begin{align}
+ t_0&=0, & b_j&=a_j\oplus D_j\oplus t_j,
+ &t_{j+1}&=\maj(a_j,D_j,t_j).\label{eq:input}
+\end{align}
+Here $\maj(u,v,z)$ is one precisely when at least two arguments are one.
+The final carry $t_w$ is discarded. Set $\delta=a\oplus b$. Then
+\begin{equation}\label{eq:delta}
+ \delta_j=D_j\oplus t_j.
+\end{equation}
+Write $x=L_w(a)$, $y=L_w(b)$, and let $c_i$ be the carry into position $i$
+of the output addition. Its sum-bit equation is
+\begin{equation}\label{eq:outputcarry}
+ c_i=S_i\oplus x_i\oplus y_i
+     =S_i\oplus L_w(\delta)_i.
+\end{equation}
+The equality on the right uses binary linearity of $L_w$.
+The remaining output conditions are
+\begin{equation}\label{eq:output}
+ c_0=0,\qquad c_{i+1}=\maj(x_i,y_i,c_i)\quad(0\leq i<w-1).
+\end{equation}
+Again the carry out of position $w-1$ is discarded.
+
+Process input positions in the order $j=0,\ldots,w-1$ and associate
+\begin{equation}\label{eq:index}
+ i=(j-r_2)\bmod w.
+\end{equation}
+For any word $v$, its output bit at this position is
+\begin{equation}\label{eq:taps}
+ L_w(v)_i=v_j\oplus v_{(j-d)\bmod w}
+       \oplus \varepsilon_i v_{(j-h)\bmod w},\qquad
+ \varepsilon_i=\mathbf 1_{\{i+s<w\}}.
+\end{equation}
+All noncurrent taps lie within the preceding $h$ cyclic input positions.
+The factor $\varepsilon_i$ preserves the zero-filled right shift.
+
+\begin{lemma}[Local transition]\label{lem:transition}
+Suppose the preceding $h$ bits of $a,b$ and the entering input carry $t_j$ are known.
+Then $c_i$ is known before $a_j$ is chosen. For either choice $a_j\in\B$,
+the validity of the next transition is decidable from these data and $D,S$.
+\end{lemma}
+\begin{proof}
+Equation~\eqref{eq:delta} gives $\delta_j$ without $a_j$.
+Equations~\eqref{eq:outputcarry} and \eqref{eq:taps} then give $c_i$.
+A choice of $a_j$ determines $b_j,t_{j+1},x_i,y_i$ by \eqref{eq:input}
+and \eqref{eq:taps}. When $i<w-1$, compute the required next carry from
+$S_{i+1}\oplus L_w(\delta)_{i+1}$ and compare it with $\maj(x_i,y_i,c_i)$.
+The new history and $\delta_{j+1}=D_{j+1}\oplus t_{j+1}$ supply its taps.
+At $j=w-1$, the next input index is zero; use $\delta_0=D_0$ because $t_0=0$.
+At $i=w-1$, impose no outgoing output-carry condition. At $i=0$, impose $c_0=0$.
+These rules give all sum-bit and carry conditions, including both discarded carries.
+\end{proof}
+
+\section{The cyclic boundary}
+The first transition uses the high $h$ input bits.
+Enumerate a boundary seed
+\begin{equation}\label{eq:seed}
+ \sigma=(\alpha,\tau)\in\B^h\times\B,
+\end{equation}
+where $\alpha=(a_{w-h},\ldots,a_{w-1})$ and $\tau=t_{w-h}$.
+Add the known high $h$ bits of $D$ to $\alpha$, with entering carry $\tau$.
+This determines a high-bit word $\beta=(b_{w-h},\ldots,b_{w-1})$.
+Use $\alpha,\beta$ as the initial cyclic histories, while the actual forward
+input carry starts at $t_0=0$.
+
+At positions $j<w-h$, allow both values of $a_j$.
+At positions $j\geq w-h$, require the corresponding seeded bit of $\alpha$.
+Require $t_{w-h}=\tau$ at entry to the seeded tail, and require the produced
+$b$-tail to equal $\beta$. Apply Lemma~\ref{lem:transition} throughout.
+
+\begin{lemma}[Exact coverage]\label{lem:coverage}
+Accepted paths, over all seeds \eqref{eq:seed}, are in bijection with
+$\mathcal A(D,S)$.
+\end{lemma}
+\begin{proof}
+An accepted path fixes one complete word $a$.
+Its input additions and the tail-carry agreement give
+$b=(a+D)\bmod 2^w$. The seeded histories agree with the completed tails.
+Lemma~\ref{lem:transition} enforces every output sum bit and its carry condition.
+Thus the word satisfies \eqref{eq:fiber}.
+
+Conversely, a solution $a$ fixes its high $h$ bits and the unique carry $t_{w-h}$.
+It therefore fixes exactly one seed. Its actual bits follow a legal path,
+since each transition is an identity of the two additions.
+Distinct words differ in a chosen bit; distinct seeds cannot describe the same word.
+This proves both completeness and absence of duplicate counting.
+\end{proof}
+
+\section{A sufficient state of \texorpdfstring{$h+1$}{h+1} bits}
+For a fixed seed and a fixed position $j\geq h$, define
+\begin{equation}\label{eq:state}
+ Q_j=\bigl(a_{j-h},\ldots,a_{j-1},\,t_{j-h}\bigr).
+\end{equation}
+This is a binary state of length $h+1$.
+
+\begin{lemma}[Sufficient frontier]\label{lem:frontier}
+For fixed $D,S$, seed $\sigma$, and position $j\geq h$, any two valid prefixes
+with the same $Q_j$ have exactly the same legal suffixes.
+\end{lemma}
+\begin{proof}
+The $h$ input bits in $Q_j$, the known $D$-segment and $t_{j-h}$ determine the
+corresponding $h$ bits of $b$ and the carry $t_j$ by ordinary addition.
+Equation~\eqref{eq:taps} uses only those histories and subsequent input bits.
+Equation~\eqref{eq:outputcarry} determines the output carry from the same data.
+The remaining seeded-tail restrictions are fixed by $\sigma$.
+Consequently both prefixes admit the same next choices, with the same successor
+states. Induction over the remaining positions gives identical legal suffixes.
+\end{proof}
+
+For $j<h$, the initial tail is fixed, and the $h$-bit input history contains
+all $j$ selected low bits. It identifies the prefix uniquely.
+There are at most $2^j\leq2^{h+1}$ states at these positions as well.
+If an implementation retains both input histories, it can recover the entering
+history carry directly:
+\begin{equation}\label{eq:oldcarry}
+ t_{j-h}=a_{j-h}\oplus b_{j-h}\oplus D_{j-h}.
+\end{equation}
+The additional history is therefore redundant, rather than an additional
+independent component of the state.
+
+\section{Counting, witnesses and cost}
+For each seed, form the layered directed graph of legal transitions.
+Merge equal states within a layer according to Lemma~\ref{lem:frontier}.
+Attach weight one to the initial state. For each valid transition, add the
+source weight to its destination weight. The sum of terminal weights is the
+number of accepted words for that seed. Add the totals over all seeds.
+
+A representative prefix can accompany each positive weight.
+When two prefixes merge, retain either representative: the frontier lemma gives
+both the same suffix set. A positive terminal weight therefore supplies a
+witness. A suffix-memoized implementation is equivalent. It stores the number
+of legal suffixes and one suffix witness at each state.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Lemma~\ref{lem:coverage} identifies accepted paths with the required solutions.
+The frontier lemma justifies every merge. Weighted path counting and witness
+reconstruction therefore give the stated output exactly.
+There are $2^{h+1}$ seeds, $w$ nonterminal layers, and at most $2^{h+1}$ states
+per seed and layer. Their product is \eqref{eq:bound}.
+Each state has at most two candidate transitions.
+Preparing the high-bit addition for every seed costs $O(h2^{h+1})$;
+reading the input bits costs $O(w)$.
+
+Counts never exceed $2^w$, so $w+1$ bits suffice.
+A representative word needs $w$ bits. The local transition uses a bounded
+number of bit operations if the redundant histories are retained.
+Conservative indexing and arbitrary-precision addition cost $O(w)$ per
+state or transition. This gives $O(w^2 2^{2h+2})$ bit operations.
+A suffix table for one seed has at most $w2^{h+1}$ entries of $O(w)$ bits;
+reuse the table for the next seed. This gives the stated storage bound.
+\end{proof}
+
+\begin{corollary}
+For every fixed tap span $h$, the count-and-witness problem \eqref{eq:fiber}
+has polynomial bit complexity in $w$, independently of the size of its fiber.
+\end{corollary}
+Explicit enumeration has a different output contract: writing $N$ distinct
+$w$-bit words requires $\Omega(wN)$ output bits.
+Likewise, an added condition can distinguish prefixes that \eqref{eq:state}
+merges. Such a condition requires a sufficient state of its own.
+The theorem concerns \eqref{eq:fiber} with the stated taps and boundary rules.
+
+\section{A complete 256-bit example}
+Use $(r_1,r_2,s)=(17,19,10)$, so $h=9$.
+For reproducibility, the following hexadecimal strings are the supplied words
+$D$ and $S$. Concatenate each pair of lines, with the upper line most significant.
+\begin{center}\small\ttfamily
+\begin{tabular}{cl}
+$D$ & bd8cc0534cb95939a2e5cbed5a8e57cc\\[-1pt]
+    & 809ec58eeee0e0317a2d380ff7a92156\\[3pt]
+$S$ & 9cec8b4181dcf3012fa4710a9b9a8ece\\[-1pt]
+    & dc001740cc795ef2b57d4bad916262f9
+\end{tabular}
+\end{center}
+The exact result is
+\begin{equation}\label{eq:example}
+ |\mathcal A(D,S)|=5{,}784{,}112{,}988{,}160.
+\end{equation}
+The native suffix implementation visits $558{,}622$ nonterminal states and
+examines $1{,}115{,}268$ transitions. Its $1{,}024$ boundary seeds cover every
+possible high nine-bit word and entering carry. These are deterministic
+execution counts for this instance, not a bound for all inputs.
+The general bound here is $256\cdot2^{20}=268{,}435{,}456$ states.
+The full candidate domain has $2^{256}$ words.
+
+Two Python implementations reproduce \eqref{eq:example}. One uses the canonical
+frontier in forward order. The other retains both input histories and an
+explicit output carry, including its cyclic boundary. Their agreement checks
+the eliminated-carry construction through a different state representation.
+Each returned witness also satisfies \eqref{eq:fiber} by direct word arithmetic.
+
+\section{Verification and available sources}
+The accompanying code contains the integer C++ suffix implementation, a canonical
+Python forward implementation, and a Python reference with explicit output carries.
+It also contains the fixed inputs, exact results and the figure construction data.
+The verification covers the following complete paths.
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Comparison & Queries\\
+\midrule
+All $D,S$ at widths $4$--$7$, declared tap sets & 21,760\\
+Every tap triple at widths $4$--$8$, fixed test inputs & 840\\
+Three implementations on fixed widths $24$--$256$ & 54\\
+\bottomrule
+\end{tabular}
+\end{center}
+The first comparison builds the complete forward histogram for each $D$ and
+checks each target count. The second includes zero, all-one and independently
+selected inputs. The third includes empty and nonempty fibers, with counts
+represented as arbitrary-precision integers. All comparisons agree.
+These executions supplement the proof; the general theorem follows from
+Lemmas~\ref{lem:transition}--\ref{lem:frontier} and the state count.
+
+The implementations enforce declared resource limits. An interrupted search
+returns an incomplete result, rather than an empty fiber.
+The state bound specifies combinatorial work; the bit-operation bound also charges exact integer arithmetic.
+The specific sufficient state and carry elimination are the mathematical content;
+finite-state arithmetic counting itself has the prior literature cited above.
+
+\noindent\textit{Reproducibility.}
+The versioned release supplies the full code, exact example, verification receipt,
+editable figure and manuscript source. Its DOI is \texttt{10.5281/zenodo.23697063}.
+
+\begin{thebibliography}{9}
+\bibitem{mouha2011}
+N. Mouha, V. Velichkov, C. De Canni\`ere and B. Preneel.
+\emph{The Differential Analysis of S-Functions}.
+In Selected Areas in Cryptography, LNCS 6544, pp. 36--56, Springer, 2011.
+\href{https://doi.org/10.1007/978-3-642-19574-7_3}{doi:10.1007/978-3-642-19574-7\_3}.
+\bibitem{velichkov2011}
+V. Velichkov, N. Mouha, C. De Canni\`ere and B. Preneel.
+\emph{The Additive Differential Probability of ARX}.
+In Fast Software Encryption, LNCS 6733, pp. 342--358, Springer, 2011.
+\href{https://doi.org/10.1007/978-3-642-21702-9_20}{doi:10.1007/978-3-642-21702-9\_20}.
+\end{thebibliography}
+\end{document}

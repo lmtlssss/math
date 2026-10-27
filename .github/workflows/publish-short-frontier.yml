@@ -1,0 +1,44 @@
+name: Build bounded tap span paper
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  paper:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install typesetting
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt; fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt; fi
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update -qq
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends texlive-xetex texlive-latex-extra texlive-fonts-recommended fonts-noto-core poppler-utils libboost-dev
+      - name: Replay and compile
+        run: |
+          cd mathematics/discrete-mathematics/bounded-tap-span-counting
+          python3 verify.py --bootstrap --start 0 --stop 3
+          python3 run_example.py
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct)"
+          export FORCE_SOURCE_DATE=1
+          xelatex -interaction=nonstopmode -halt-on-error paper.tex
+          xelatex -interaction=nonstopmode -halt-on-error paper.tex
+          pdfinfo paper.pdf
+          pdftotext -layout paper.pdf evidence/paper-text.txt
+          pdftoppm -f 1 -singlefile -scale-to 1400 -png paper.pdf evidence/cloud-first-page
+          sha256sum paper.pdf > evidence/cloud-pdf.sha256
+      - name: Stage draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create short-frontier-note-v1.0.0 mathematics/discrete-mathematics/bounded-tap-span-counting/paper.pdf --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "Exact Counting for a Boolean–Modular Equation with Bounded Tap Span" --notes "lmtlssss🜐 · Version 1.0.0. Exact count and witness from a bounded nonlinear frontier, complete proof and executable verification. DOI: 10.5281/zenodo.23697063."
+      - uses: actions/upload-artifact@v4
+        with:
+          name: short-frontier-paper-build
+          path: |
+            mathematics/discrete-mathematics/bounded-tap-span-counting/paper.pdf
+            mathematics/discrete-mathematics/bounded-tap-span-counting/evidence/verification.json
+            mathematics/discrete-mathematics/bounded-tap-span-counting/evidence/paper-text.txt
+            mathematics/discrete-mathematics/bounded-tap-span-counting/evidence/cloud-first-page.png
+            mathematics/discrete-mathematics/bounded-tap-span-counting/evidence/cloud-pdf.sha256
