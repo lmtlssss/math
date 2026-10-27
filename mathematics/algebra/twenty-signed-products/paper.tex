@@ -1,0 +1,394 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage{microtype,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\itshape Twenty signed products for a composition tensor}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\rad}{rad}
+\DeclareMathOperator{\supp}{supp}
+\newcommand{\R}{\mathbb R}\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}\newcommand{\ind}{\mathbf1}
+\newcommand{\rkplus}{\operatorname{rank}_{+}}
+\newcommand{\rkreal}{\operatorname{rank}_{\R}}
+\hypersetup{pdftitle={Twenty Signed Products for a Twelve-State Composition Tensor},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: tensor rank and algebraic complexity},pdfkeywords={tensor rank, nonnegative rank, finite monoids, bilinear complexity}}
+\title{\LARGE Twenty signed products for a\protect\\twelve-state composition tensor}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{27 October 2026}
+\begin{document}
+\maketitle\thispagestyle{plain}
+\begin{abstract}
+We give a twenty-term signed decomposition of the multiplication tensor of a
+specified twelve-element transformation monoid. Its nonnegative rank is
+exactly 35. An integral change of coordinates separates five scalar
+characters, a two-by-two matrix product, and three additional bilinear
+forms. Strassen's seven products for the matrix component give twenty
+products in total. A square-zero radical and the semisimple quotient
+$\R^5\times M_2(\R)$ give the lower bound 18. For every positive integer
+$q$, the nonnegative rank of the tensor power is $35^q$, whereas its
+signed rank is at most $20^q$. The coordinate formulas and exact
+integer certificates are supplied.
+\end{abstract}
+\noindent\textit{Mathematics Subject Classification (2020).}
+15A69; 16Z05, 20M20.\par
+\noindent\textit{Keywords.} Tensor rank; finite monoid; bilinear complexity;
+nonnegative decomposition.\par
+\noindent\textit{Version.} 1.0.0.\quad
+\textit{DOI.} \href{https://doi.org/10.5281/zenodo.23695066}{10.5281/zenodo.23695066}.
+
+\section{The result}
+
+Let $C$ be the composition tensor of the monoid $S$ defined below.
+The preceding note~\cite{positive} determined its nonnegative rank:
+$\rkplus(C)=35$. Here we allow negative coefficients and construct the
+same bilinear map with twenty products. The change is in the
+representation of the tensor, with its coefficients fixed.
+
+For a real three-way tensor, $\rkreal(C)$ is the least $r$ such that
+\begin{equation}\label{eq:rank}
+ C=\sum_{\ell=1}^{r}\alpha_\ell\otimes\beta_\ell\otimes\gamma_\ell,
+ \qquad \alpha_\ell,\beta_\ell,\gamma_\ell\in\R^{12}.
+\end{equation}
+The nonnegative rank requires all three factors to be entrywise
+nonnegative. A decomposition~\eqref{eq:rank} computes the associated
+bilinear map with $r$ products of linear forms. Linear operations belong
+to a separate cost account.
+
+\begin{theorem}\label{thm:main}
+The tensor $C$ has an integer twenty-term decomposition, with every
+factor coefficient in $\{0,\pm1,\pm2\}$. Moreover,
+\begin{equation}\label{eq:bounds}
+ 18\leq\rkreal(C)\leq20,\qquad \rkplus(C)=35.
+\end{equation}
+For every integer $q\geq1$,
+\begin{equation}\label{eq:power}
+ \rkplus(C^{\otimes q})=35^q,
+ \qquad \rkreal(C^{\otimes q})\leq20^q.
+\end{equation}
+\end{theorem}
+
+The construction uses Strassen's matrix algorithm~\cite{strassen}.
+The lower bound uses the Alder--Strassen inequality~\cite{alder}, as
+formulated for bilinear rank in Bl\"aser~\cite{blaser}.
+This note records the explicit construction for $S$, its algebra
+structure, and the resulting tensor-power separation.
+
+\section{The finite monoid}
+
+A map $f:\{0,1,2,3\}\to\{0,1,2,3\}$ is written as the tuple
+$(f(0),f(1),f(2),f(3))$. Consider the following twelve maps, in the given
+order:
+\begin{equation}\label{eq:maps}
+\begin{array}{c|cccccc}
+ i&0&1&2&3&4&5\\\hline
+ m_i&(0,0,0,0)&(0,0,0,1)&(0,1,1,1)&(0,1,2,2)&(0,1,2,3)&(1,1,1,1)\\[3pt]
+ i&6&7&8&9&10&11\\\hline
+ m_i&(1,1,2,2)&(1,1,2,3)&(2,2,2,2)&(2,2,2,3)&(2,3,3,3)&(3,3,3,3).
+\end{array}
+\end{equation}
+Set $m_i*m_j=m_j\circ m_i$ and write $M(i,j)$ for its index.
+Table~\ref{tab:monoid} proves closure. Associativity follows from function
+composition, and $m_4$ is the identity. The six maps with indices
+$1,2,3,7,9,10$ generate $S$.
+
+\begin{table}[ht]
+\centering\small\setlength{\tabcolsep}{5.2pt}
+\begin{tabular}{r|rrrrrrrrrrrr}
+\toprule
+$M(i,j)$&0&1&2&3&4&5&6&7&8&9&10&11\\\midrule
+0 & 0 & 0 & 0 & 0 & 0 & 5 & 5 & 5 & 8 & 8 & 8 & 11 \\
+1 & 0 & 0 & 1 & 1 & 1 & 5 & 5 & 5 & 8 & 8 & 9 & 11 \\
+2 & 0 & 0 & 2 & 2 & 2 & 5 & 5 & 5 & 8 & 8 & 10 & 11 \\
+3 & 0 & 0 & 2 & 3 & 3 & 5 & 6 & 6 & 8 & 8 & 10 & 11 \\
+4 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
+5 & 0 & 0 & 5 & 5 & 5 & 5 & 5 & 5 & 8 & 8 & 11 & 11 \\
+6 & 0 & 0 & 5 & 6 & 6 & 5 & 6 & 6 & 8 & 8 & 11 & 11 \\
+7 & 0 & 1 & 5 & 6 & 7 & 5 & 6 & 7 & 8 & 9 & 11 & 11 \\
+8 & 0 & 0 & 5 & 8 & 8 & 5 & 8 & 8 & 8 & 8 & 11 & 11 \\
+9 & 0 & 1 & 5 & 8 & 9 & 5 & 8 & 9 & 8 & 9 & 11 & 11 \\
+10 & 0 & 2 & 5 & 8 & 10 & 5 & 8 & 10 & 8 & 10 & 11 & 11 \\
+11 & 0 & 5 & 5 & 8 & 11 & 5 & 8 & 11 & 8 & 11 & 11 & 11 \\
+\bottomrule
+\end{tabular}
+\caption{The product applies the row map first, then the column map.}
+\label{tab:monoid}
+\end{table}
+
+Let $A=\R[S]$, with basis $e_0,\ldots,e_{11}$ and product
+$e_ie_j=e_{M(i,j)}$. For coefficient columns $a,b\in\R^{12}$, denote
+by $p=a*b$ the coefficient column of their product. Thus
+\begin{equation}\label{eq:product}
+ C_{ijk}=\ind_{\{M(i,j)=k\}},\qquad
+ p_k=\sum_{M(i,j)=k}a_ib_j.
+\end{equation}
+There are exactly 144 nonzero tensor entries. The indexing and product
+order agree with the preceding nonnegative-rank calculation~\cite{positive}.
+
+\section{Coordinates for the twenty products}\label{sec:coordinates}
+
+Define the linear coordinate change $u=Qa$ by
+\begin{equation}\label{eq:Q}
+\begin{alignedat}{2}
+ u_0&=a_4, &\qquad u_6&=a_1,\\
+ u_1&=a_4+a_7, &u_7&=a_4+a_7+a_9,\\
+ u_2&=a_3+a_4, &u_8&=a_2+a_3+a_4,\\
+ u_3&=a_3+a_4+a_6+a_7, &u_9&=a_8+a_9+a_{10}+a_{11},\\
+ u_4&=\sum_{i=0}^{11}a_i, &u_{10}&=a_{11},\\
+ u_5&=a_{10}, &u_{11}&=a_0.
+\end{alignedat}
+\end{equation}
+For any column $z=Qp$, the inverse is
+\begin{equation}\label{eq:Qinv}
+\begin{alignedat}{2}
+ p_0&=z_{11}, &\qquad p_6&=z_0-z_1-z_2+z_3,\\
+ p_1&=z_6, &p_7&=z_1-z_0,\\
+ p_2&=z_8-z_2, &p_8&=z_1-z_5-z_7+z_9-z_{10},\\
+ p_3&=z_2-z_0, &p_9&=z_7-z_1,\\
+ p_4&=z_0, &p_{10}&=z_5,\\
+ p_5&=z_2-z_3+z_4-z_6-z_8-z_9-z_{11},
+ &p_{11}&=z_{10}.
+\end{alignedat}
+\end{equation}
+Substitution proves that these maps are mutual inverses over $\Z$.
+In particular, $Q$ is unimodular.
+
+For $v=Qb$ and $z=Q(a*b)$, the first five coordinates satisfy
+\begin{equation}\label{eq:characters}
+ z_i=u_iv_i\qquad(0\leq i\leq4).
+\end{equation}
+The next four coordinates form the matrix product
+\begin{equation}\label{eq:matrix}
+ \begin{pmatrix}z_8&z_6\\z_5&z_7\end{pmatrix}
+ =\begin{pmatrix}v_8&v_6\\v_5&v_7\end{pmatrix}
+  \begin{pmatrix}u_8&u_6\\u_5&u_7\end{pmatrix}.
+\end{equation}
+The remaining coordinates are
+\begin{align}
+ z_9&=u_9v_3+u_4v_9,\label{eq:z9}\\
+ z_{10}&=u_{10}v_7+(u_4-u_6-u_8-u_{11})v_5+u_4v_{10},\label{eq:z10}\\
+ z_{11}&=u_4v_{11}+(u_4-u_5-u_7-u_{10})v_6+u_{11}v_8.\label{eq:z11}
+\end{align}
+
+\begin{lemma}\label{lem:coordinates}
+Equations~\eqref{eq:characters}--\eqref{eq:z11} hold for every $a,b$.
+\end{lemma}
+\begin{proof}
+Both sides are bilinear. For $a=e_i$ and $b=e_j$, the left side is
+$Qe_{M(i,j)}$. Substitution of the corresponding columns of $Q$ into
+the right side gives the same column for each entry of
+Table~\ref{tab:monoid}. This finite identity proves the assertion by
+bilinearity. The supplied verifier checks all 144 basis pairs with
+integer arithmetic. It also checks the expanded twenty-term tensor
+identity independently of these coordinate formulas.
+\end{proof}
+
+To evaluate~\eqref{eq:matrix}, use seven scalar products:
+\begin{equation}\label{eq:strassen}
+\begin{alignedat}{2}
+ s_1&=(u_8+u_7)(v_8+v_7),&\qquad s_2&=u_8(v_5+v_7),\\
+ s_3&=(u_6-u_7)v_8,&s_4&=(u_5-u_8)v_7,\\
+ s_5&=u_7(v_8+v_6),&s_6&=(u_8+u_6)(v_5-v_8),\\
+ s_7&=(u_5+u_7)(v_6-v_7).&&
+\end{alignedat}
+\end{equation}
+Then
+\begin{equation}\label{eq:strassenout}
+ z_8=s_1+s_4-s_5+s_7,\quad z_6=s_3+s_5,\quad
+ z_5=s_2+s_4,\quad z_7=s_1-s_2+s_3+s_6.
+\end{equation}
+These are Strassen's formulas~\cite{strassen} with the order of the
+matrix factors fixed by~\eqref{eq:matrix}.
+
+\begin{proposition}\label{prop:upper}
+Equations~\eqref{eq:Q}--\eqref{eq:strassenout} give an exact algorithm
+with twenty products of an $a$-linear form and a $b$-linear form.
+\end{proposition}
+\begin{proof}
+Equation~\eqref{eq:characters} uses five products.
+Equations~\eqref{eq:z9}--\eqref{eq:z11} use $2+3+3=8$ products.
+Equation~\eqref{eq:strassen} uses seven. The coordinate changes and
+reconstruction use only linear operations. Therefore the total is
+$5+8+7=20$. Expansion in the original coordinates gives
+\begin{equation}\label{eq:certificate}
+ C_{ijk}=\sum_{\ell=1}^{20}
+ \alpha_{\ell i}\beta_{\ell j}\gamma_{\ell k}
+ \quad(0\leq i,j,k<12).
+\end{equation}
+The coefficients in the expansion belong to $\{0,\pm1,\pm2\}$.
+The supplied certificate lists all 720 factor coefficients.
+The identity holds over $\Z$, hence over $\Q$, $\R$ and $\mathbb C$.
+\end{proof}
+
+\section{The lower bound}
+
+The first five coordinate functions in~\eqref{eq:Q} are unital algebra
+homomorphisms from $A$ to $\R$, by~\eqref{eq:characters}. Write them as
+$\chi_0,\ldots,\chi_4$. Define
+\begin{equation}\label{eq:rho}
+ \rho(a)=\begin{pmatrix}u_8&u_6\\u_5&u_7\end{pmatrix}.
+\end{equation}
+Equation~\eqref{eq:matrix} states that $\rho(a*b)=\rho(b)\rho(a)$.
+Thus $a\mapsto\rho(a)^{\mathsf T}$ is a unital homomorphism.
+
+\begin{lemma}\label{lem:radical}
+The algebra $A$ has a three-dimensional radical $J$ with $J^2=0$, and
+\begin{equation}\label{eq:quotient}
+ A/J\cong\R^5\times M_2(\R).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Consider the homomorphism
+\[
+ \Phi(a)=\bigl(\chi_0(a),\ldots,\chi_4(a),\rho(a)^{\mathsf T}\bigr).
+\]
+Its nine coordinate rows are precisely the first nine rows of $Q$,
+up to order. They are independent because $Q$ is invertible, so
+$\Phi$ is surjective. Its kernel is
+\begin{equation}\label{eq:J}
+ J=\operatorname{span}\{e_5-e_0,\ e_8-e_0,\ e_{11}-e_0\}.
+\end{equation}
+These three independent vectors vanish under $\Phi$, and the kernel
+has dimension three.
+
+The maps $m_0,m_5,m_8,m_{11}$ are constant. Under our product convention,
+$e_re_s=e_s$ for their indices. Hence
+$(e_r-e_0)(e_s-e_0)=e_s-e_0-e_s+e_0=0$.
+This proves $J^2=0$. Every nilpotent ideal belongs to the Jacobson
+radical. Conversely, $A/J$ is the semisimple algebra in
+\eqref{eq:quotient}, so $\rad A\subseteq J$. Therefore $J=\rad A$.
+\end{proof}
+
+\begin{proposition}\label{prop:lower}
+The real bilinear rank of $C$ is at least 18.
+\end{proposition}
+\begin{proof}
+The quotient in~\eqref{eq:quotient} has six simple factors, so $A$ has
+six maximal two-sided ideals. The Alder--Strassen bound gives
+\[
+ R(A)\geq2\dim A-t(A)=2\cdot12-6=18.
+\]
+Here $R(A)$ is the rank of the multiplication tensor of $A$, and
+$t(A)$ is its number of maximal two-sided ideals~\cite{alder,blaser}.
+Changing the algebra basis preserves this rank. In the basis $e_i$,
+its multiplication tensor is $C$.
+\end{proof}
+
+Together, Propositions~\ref{prop:upper} and~\ref{prop:lower} give
+$\rkreal(C)\in\{18,19,20\}$. The construction specifies an upper bound
+of twenty. Determining which of these three values is attained remains
+an open calculation for this algebra.
+
+\section{Tensor powers and the nonnegative bound}
+
+The proof of the positive-rank theorem in~\cite{positive} gives two
+finite certificates. Thirty-five monochromatic rectangles partition
+all 144 nonzero entries of $C$. A set $W$ of 35 nonzero triples is
+pairwise incompatible: for any two distinct members, at least one
+coordinate-wise mixed triple is a zero of $C$. Both certificates are
+included in the present release.
+
+For completeness, a nonnegative rank-one term has support of the form
+$I\times J\times K$. In a nonnegative decomposition of $C$, this box
+must lie inside $\supp C$. A box therefore covers at most one member
+of $W$. This gives the lower bound 35, and the rectangle partition
+gives the matching upper bound.
+
+\Needspace{8\baselineskip}
+\begin{proposition}\label{prop:powers}
+For every $q\geq1$, $\rkplus(C^{\otimes q})=35^q$.
+\end{proposition}
+\begin{proof}
+Tensor the 35-term nonnegative decomposition to obtain $35^q$ terms.
+For the reverse inequality, group each tensor leg into a $q$-tuple.
+The Cartesian product $W^q$ has $35^q$ nonzero entries. Two distinct
+members differ in at least one coordinate. In that coordinate,
+incompatibility of the corresponding members of $W$ supplies a mixed
+zero. Apply the same choices of tensor legs to the two $q$-tuples.
+The resulting entry of $C^{\otimes q}$ has a zero factor, so it is zero.
+Thus $W^q$ is pairwise incompatible. Every nonnegative rank-one term
+covers at most one of its entries. At least $35^q$ terms are required.
+\end{proof}
+
+Tensoring~\eqref{eq:certificate} gives a signed decomposition with
+$20^q$ terms. Therefore
+\begin{equation}\label{eq:separation}
+ \frac{\rkplus(C^{\otimes q})}{\rkreal(C^{\otimes q})}
+ \geq\left(\frac{35}{20}\right)^q
+ =\left(\frac74\right)^q.
+\end{equation}
+This proves Theorem~\ref{thm:main}.
+
+The operation $C^{\otimes q}$ has two input vectors of length $12^q$
+and one output vector of length $12^q$. It is a tensor product of
+bilinear maps. Repeated multiplication of $q$ elements in the fixed
+algebra $A$ is a different operation. Equation~\eqref{eq:separation}
+compares bilinear product counts for the tensor product.
+
+\section{Certificates and reproduction}
+
+The release contains \texttt{certificate.json} and a standard-library
+Python verifier. The certificate includes the indexed maps, table,
+coordinate matrix, twenty signed terms, positive rectangle partition,
+and lower-bound witnesses. The verifier reconstructs composition from
+the maps and checks all 1,728 coefficient equalities in
+\eqref{eq:certificate} over the integers.
+
+A separately written implementation of
+\eqref{eq:Q}--\eqref{eq:strassenout} agrees with the table on all
+144 input basis pairs. These comparisons determine the complete
+bilinear map. Rational elimination checks the nine-dimensional quotient
+and the kernel in~\eqref{eq:J}. The verifier also checks all 595 base
+witness pairs and all 749,700 pairs in the tensor-square witness set.
+The general tensor-power result follows from
+Proposition~\ref{prop:powers}, rather than a finite extrapolation.
+
+The following command reproduces the certificate checks:
+\begin{center}\texttt{python3 verify.py}\end{center}
+The written proofs establish the mathematical statements. The executable
+checks provide exact, inspectable evidence for the finite tables and
+formulas. The algebraic rank model counts products of linear forms.
+Addition counts, storage, numerical stability and execution time require
+their own analysis.
+
+\begin{thebibliography}{9}
+\bibitem{positive}
+lmtlssss{\authorsymbol 🜐}.
+\emph{Exact nonnegative rank of a twelve-state composition tensor}.
+Version 1.0.0, 2026.
+\href{https://doi.org/10.5281/zenodo.23678773}{doi:10.5281/zenodo.23678773}.
+
+\bibitem{strassen}
+V.~Strassen.
+Gaussian elimination is not optimal.
+\emph{Numerische Mathematik} \textbf{13} (1969), 354--356.
+\href{https://doi.org/10.1007/BF02165411}{doi:10.1007/BF02165411}.
+
+\bibitem{alder}
+A.~Alder and V.~Strassen.
+On the algorithmic complexity of associative algebras.
+\emph{Theoretical Computer Science} \textbf{15} (1981), 201--211.
+\href{https://doi.org/10.1016/0304-3975(81)90070-0}{doi:10.1016/0304-3975(81)90070-0}.
+
+\bibitem{blaser}
+M.~Bl\"aser.
+A complete characterization of the algebras of minimal bilinear complexity.
+\emph{SIAM Journal on Computing} \textbf{34} (2005), 277--298.
+\href{https://doi.org/10.1137/S0097539703438277}{doi:10.1137/S0097539703438277}.
+\end{thebibliography}
+\end{document}

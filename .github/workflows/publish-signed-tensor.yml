@@ -1,0 +1,43 @@
+name: Build signed tensor paper
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  paper:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install typesetting
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt; fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt; fi
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update -qq
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends texlive-xetex texlive-latex-extra texlive-fonts-recommended fonts-noto-core poppler-utils
+      - name: Verify and compile exact source
+        run: |
+          cd mathematics/algebra/twenty-signed-products
+          python3 verify.py --output evidence/cloud-verification.json
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct)"
+          export FORCE_SOURCE_DATE=1
+          xelatex -interaction=nonstopmode -halt-on-error paper.tex
+          xelatex -interaction=nonstopmode -halt-on-error paper.tex
+          pdfinfo paper.pdf
+          pdftotext -layout paper.pdf evidence/paper-text.txt
+          pdftoppm -f 1 -singlefile -scale-to 1400 -png paper.pdf evidence/cloud-first-page
+          sha256sum paper.pdf > evidence/cloud-pdf.sha256
+      - name: Stage draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create signed-tensor-note-v1.0.0 mathematics/algebra/twenty-signed-products/paper.pdf --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "Twenty Signed Products for a Twelve-State Composition Tensor" --notes "lmtlssss🜐 · Version 1.0.0. Exact twenty-term signed construction, rank bounds 18–20, and tensor-power separation from nonnegative rank. DOI: 10.5281/zenodo.23695066."
+      - uses: actions/upload-artifact@v4
+        with:
+          name: signed-tensor-paper-build
+          path: |
+            mathematics/algebra/twenty-signed-products/paper.pdf
+            mathematics/algebra/twenty-signed-products/evidence/cloud-verification.json
+            mathematics/algebra/twenty-signed-products/evidence/paper-text.txt
+            mathematics/algebra/twenty-signed-products/evidence/cloud-first-page.png
+            mathematics/algebra/twenty-signed-products/evidence/cloud-pdf.sha256
