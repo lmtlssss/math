@@ -1,0 +1,73 @@
+name: Re-render published mathematical covers at native 4K
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Exact publication slug or all
+        type: choice
+        default: all
+        options: [all, tensor, three-bit, signed-tensor, short-frontier, affine-carry, two-stage-addition, cascaded-addition, binary-algebra, ordered-carry]
+permissions:
+  contents: write
+jobs:
+  render:
+    if: ${{ inputs.target == 'all' || inputs.target == matrix.slug }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - { slug: tensor, tag: tensor-note-v1.0.0, blend: twelve-state-tensor-rank35.blend, original_cover: twelve-state-tensor-rank35-render.png }
+          - { slug: three-bit, tag: three-bit-note-v1.0.0, blend: three-bit-boundary.blend, original_cover: three-bit-boundary.png }
+          - { slug: signed-tensor, tag: signed-tensor-note-v1.0.0, blend: twenty-signed-products.blend, original_cover: 00-cover.png }
+          - { slug: short-frontier, tag: short-frontier-note-v1.0.0, blend: bounded-tap-span.blend, original_cover: 00-cover.png }
+          - { slug: affine-carry, tag: affine-carry-note-v1.0.0, blend: affine-carry.blend, original_cover: 00-cover.png }
+          - { slug: two-stage-addition, tag: addition-state-note-v1.0.0, blend: two-stage-addition.blend, original_cover: 00-cover.png }
+          - { slug: cascaded-addition, tag: cascade-carry-note-v1.0.0, blend: cascaded-addition.blend, original_cover: 00-cover.png }
+          - { slug: binary-algebra, tag: binary-algebra-note-v1.0.0, blend: binary-algebra.blend, original_cover: 00-cover.png }
+          - { slug: ordered-carry, tag: shared-input-note-v1.0.0, blend: shared-input-carry.blend, original_cover: 00-cover.png }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install native Blender
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=2 install -y --no-install-recommends blender
+          blender -b --factory-startup --python-expr "import bpy; print('NATIVE_BLENDER_VERSION',bpy.app.version_string)"
+      - name: Download released editable scene
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ matrix.tag }}
+          BLEND: ${{ matrix.blend }}
+          SLUG: ${{ matrix.slug }}
+        run: |
+          set -euo pipefail
+          mkdir -p "input/$SLUG" "output/$SLUG"
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BLEND" --dir "input/$SLUG"
+          test -s "input/$SLUG/$BLEND"
+      - name: Render and verify 4K dimensions
+        env:
+          SLUG: ${{ matrix.slug }}
+          BLEND: ${{ matrix.blend }}
+        run: |
+          blender -b --python .github/scripts/render_minefield_4k.py -- "input/$SLUG/$BLEND" "output/$SLUG/00-cover.png" "$SLUG"
+      - name: Replace GitHub cover; preserve paper and figure source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ matrix.tag }}
+          ORIGINAL_COVER: ${{ matrix.original_cover }}
+          SLUG: ${{ matrix.slug }}
+        run: |
+          set -euo pipefail
+          if [ "$ORIGINAL_COVER" != "00-cover.png" ]; then
+            cp "output/$SLUG/00-cover.png" "output/$SLUG/$ORIGINAL_COVER"
+            gh release upload "$TAG" "output/$SLUG/$ORIGINAL_COVER" --repo "$GITHUB_REPOSITORY" --clobber
+          fi
+          gh release upload "$TAG" "output/$SLUG/00-cover.png" --repo "$GITHUB_REPOSITORY" --clobber
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '[.assets[]|select(.name=="00-cover.png")|{name,size}]'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: minefield-native-4k-${{ matrix.slug }}
+          path: output/${{ matrix.slug }}/
+          if-no-files-found: error
