@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cite the mathematical paper and its exact certificates."
+title: "Two Sparse Binary Operators with Optimal Generating Length"
+authors:
+  - name: "lmtlssss🜐"
+version: 1.0.0
+date-released: 2026-10-27
+doi: 10.5281/zenodo.23701587
+url: https://github.com/lmtlssss/math
+license: CC-BY-4.0

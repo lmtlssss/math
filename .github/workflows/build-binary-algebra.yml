@@ -1,0 +1,72 @@
+name: Build binary operator algebra paper
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publication:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install typesetting and native Blender
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt; fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt; fi
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update -qq
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends texlive-xetex texlive-latex-extra texlive-fonts-recommended fonts-noto-core fonts-dejavu-core blender poppler-utils python3-pil
+      - name: Verify complete functions and compile
+        run: |
+          cd mathematics/algebra/binary-operator-algebra
+          python3 verify.py --output evidence/cloud-verification.json
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct)"
+          export FORCE_SOURCE_DATE=1
+          make paper
+          mkdir -p release
+          cp paper.pdf release/paper.pdf
+          pdftotext -layout paper.pdf evidence/cloud-paper-text.txt
+          pdftoppm -scale-to 1400 -png paper.pdf evidence/cloud-page
+      - name: Render exact native figure
+        run: |
+          cd mathematics/algebra/binary-operator-algebra
+          FIGURE_OUTPUT="$PWD/release" blender -b --python visual/build_scene.py
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          from zipfile import ZipFile,ZIP_DEFLATED
+          import hashlib,json
+          root=Path('.');out=root/'release'
+          Image.open(out/'00-cover.png').convert('RGB').quantize(colors=256).save(out/'00-cover-small.png',optimize=True)
+          (out/'00-cover-small.png').replace(out/'00-cover.png')
+          with ZipFile(out/'source-and-proof.zip','w',compression=ZIP_DEFLATED,compresslevel=8) as z:
+              for p in sorted(root.rglob('*')):
+                  if not p.is_file() or 'release' in p.parts or '__pycache__' in p.parts: continue
+                  if p.suffix in {'.aux','.log','.out','.pyc','.ttf','.otf','.woff','.woff2'}: continue
+                  if p.name.startswith('cloud-page') or p.name.startswith('layout-preview'): continue
+                  z.write(p,'binary-operator-algebra/'+str(p))
+              z.write(out/'00-cover.png','binary-operator-algebra/visual/00-cover.png')
+              z.write(out/'render-receipt.json','binary-operator-algebra/visual/render-receipt.json')
+          manifest={p.name:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'md5':hashlib.md5(p.read_bytes()).hexdigest()} for p in out.iterdir() if p.is_file() and p.name!='MANIFEST.json'}
+          (out/'MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Stage a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          DIR=mathematics/algebra/binary-operator-algebra/release
+          if gh release view binary-algebra-note-v1.0.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            test "$(gh release view binary-algebra-note-v1.0.0 --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)" = true
+          else
+            gh release create binary-algebra-note-v1.0.0 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "Two Sparse Binary Operators with Optimal Generating Length" --notes "lmtlssss🜐 · Version 1.0.0. Full binary matrix algebra, exact optimal generating length ten, constructive rank-one certificate, proofs and source. DOI: 10.5281/zenodo.23701587."
+          fi
+          gh release upload binary-algebra-note-v1.0.0 "$DIR/paper.pdf" "$DIR/00-cover.png" "$DIR/binary-algebra.blend" "$DIR/source-and-proof.zip" --repo "$GITHUB_REPOSITORY" --clobber
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binary-algebra-publication
+          path: |
+            mathematics/algebra/binary-operator-algebra/release/
+            mathematics/algebra/binary-operator-algebra/evidence/cloud-page-*.png
+            mathematics/algebra/binary-operator-algebra/evidence/cloud-verification.json
+            mathematics/algebra/binary-operator-algebra/evidence/cloud-paper-text.txt
