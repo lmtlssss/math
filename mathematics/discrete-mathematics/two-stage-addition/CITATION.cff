@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cite the mathematical preprint and its exact verification package."
+title: "Exact State Complexity of Two-Stage Addition"
+authors:
+  - name: "lmtlssss🜐"
+type: article
+version: 1.0.0
+date-released: 2026-10-27
+doi: 10.5281/zenodo.23698617
+url: "https://github.com/lmtlssss/math/tree/main/mathematics/discrete-mathematics/two-stage-addition"

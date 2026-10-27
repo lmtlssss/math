@@ -1,0 +1,351 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\itshape Exact state complexity of two-stage addition}
+\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\res}[1]{[#1]_B}
+\newcommand{\pairs}{\{0,1\}^2}
+\newcommand{\Q}{\mathcal Q_B}
+\DeclareMathOperator{\im}{im}
+\hypersetup{pdftitle={Exact State Complexity of Two-Stage Addition},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: finite functions and modular arithmetic},pdfkeywords={carry propagation, finite functions, state complexity, exact encoding}}
+\title{\LARGE Exact State Complexity of Two-Stage Addition}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{27 October 2026}
+\begin{document}
+\maketitle\thispagestyle{plain}
+\begin{abstract}
+Three fixed radix-$B$ operands determine a function of two incoming carry
+bits through two successive additions. We classify this function when its
+outputs include the residue and both outgoing carries. For every integer
+$B\geq2$, exactly $5B-4$ functions occur. An explicit normal form gives a
+contiguous state code and a representative operand triple for each state.
+We determine each class's multiplicity and the distribution of carry-image
+sizes under uniform operands. The minimum fixed-length description is
+$\lceil\log_2(5B-4)\rceil$ bits. In particular, three 32-bit operands admit
+an exact 35-bit response code. Independently recoverable digit stages obey
+a separate product formula; four byte stages require 42 bits. The proofs
+are accompanied by complete-function enumeration and executable encoders.
+\end{abstract}
+\noindent\textit{Keywords.} Modular arithmetic; carry propagation; finite functions;
+exact encoding; enumerative combinatorics.\par
+\noindent\textit{DOI.} \href{https://doi.org/10.5281/zenodo.23698617}{10.5281/zenodo.23698617}.
+
+\section{The response contract}
+Fix an integer $B\geq2$. Write $\res z$ for the least nonnegative residue
+of $z$ modulo $B$. The operands $C,S,H$ belong to $\{0,\ldots,B-1\}$.
+They remain fixed while the incoming carry bits $(a,b)$ range over $\pairs$.
+Define
+\begin{align}
+ u&=C+S+a,& c_1&=\lfloor u/B\rfloor,\label{eq:first}\\
+ z&=\res u+H+b,& c_2&=\lfloor z/B\rfloor,\qquad \rho=\res z.\label{eq:second}
+\end{align}
+Both $c_1$ and $c_2$ are bits. The \emph{complete response} is the function
+\[
+ Q_{C,S,H}:\pairs\longrightarrow\{0,\ldots,B-1\}\times\pairs,
+ \qquad (a,b)\longmapsto(\rho,c_1,c_2).
+\]
+Two operand triples are equivalent when their complete responses agree
+at all four inputs. Let $\Q$ denote the set of these functions.
+A state code identifies an element of $\Q$; it need not recover the
+original operands.
+
+Carry composition is an established method in arithmetic circuits.
+Parallel-prefix addition uses it to combine local carry information
+\cite{brentkung}. Probabilistic carry processes also have an extensive
+combinatorial theory \cite{diaconisfulman}. The object here is the finite
+response determined by \emph{fixed} operands. The residue and both
+outgoing carries are part of its specification.
+
+\begin{theorem}\label{thm:count}
+For every integer $B\geq2$,
+\[
+ |\Q|=5B-4.
+\]
+For a fixed zero-input residue $v=\res{C+S+H}$, there are five states
+when $v<B-2$, and three states at each of $v=B-2$ and $v=B-1$.
+All these states have constructive operand representatives.
+\end{theorem}
+
+\section{Normal forms and exact classification}
+Write
+\[
+ C+S=qB+r,\qquad r+H=kB+v,
+\]
+where $0\leq r,v<B$ and $q,k\in\{0,1\}$. Let
+$T_{C,S,H}(a,b)=(c_1,c_2)$ be the carry part of the response.
+
+\begin{lemma}\label{lem:residue}
+For every incoming pair,
+\begin{equation}\label{eq:residue}
+ \rho=\res{v+a+b}.
+\end{equation}
+If $r<B-1$, then
+\begin{equation}\label{eq:regular}
+ T(a,b)=\left(q,\left\lfloor\frac{r+H+a+b}{B}\right\rfloor\right).
+\end{equation}
+If $r=B-1$, then $q=0$ and
+\begin{equation}\label{eq:special}
+ T(a,b)=\left(a,\left\lfloor\frac{[B-1+a]_B+H+b}{B}\right\rfloor\right).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Removing the first multiple of $B$ does not change the final residue,
+which proves \eqref{eq:residue}. If $r<B-1$, adding $a$ cannot change
+$q$. If $r=B-1$, the bound $C+S\leq2B-2$ forces $q=0$, and
+$[B-1+a]_B$ equals $B-1$ at $a=0$ and zero at $a=1$.
+These observations give \eqref{eq:regular} and \eqref{eq:special}.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{The complete carry normal forms. Each two-digit entry is the
+ordered pair $(c_1,c_2)$. The residue is given by \eqref{eq:residue}.}
+\label{tab:forms}
+\begin{tabular}{@{}ccrrrr@{}}
+\toprule
+Residue $v$ & Type $t$ & $T(00)$ & $T(01)$ & $T(10)$ & $T(11)$\\
+\midrule
+$0\leq v\leq B-3$ &0&00&00&00&00\\
+ &1&01&01&01&01\\
+ &2&01&01&10&10\\
+ &3&10&10&10&10\\
+ &4&11&11&11&11\\
+\midrule
+$B-2$&0&00&00&00&01\\
+ &1&01&01&10&11\\
+ &2&10&10&10&11\\
+\midrule
+$B-1$&0&00&01&01&01\\
+ &1&00&01&10&10\\
+ &2&10&11&11&11\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proof}[Proof of Theorem~\ref{thm:count}]
+Suppose first that $v\leq B-3$. In the regular case $r<B-1$, neither
+$v+1$ nor $v+2$ reaches $B$. Thus $T$ is the constant pair $(q,k)$.
+Each of the four pairs occurs: choose $r=v$, $H=0$ for $k=0$;
+choose $r=v+1$, $H=B-1$ for $k=1$. Both choices have $r\leq B-2$.
+For either choice, $q=0$ is realized by $(C,S)=(0,r)$ and $q=1$
+by $(C,S)=(B-1,r+1)$.
+
+The remaining case has $r=B-1$ and $H=v+1$. It gives
+$T(a,b)=(a,1-a)$, the fifth map. This case is realized by
+$(C,S)=(0,B-1)$. The five maps are distinct.
+
+Now let $v\in\{B-2,B-1\}$. In the regular case,
+$r+H\leq2B-3$ excludes $r+H=B+v$. Hence $k=0$.
+For $v=B-2$, the second carry is one exactly when $a=b=1$.
+For $v=B-1$, it is one exactly when $a+b\geq1$.
+Either value of $q$ occurs by taking $r=0$, $H=v$, and
+$(C,S)=(0,0)$ or $(B-1,1)$.
+
+The special case $r=B-1$ has $H=B-1$ at $v=B-2$ and $H=0$
+at $v=B-1$. It supplies the third map in each terminal group.
+Table~\ref{tab:forms} lists every result. Different $v$ values are
+separated by the residue at input $(0,0)$; maps within each group are
+separated by their carry tables. Therefore the total is
+$5(B-2)+3+3=5B-4$. When $B=2$, the middle range is empty and the
+six terminal maps still give the stated count.
+\end{proof}
+
+\section{Canonical encoding and the exact bit bound}
+For the types in Table~\ref{tab:forms}, define
+\begin{equation}\label{eq:label}
+ \ell(v,t)=
+ \begin{cases}
+ 5v+t,&0\leq v<B-2,\quad 0\leq t<5,\\
+ 5(B-2)+3(v-B+2)+t,&B-2\leq v<B,\quad 0\leq t<3.
+ \end{cases}
+\end{equation}
+The labels are precisely $0,\ldots,5B-5$. They require no table indexed
+by the original operand triple.
+
+An encoder first computes $(q,r)$ and $(k,v)$ above. For $v<B-2$,
+type $2$ applies when $r=B-1$. Otherwise $t=k$ if $q=0$ and
+$t=3+k$ if $q=1$. At the terminal residues, type $1$ applies when
+$r=B-1$; otherwise $t=2q$. A decoder recovers $(v,t)$ by division
+with remainder by five or three, reads the corresponding carry row,
+and returns \eqref{eq:residue} with that row's carry pair.
+
+\begin{corollary}\label{cor:bits}
+The minimum number of bits in a fixed-length code that recovers the
+complete response is
+\[
+ b(B)=\left\lceil\log_2(5B-4)\right\rceil.
+\]
+For $B=2^w$, this is $3$ at $w=1$, $4$ at $w=2$, and $w+3$ for
+all $w\geq3$.
+\end{corollary}
+\begin{proof}
+A code of length $b$ has at most $2^b$ values. Distinct functions in
+$\Q$ must have different codes, giving the lower bound.
+The labels in \eqref{eq:label} achieve it. For $B>4$,
+$4B<5B-4<8B$, which gives $w+3$ in the binary case.
+\end{proof}
+
+A byte stage has $1276$ states and needs eleven bits. A 32-bit word
+has $21\,474\,836\,476$ states and needs exactly 35 bits.
+The input consists of 96 operand bits, but the preserved object is the
+four-input response, not the three operands themselves.
+This is a representation bound; encoder and decoder execution costs are
+separate from the number of state bits.
+
+For example, at $B=256$, the operands $(37,218,13)$ have $r=255$
+and $v=12$. Their label is $5\cdot12+2=62$. In input order
+$00,01,10,11$, the full outputs are
+\[
+ (12,0,1),\quad(13,0,1),\quad(13,1,0),\quad(14,1,0).
+\]
+Exactly 256 operand triples produce this same function.
+
+\section{Class multiplicities and carry images}
+The quotient states are not equally likely under uniform operands.
+Their exact multiplicities follow from the triangular distribution
+of $C+S$.
+
+\begin{proposition}\label{prop:weights}
+For $0\leq v\leq B-3$, the numbers of operand triples of types
+$0,1,2,3,4$ are respectively
+\begin{align*}
+ n_0(v)&=\frac{(v+1)(v+2)}2,&
+ n_1(v)&=\frac{B(B-1)-(v+1)(v+2)}2,\\
+ n_2(v)&=B,&
+ n_3(v)&=\frac{(v+1)(2B-2-v)}2,\\
+ n_4(v)&=\frac{(B-v-2)(B-v-1)}2.
+\end{align*}
+At either terminal residue, the three multiplicities are
+$B(B-1)/2$, $B$, and $B(B-1)/2$.
+\end{proposition}
+\begin{proof}
+For $r\leq B-2$, the number of pairs with $C+S=r$ is $r+1$;
+the number with $C+S=B+r$ is $B-r-1$. Once $r$ and $v$ are fixed,
+$H=[v-r]_B$ is unique. For $k=0$, sum the appropriate pair count
+from $r=0$ to $r=v$. For $k=1$, sum from $r=v+1$ to $r=B-2$.
+These four sums give $n_0,n_3,n_1,n_4$. The special case
+$C+S=B-1$ has exactly $B$ pairs. At a terminal residue only $k=0$
+occurs in the regular case, so both sums extend through $r=B-2$.
+\end{proof}
+
+Let $\kappa(C,S,H)=|\im T_{C,S,H}|$ be the number of distinct outgoing
+carry pairs. This cardinality concerns the carry projection only.
+The complete responses also retain the residues.
+
+\begin{corollary}\label{cor:rank}
+Among all $B^3$ operand triples, the counts for $\kappa=1,2,3$ are
+\[
+ B(B-1)(B-2),\qquad 3B^2-4B,\qquad 2B,
+\]
+and $\kappa=4$ does not occur. Under independent uniform operands,
+\begin{equation}\label{eq:prob}
+ \Pr(\kappa>1)=\frac3B-\frac2{B^2},\qquad
+ \mathbb E\kappa=1+\frac3B.
+\end{equation}
+\end{corollary}
+\begin{proof}
+The four regular middle types have constant carry maps. Their total
+multiplicity at each middle residue is $B(B-1)$. The middle special
+type has image size two and contributes $B(B-2)$ triples in total.
+The four regular terminal types contribute $2B(B-1)$ more triples of
+image size two. Each special terminal type has image size three and
+multiplicity $B$. The stated counts follow. Dividing their sums by
+$B^3$ gives \eqref{eq:prob}.
+\end{proof}
+
+For $B=256$, these counts are $16\,581\,120$, $195\,584$, and $512$.
+For binary words, \eqref{eq:prob} becomes
+$\Pr(\kappa>1)=3\cdot2^{-w}-2\cdot4^{-w}$ and
+$\mathbb E\kappa=1+3\cdot2^{-w}$.
+These probabilities use uniform \emph{operand triples}, rather than
+uniform labels or independent samples from the normal-form table.
+
+\section{Independently recoverable digit stages}
+The whole-word response and a collection of separately queryable digit
+responses specify different objects. The distinction determines the
+encoding bound.
+
+Take radices $B_1,\ldots,B_m\geq2$, from least to most significant.
+At stage $i$, select an independent operand triple of radix $B_i$ and
+retain its complete function in $\mathcal Q_{B_i}$. The contract permits
+any of the four carry inputs to be queried at \emph{each} stage.
+
+\begin{theorem}\label{thm:stages}
+The number of independently recoverable stage tuples is exactly
+\[
+ \prod_{i=1}^{m}(5B_i-4).
+\]
+Their optimal fixed-length encoding uses
+$\left\lceil\log_2\prod_i(5B_i-4)\right\rceil$ bits.
+The tuple determines the full composed residue and both outgoing
+carries at every intermediate boundary, for any initial carry pair.
+\end{theorem}
+\begin{proof}
+Every stage function has a representative by
+Theorem~\ref{thm:count}. Independent digit choices therefore realize
+every tuple in the Cartesian product. Distinct tuples differ at a
+stage that the contract allows a recipient to query, so they require
+distinct labels. Mixed-radix encoding of the stage labels attains the
+bound. To compose them, evaluate the least significant stage and feed
+its outgoing pair into the next stage. Repeat and assemble the residue
+digits with weights $1,B_1,B_1B_2,\ldots$.
+\end{proof}
+
+Four byte stages have $1276^4=2\,650\,957\,086\,976$ tuples and
+require 42 bits. Four separate eleven-bit fields use 44 bits.
+A single 32-bit whole-word response requires 35 bits instead.
+The 42-bit minimum is for independently recoverable stage functions.
+It is not a lower bound for an interface that exposes only trajectories
+reachable from the four initial whole-word carry pairs.
+
+\section{Reproduction and scope}
+The supplied Python encoder implements \eqref{eq:label} for arbitrary
+integer radices. Its decoder uses Table~\ref{tab:forms}; a separate
+forward oracle evaluates \eqref{eq:first}--\eqref{eq:second} directly.
+The verification compares all four outputs for every operand triple
+at radices $2$ through $20$: $44\,099$ triples and $176\,396$ responses.
+It also checks every class size and constructive representative.
+
+A separately compiled C++ program exhausts all binary widths one
+through eight. At width eight it compares all $16\,777\,216$ triples
+and obtains the class and carry-image counts above. Further exact
+checks cover $1340$ operand triples through 512-bit words and $2560$
+four-input stage-composition comparisons, including nonbinary mixed
+radices. All comparisons pass. The complete-function experiments
+support the implementations; the case classification proves the
+statements for every radix.
+
+The figure uses the complete radix-eight example: 512 operand triples
+map to 36 response states. Every link comes from the encoder, and each
+state has its actual multiplicity. The manuscript and source package
+state the response contract explicitly. The encoded state preserves
+that contract rather than the original operands, arithmetic timing,
+or carries inside an unpartitioned word.
+
+\begin{thebibliography}{9}
+\bibitem{brentkung} R. P. Brent and H. T. Kung,
+A regular layout for parallel adders,
+\emph{IEEE Transactions on Computers} C-31 (1982), 260--264.
+\href{https://doi.org/10.1109/TC.1982.1675982}{doi:10.1109/TC.1982.1675982}.
+\bibitem{diaconisfulman} P. Diaconis and J. Fulman,
+Carries, shuffling, and symmetric functions,
+\emph{Advances in Applied Mathematics} 43 (2009), 176--196.
+\href{https://doi.org/10.1016/j.aam.2009.02.002}{doi:10.1016/j.aam.2009.02.002}.
+\end{thebibliography}
+\end{document}

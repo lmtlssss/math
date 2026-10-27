@@ -1,0 +1,70 @@
+name: Build addition state paper
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publication:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install academic typesetting and native Blender
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt; fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt; fi
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 -o Acquire::https::Timeout=25 update -qq
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 -o Acquire::https::Timeout=25 install -y --no-install-recommends texlive-xetex texlive-latex-extra texlive-fonts-recommended fonts-noto-core fonts-dejavu-core poppler-utils blender python3-pil
+      - name: Verify complete fibers and compile manuscript
+        run: |
+          cd mathematics/discrete-mathematics/two-stage-addition
+          make verify
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct)"
+          export FORCE_SOURCE_DATE=1
+          make paper
+          pdfinfo paper.pdf
+          pdftotext -layout paper.pdf evidence/cloud-paper-text.txt
+          pdftoppm -r 85 -png paper.pdf evidence/cloud-page
+      - name: Render native Blender proof geometry
+        run: |
+          cd mathematics/discrete-mathematics/two-stage-addition
+          mkdir -p release
+          FIGURE_OUTPUT="$PWD/release" blender -b --threads 4 --python visual/build_scene.py
+          cp paper.pdf release/paper.pdf
+          /usr/bin/python3 - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          import hashlib,json,zipfile
+          root=Path('mathematics/discrete-mathematics/two-stage-addition')
+          if not root.exists():root=Path('.')
+          out=root/'release'
+          im=Image.open(out/'00-cover.png').convert('RGB')
+          im.quantize(colors=256,method=Image.Quantize.FASTOCTREE,dither=Image.Dither.NONE).save(out/'00-cover.png',optimize=True)
+          names=['paper.tex','state.py','verify_full.cpp','verify.py','README.md','LICENSE.md','Makefile','CITATION.bib','CITATION.cff','VERIFICATION.md','VERIFICATION_PLAN.md','evidence/figure.json','evidence/verification.json','evidence/full-binary-census.json','visual/build_scene.py']
+          with zipfile.ZipFile(out/'source-and-proof.zip','w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+              for name in names:z.write(root/name,'two-stage-addition/'+name)
+              z.write(out/'paper.pdf','two-stage-addition/paper.pdf')
+              z.write(out/'00-cover.png','two-stage-addition/visual/00-cover.png')
+          manifest={p.name:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'md5':hashlib.md5(p.read_bytes()).hexdigest()} for p in out.iterdir() if p.is_file()}
+          (out/'MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Stage publication assets in a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          R=mathematics/discrete-mathematics/two-stage-addition/release
+          if gh release view addition-state-note-v1.0.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            test "$(gh release view addition-state-note-v1.0.0 --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)" = true
+            gh release upload addition-state-note-v1.0.0 "$R/paper.pdf" "$R/00-cover.png" "$R/two-stage-addition.blend" "$R/source-and-proof.zip" --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create addition-state-note-v1.0.0 "$R/paper.pdf" "$R/00-cover.png" "$R/two-stage-addition.blend" "$R/source-and-proof.zip" --draft --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "Exact State Complexity of Two-Stage Addition" --notes "lmtlssss🜐 · Version 1.0.0. Exact 5B-4 response classes, optimal state codes, constructive representatives, class multiplicities, carry-image distribution, and independent-stage encoding. DOI: 10.5281/zenodo.23698617."
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: addition-state-publication
+          path: |
+            mathematics/discrete-mathematics/two-stage-addition/release/
+            mathematics/discrete-mathematics/two-stage-addition/evidence/cloud-page-*.png
+            mathematics/discrete-mathematics/two-stage-addition/evidence/cloud-paper-text.txt
+            mathematics/discrete-mathematics/two-stage-addition/evidence/verification.json

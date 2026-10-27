@@ -1,0 +1,223 @@
+{
+  "status": "PASS",
+  "complete_arbitrary_radix_triples": 44099,
+  "complete_function_responses": 176396,
+  "radix_census": [
+    {
+      "radix": 2,
+      "triples": 8,
+      "classes": 6,
+      "minimum_bits": 3,
+      "carry_image_histogram": {
+        "2": 4,
+        "3": 4
+      }
+    },
+    {
+      "radix": 3,
+      "triples": 27,
+      "classes": 11,
+      "minimum_bits": 4,
+      "carry_image_histogram": {
+        "1": 6,
+        "2": 15,
+        "3": 6
+      }
+    },
+    {
+      "radix": 4,
+      "triples": 64,
+      "classes": 16,
+      "minimum_bits": 4,
+      "carry_image_histogram": {
+        "1": 24,
+        "2": 32,
+        "3": 8
+      }
+    },
+    {
+      "radix": 5,
+      "triples": 125,
+      "classes": 21,
+      "minimum_bits": 5,
+      "carry_image_histogram": {
+        "1": 60,
+        "2": 55,
+        "3": 10
+      }
+    },
+    {
+      "radix": 6,
+      "triples": 216,
+      "classes": 26,
+      "minimum_bits": 5,
+      "carry_image_histogram": {
+        "1": 120,
+        "2": 84,
+        "3": 12
+      }
+    },
+    {
+      "radix": 7,
+      "triples": 343,
+      "classes": 31,
+      "minimum_bits": 5,
+      "carry_image_histogram": {
+        "1": 210,
+        "2": 119,
+        "3": 14
+      }
+    },
+    {
+      "radix": 8,
+      "triples": 512,
+      "classes": 36,
+      "minimum_bits": 6,
+      "carry_image_histogram": {
+        "1": 336,
+        "2": 160,
+        "3": 16
+      }
+    },
+    {
+      "radix": 9,
+      "triples": 729,
+      "classes": 41,
+      "minimum_bits": 6,
+      "carry_image_histogram": {
+        "1": 504,
+        "2": 207,
+        "3": 18
+      }
+    },
+    {
+      "radix": 10,
+      "triples": 1000,
+      "classes": 46,
+      "minimum_bits": 6,
+      "carry_image_histogram": {
+        "1": 720,
+        "2": 260,
+        "3": 20
+      }
+    },
+    {
+      "radix": 11,
+      "triples": 1331,
+      "classes": 51,
+      "minimum_bits": 6,
+      "carry_image_histogram": {
+        "1": 990,
+        "2": 319,
+        "3": 22
+      }
+    },
+    {
+      "radix": 12,
+      "triples": 1728,
+      "classes": 56,
+      "minimum_bits": 6,
+      "carry_image_histogram": {
+        "1": 1320,
+        "2": 384,
+        "3": 24
+      }
+    },
+    {
+      "radix": 13,
+      "triples": 2197,
+      "classes": 61,
+      "minimum_bits": 6,
+      "carry_image_histogram": {
+        "1": 1716,
+        "2": 455,
+        "3": 26
+      }
+    },
+    {
+      "radix": 14,
+      "triples": 2744,
+      "classes": 66,
+      "minimum_bits": 7,
+      "carry_image_histogram": {
+        "1": 2184,
+        "2": 532,
+        "3": 28
+      }
+    },
+    {
+      "radix": 15,
+      "triples": 3375,
+      "classes": 71,
+      "minimum_bits": 7,
+      "carry_image_histogram": {
+        "1": 2730,
+        "2": 615,
+        "3": 30
+      }
+    },
+    {
+      "radix": 16,
+      "triples": 4096,
+      "classes": 76,
+      "minimum_bits": 7,
+      "carry_image_histogram": {
+        "1": 3360,
+        "2": 704,
+        "3": 32
+      }
+    },
+    {
+      "radix": 17,
+      "triples": 4913,
+      "classes": 81,
+      "minimum_bits": 7,
+      "carry_image_histogram": {
+        "1": 4080,
+        "2": 799,
+        "3": 34
+      }
+    },
+    {
+      "radix": 18,
+      "triples": 5832,
+      "classes": 86,
+      "minimum_bits": 7,
+      "carry_image_histogram": {
+        "1": 4896,
+        "2": 900,
+        "3": 36
+      }
+    },
+    {
+      "radix": 19,
+      "triples": 6859,
+      "classes": 91,
+      "minimum_bits": 7,
+      "carry_image_histogram": {
+        "1": 5814,
+        "2": 1007,
+        "3": 38
+      }
+    },
+    {
+      "radix": 20,
+      "triples": 8000,
+      "classes": 96,
+      "minimum_bits": 7,
+      "carry_image_histogram": {
+        "1": 6840,
+        "2": 1120,
+        "3": 40
+      }
+    }
+  ],
+  "wide_triples_through_512_bits": 1340,
+  "mixed_radix_four_input_comparisons": 2560,
+  "binary32_states": 21474836476,
+  "binary32_minimum_bits": 35,
+  "byte_states": 1276,
+  "four_byte_independently_recoverable_states": 2650957086976,
+  "four_byte_minimum_bits": 42,
+  "elapsed_seconds": 0.22630893299998434
+}
