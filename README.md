@@ -50,3 +50,10 @@ Three fixed radix-B operands define exactly 5B-4 complete two-carry response fun
 27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23700193](https://doi.org/10.5281/zenodo.23700193)
 
 An exact all-stage, arbitrary-radix count and constructive minimum-length function code. Three 32-bit additions retain every incoming-carry response in exactly 36 bits.
+
+## Mathematics · Matrix algebras
+
+[Two Sparse Binary Operators with Optimal Generating Length](mathematics/algebra/binary-operator-algebra/)  
+27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23701587](https://doi.org/10.5281/zenodo.23701587)
+
+Two sparse binary operators span the full 32-by-32 matrix algebra with products of length at most ten. Ten is the minimum possible bound. A polynomial rank-one identity gives a second constructive proof.

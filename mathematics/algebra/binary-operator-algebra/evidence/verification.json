@@ -1,0 +1,38 @@
+{
+  "status": "pass",
+  "date": "2026-10-27",
+  "field": "F2",
+  "dimension": 32,
+  "rank_D": 31,
+  "rank_P": 1,
+  "compact_identity_complete_coefficients": 1024,
+  "cyclic_basis_ranks": [
+    32,
+    32
+  ],
+  "two_sided_inverse_matrix_products": 4,
+  "short_certificate_words": 1024,
+  "short_certificate_rank": 1024,
+  "all_words_through_length10": 2047,
+  "cumulative_dimensions": [
+    1,
+    3,
+    7,
+    15,
+    31,
+    63,
+    127,
+    255,
+    510,
+    991,
+    1024
+  ],
+  "elementary_maps_reconstructed_by_each_of_two_methods": 1024,
+  "random_complete_maps_by_each_of_two_methods": 64,
+  "input_basis_images_per_method": 34816,
+  "altered_certificates_rejected": 5,
+  "short_word_terms_elementary_min": 435,
+  "short_word_terms_elementary_max": 561,
+  "elapsed_seconds": 2.254157006000014,
+  "scope": "Complete exact matrix identities and synthesis; internal independent algorithms, not proof-kernel acceptance or execution-speed evidence."
+}
