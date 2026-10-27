@@ -21,6 +21,8 @@ assert {a^((a+offset)&255) for a in range(256)}==set(signatures)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 s=bpy.context.scene;s.render.engine='CYCLES';s.cycles.device='CPU';s.cycles.samples=8
+s.cycles.use_denoising=False
+for layer in s.view_layers:layer.cycles.use_denoising=False
 s.render.threads_mode='FIXED';s.render.threads=4
 s.render.resolution_x=2400;s.render.resolution_y=1650;s.render.resolution_percentage=100
 s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGB'
