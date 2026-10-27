@@ -43,3 +43,10 @@ For any invertible binary-linear map, the complete Boolean–modular inverse is 
 27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23698617](https://doi.org/10.5281/zenodo.23698617)
 
 Three fixed radix-B operands define exactly 5B-4 complete two-carry response functions. Explicit normal forms attain the optimal fixed-length code, with a 35-bit code for 32-bit words and a distinct 42-bit independently queryable byte-stage contract.
+
+## Mathematics · Cascaded sum-and-carry functions
+
+[Exact Counts of Sum-and-Carry Functions for Cascaded Addition](mathematics/discrete-mathematics/cascaded-sum-carry/)  
+27 October 2026 · Version 1.0.0 · DOI: [10.5281/zenodo.23700193](https://doi.org/10.5281/zenodo.23700193)
+
+An exact all-stage, arbitrary-radix count and constructive minimum-length function code. Three 32-bit additions retain every incoming-carry response in exactly 36 bits.

@@ -1,0 +1,405 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\itshape Sum-and-carry functions for cascaded addition}
+\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\F}{\mathbb F_2}
+\newcommand{\andb}{\mathbin{\&}}
+\newcommand{\res}[1]{[#1]_M}
+\DeclareMathOperator{\wt}{wt}
+\DeclareMathOperator{\rank}{rank}
+\hypersetup{pdftitle={Exact Counts of Sum-and-Carry Functions for Cascaded Addition},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: enumerative combinatorics and arithmetic functions},pdfkeywords={carry functions, cascaded addition, exact enumeration, minimal encoding, partial permutations}}
+\title{\LARGE Exact Counts of Sum-and-Carry Functions\\for Cascaded Addition}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{27 October 2026\\[3pt]{\small\href{https://doi.org/10.5281/zenodo.23700193}{doi:10.5281/zenodo.23700193}}}
+\newcommand{\Q}{\mathcal Q}
+\newcommand{\supp}{\mathcal R}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\abits}{\boldsymbol a}
+\newcommand{\xvec}{\boldsymbol x}
+\begin{document}
+\maketitle\thispagestyle{plain}
+\begin{abstract}
+We count the complete functions defined by successive radix-$B$ additions
+with independently variable incoming carry bits. Each function retains the
+final residue and every outgoing carry. For $k$ additions, let
+$A_0=1$, $A_j=jA_{j-1}+1$, and $t=\min\{k,B-1\}$.
+The exact number of functions is
+$B^{k-t}((B-1)A_t+1)$.
+The proof classifies each carry function by its possible final residues:
+a full initial interval or a single terminal residue.
+This classification gives a dense encoder and decoder, and hence the exact
+minimum fixed-length label. Two additions give $5B-4$ functions; three give
+$16B-15$ when $B\geq4$.
+For three 32-bit additions, 36 bits preserve the complete function of four
+32-bit operands, including all eight incoming-carry assignments.
+\end{abstract}
+\noindent\textit{Keywords.} Arithmetic carries; function classification;
+exact enumeration; minimal codes; partial permutations.
+
+\section{The arithmetic function}
+Fix integers $B\geq2$ and $k\geq0$. Choose operands
+$\xvec=(x_0,\ldots,x_k)\in\{0,\ldots,B-1\}^{k+1}$.
+The operands are parameters. The variable inputs are independent bits
+$\abits=(a_1,\ldots,a_k)\in\{0,1\}^k$.
+Starting from $r_0=x_0$, define, for $1\leq i\leq k$,
+\begin{equation}\label{eq:operation}
+ u_i=r_{i-1}+x_i+a_i,\qquad
+ c_i=\left\lfloor\frac{u_i}{B}\right\rfloor,\qquad
+ r_i=u_i-Bc_i.
+\end{equation}
+Every $c_i$ is a bit. We retain the function
+\begin{equation}\label{eq:function}
+ Q_{\xvec}:\abits\longmapsto
+      (r_k(\abits),c_1(\abits),\ldots,c_k(\abits)).
+\end{equation}
+Two operand tuples are equivalent when these functions agree on all
+$2^k$ inputs. Write $\Q_k(B)$ for the set of distinct functions, and
+$N_k(B)=|\Q_k(B)|$. For $k=0$, the function is the constant residue $x_0$,
+so $N_0(B)=B$.
+
+The distinction between parameters and inputs is essential. A label for
+$Q_{\xvec}$ identifies an arithmetic function. It can represent several
+operand tuples, all with the same responses to the incoming bits.
+The specified outputs include each stage's outgoing carry, rather than only
+their sum or the final modular result.
+
+\section{Exact count}
+Let
+\begin{equation}\label{eq:arrangements}
+ A_0=1,\qquad A_j=jA_{j-1}+1
+       =j!\sum_{\ell=0}^{j}\frac1{\ell!}.
+\end{equation}
+These are the classical numbers of ordered subsets of a $j$-element set,
+recorded as A000522~\cite{oeis}. Their initial values are
+$1,2,5,16,65,326,1957$.
+
+\begin{theorem}\label{thm:main}
+For every $B\geq2$ and $k\geq0$, put $t=\min\{k,B-1\}$. Then
+\begin{equation}\label{eq:count}
+ \boxed{N_k(B)=B^{k-t}\bigl((B-1)A_t+1\bigr).}
+\end{equation}
+In particular, for $0\leq k<B$,
+\begin{equation}\label{eq:short}
+ N_k(B)=(B-1)A_k+1,
+\end{equation}
+and $N_k(B)=B\,N_{k-1}(B)$ for $k\geq B$.
+\end{theorem}
+
+The first cases are $2B-1$, $5B-4$, $16B-15$, and $65B-64$,
+within the respective ranges $k<B$. The assertion counts functions,
+including those attained by many different operand tuples.
+
+\subsection{Cumulative carry profiles}
+Set
+\[
+ S_i=x_0+\cdots+x_i,\qquad T_i=a_1+\cdots+a_i,
+ \qquad P_i(t)=\left\lfloor\frac{S_i+t}{B}\right\rfloor
+ \quad(0\leq t\leq i),
+\]
+with $P_0(0)=0$.
+Repeated substitution in \eqref{eq:operation} gives
+\begin{equation}\label{eq:prefix}
+ r_i=S_i+T_i-B\sum_{j=1}^{i}c_j,
+ \qquad \sum_{j=1}^{i}c_j=P_i(T_i).
+\end{equation}
+Hence
+\begin{equation}\label{eq:reconstruct}
+ c_i=P_i(T_i)-P_{i-1}(T_{i-1}),\qquad
+ r_k=[v+T_k]_B,\qquad v=[S_k]_B,
+\end{equation}
+where $[z]_B$ is the least nonnegative residue modulo $B$.
+
+\begin{lemma}\label{lem:profiles}
+The profiles $(P_1,\ldots,P_k)$ determine the complete carry-output
+function. Conversely, that function determines every profile.
+Together with $v$, the profiles determine $Q_{\xvec}$ uniquely.
+\end{lemma}
+\begin{proof}
+Equation~\eqref{eq:reconstruct} gives one direction.
+For the other, choose a prefix of $i$ incoming bits with exactly $t$ ones.
+The sum of its first $i$ carry outputs equals $P_i(t)$ by
+\eqref{eq:prefix}. Every $t\in\{0,\ldots,i\}$ occurs.
+The final residue at the all-zero input gives $v$.
+\end{proof}
+
+Write $S_i=Bq_i+v_i$. Then
+\begin{equation}\label{eq:profile-form}
+ P_i(t)=q_i+\left\lfloor\frac{v_i+t}{B}\right\rfloor.
+\end{equation}
+For $i<B$, this profile is constant exactly when
+$0\leq v_i\leq B-i-1$. Otherwise its first increase occurs at
+$t=B-v_i\in\{1,\ldots,i\}$ and identifies $v_i$.
+
+\subsection{Residue supports}
+For a carry-output function $\phi$ of $i$ incoming bits, let
+$\supp(\phi)$ be the set of residues $[S_i]_B$ attained by operand tuples
+with that same carry function.
+
+\begin{lemma}\label{lem:support}
+For $0\leq i<B$, every carry function has one of the following supports:
+\begin{enumerate}
+\item the interval $\{0,\ldots,B-i-1\}$;
+\item a singleton $\{v\}$ with $B-i\leq v\leq B-1$.
+\end{enumerate}
+There are $A_i$ functions of the first kind. For each terminal residue,
+there are $E_i=A_i-A_{i-1}$ functions of the second kind when $i\geq1$.
+\end{lemma}
+\begin{proof}
+At $i=0$, the empty carry function has every residue as its support.
+Write $A_0=1$ and $E_0=0$ for this initial case.
+Assume the classification at $i-1$, and append an operand $h$.
+Choose an old residue $r$ and a new residue $v$.
+Exactly one $h\in\{0,\ldots,B-1\}$ satisfies $[r+h]_B=v$.
+Its zero-input carry is
+\begin{equation}\label{eq:e}
+ e=\ind_{\{r>v\}}.
+\end{equation}
+If $q=P_{i-1}(0)$, the appended cumulative profile is
+\begin{equation}\label{eq:extension}
+ P_i(t)=q+e+\left\lfloor\frac{v+t}{B}\right\rfloor.
+\end{equation}
+Thus the old carry function, $v$, and $e$ determine the extension.
+Different old functions remain distinct after extension; for a fixed old
+function and $v$, the value at the zero input distinguishes the two values
+of $e$.
+
+Suppose $0\leq v\leq B-i-1$. Each old interval support
+$\{0,\ldots,B-i\}$ permits both $e=0$ and $e=1$.
+Every old singleton support has $r\geq B-i+1>v$, so it permits only $e=1$.
+Equation~\eqref{eq:extension} is constant in $t$ and independent of the
+chosen $v$ throughout this interval. Every resulting function therefore
+attains the entire interval. The number of these carry functions is
+\begin{equation}\label{eq:rec-a}
+ A_i=2A_{i-1}+(i-1)E_{i-1}.
+\end{equation}
+
+Now let $B-i\leq v\leq B-1$. An old interval support permits only $e=0$.
+Each old singleton permits exactly the value in \eqref{eq:e}.
+The new profile has its first increase at $B-v$, so it identifies $v$
+and has no other residue in its support. For each such $v$ the count is
+\begin{equation}\label{eq:rec-e}
+ E_i=A_{i-1}+(i-1)E_{i-1}.
+\end{equation}
+These constructions realize every listed extension with genuine operands.
+Conversely, every operand extension uses one of the listed choices.
+They are distinct by the preceding recovery argument.
+
+Subtracting \eqref{eq:rec-e} from \eqref{eq:rec-a} gives
+$E_i=A_i-A_{i-1}$. The initial values are $A_1=2$ and $E_1=1$.
+Induction now yields $A_i=iA_{i-1}+1$:
+for $i\geq2$, substitute $E_{i-1}=A_{i-1}-A_{i-2}$ in
+\eqref{eq:rec-a}, and use
+$A_{i-1}=(i-1)A_{i-2}+1$.
+This is precisely \eqref{eq:arrangements}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+For $1\leq k<B$, Lemma~\ref{lem:support} gives
+\[
+ N_k(B)=(B-k)A_k+kE_k
+       =BA_k-kA_{k-1}=(B-1)A_k+1.
+\]
+The case $k=0$ was established above.
+
+If $i\geq B-1$, a carry function determines its final residue.
+Indeed, the values of $P_i(t)-P_i(0)$ for $0\leq t\leq B-1$
+identify $v_i$: a first increase at $t$ gives $v_i=B-t$,
+and no increase gives $v_i=0$.
+Now take $k\geq B$. Every old function at length $k-1$ has a uniquely
+determined residue $r$. Its $B$ possible appended operands give $B$
+different final residues. Two different old functions remain distinct,
+since the new output retains all old carries.
+Therefore $N_k(B)=B N_{k-1}(B)$.
+Iterating from $k=B-1$ proves \eqref{eq:count}.
+\end{proof}
+
+\section{Dense labels and the exact bit minimum}
+\begin{theorem}\label{thm:code}
+There is an explicit bijection between $\Q_k(B)$ and
+$\{0,\ldots,N_k(B)-1\}$. Consequently the least number of bits in a
+fixed-length exact function label is
+\begin{equation}\label{eq:bits}
+ b_k(B)=\left\lceil\log_2 N_k(B)\right\rceil.
+\end{equation}
+A decoder returns a representative operand tuple with the labelled
+function, preserving every output in \eqref{eq:function}.
+\end{theorem}
+\begin{proof}
+We specify a recursive ordering. At length zero, the label is the residue.
+For $1\leq i<B$, order the functions first by their final residue $v$.
+The offset of its group is
+\begin{equation}\label{eq:offset}
+ O_i(v)=
+ \begin{cases}
+ vA_i,&v<B-i,\\
+ (B-i)A_i+(v-B+i)E_i,&v\geq B-i.
+ \end{cases}
+\end{equation}
+Within a residue group, list old interval-support functions first.
+If $v<B-i$, an old local index $p$ contributes the two indices
+$2p$ and $2p+1$, corresponding to $e=0$ and $e=1$.
+If $v\geq B-i$, it contributes only index $p$.
+Next list the old singleton supports in increasing residue order, and
+within each use the previous local ordering. Each supplies one extension.
+Lemma~\ref{lem:support} proves that these lists have respectively
+$A_i$ or $E_i$ entries, with unique coverage.
+
+The ordering is constructive in both directions.
+For a chosen interval-support predecessor, use representative residue
+$r=0$ when $e=0$ and $r=v+1$ when $e=1$.
+Both choices lie in the required old support.
+For a singleton predecessor, use its determined residue.
+Decode that predecessor recursively, then append $h=[v-r]_B$.
+This realizes the prescribed extension.
+
+For $i\geq B$, an old label $z$ and appended operand $h$ have new label
+$Bz+h$. Quotient and remainder recover them. The old residue is already
+determined by its carry function, as in the proof of
+Theorem~\ref{thm:main}.
+Thus a bijection exists at every stage.
+Any exact fixed-length code must distinguish $N_k(B)$ functions, so it
+needs at least \eqref{eq:bits} bits. The dense labels attain that bound.
+\end{proof}
+
+The implementation constructs the profiles directly from the operands and
+uses this ordering for ranking and unranking. The decoder selects a
+representative of the equivalence class. It preserves the function rather
+than the identity of the original operands.
+The bit minimum is a representation result. It assigns no unit cost to
+arbitrary-precision arithmetic or to evaluation of an entire truth table.
+
+For 32-bit operands, the first exact code lengths are:
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+Additions $k$ & Operand bits & Distinct functions & Label bits\\
+\midrule
+1 & 64 & 8,589,934,591 & 33\\
+2 & 96 & 21,474,836,476 & 35\\
+3 & 128 & 68,719,476,721 & 36\\
+4 & 160 & 279,172,874,176 & 39\\
+5 & 192 & 1,400,159,338,171 & 41\\
+\bottomrule
+\end{tabular}
+\end{center}
+In the third row, $N_3(2^{32})=2^{36}-15$. Thus 36 bits are sufficient
+and necessary for all eight incoming-bit assignments, including the final
+32-bit residue and all three carry outputs.
+
+\section{The two-stage case and a worked finite family}
+For the two-stage case~\cite{two-stage}, write $x=C+S=Bq+r$ and $r+H=Bt+v$.
+The output residue is always $[v+a+b]_B$.
+The possible carry functions are given in Table~\ref{tab:two}; here
+$q,t\in\{0,1\}$ range independently where shown.
+\begin{table}[ht]
+\centering
+\begin{tabular}{lll r}
+\toprule
+Residue & Condition & Carry outputs $(c_1,c_2)$ & Count\\
+\midrule
+$0\leq v\leq B-3$ & $r\leq B-2$ & $(q,t)$ & 4\\
+ & $r=B-1$ & $(a,1-a)$ & 1\\
+$v=B-2$ & $r\leq B-2$ & $(q,ab)$ & 2\\
+ & $r=B-1$ & $(a,(1-a)\lor b)$ & 1\\
+$v=B-1$ & $r\leq B-2$ & $(q,a\lor b)$ & 2\\
+ & $r=B-1$ & $(a,(1-a)b)$ & 1\\
+\bottomrule
+\end{tabular}
+\caption{Complete two-stage classification. The first residue range is empty
+when $B=2$. The sum of the counts over all residues is $5B-4$.}
+\label{tab:two}
+\end{table}
+
+In the first range, assign indices $2q+t$ to the constant maps and index 4
+to the remaining map. Give the function label $5v$ plus this index.
+In either terminal residue group, assign indices $q$ to the two ordinary
+maps and index 2 to the exceptional map. The label is
+$5(B-2)+3(v-B+2)$ plus this index. This gives a direct optimal codec for
+every integer radix $B\geq2$.
+
+For three stages at radix $B=8$, there are $8^4=4096$ operand tuples but
+only $16\cdot8-15=113$ complete functions. There are 16 functions at each
+residue $0,1,2,3,4$, and 11 at each residue $5,6,7$.
+The supplied figure groups every source tuple by its exact function label.
+No function is inferred from a partial set of incoming assignments.
+
+Independently addressable local-stage functions define a different output
+contract. For example, four separately recoverable byte-level two-stage
+tables have $1276^4$ possibilities and need 42 bits. This product count
+concerns four local tables; it is not a count of their reachable global
+responses from only four initial carry pairs.
+
+\section{Verification and related work}
+An independent forward arithmetic oracle checked 54 complete radix/stage
+panels: 196,160 operand tuples and 5,005,590 incoming-bit assignments.
+All 13,191 distinct functions passed dense decoding, with every label
+occupied exactly once. A separate two-stage sweep compared 359,996 output
+triples at radices 2--24. Further checks covered 15,792 outputs at widths
+8--512 bits. The tests include $k<B-1$, $k=B-1$, and $k>B-1$.
+They support the implementation; the proofs establish the general statements.
+
+Mirsalehi and Gaylord~\cite{mirsalehi} determine minimum sum-of-products
+sizes for binary addition and subtraction. Their Table I contains the
+expression $5\cdot2^j-4$ for a truth-table lookup statistic at bit position
+$j$. Numerical agreement with our two-stage count does not identify the
+objects: here the equivalence relation compares complete functions of
+independent carry inputs. The present claim is the classification,
+all-stage count, and dense function codec under the explicit contract
+\eqref{eq:function}.
+
+Diaconis and Fulman~\cite{diaconis} study the stochastic carry process
+under random operands. Jir\'askov\'a and Okhotin~\cite{jiraskova} count
+states of nondeterministic automata for positional addition of sets of
+numbers. Those output contracts differ from the finite function set here.
+The coefficient sequence $A_k$ itself is classical~\cite{oeis}; the proof
+above establishes its role in the residue-support classification.
+
+\begingroup
+\small
+\begin{thebibliography}{9}
+\setlength{\itemsep}{4pt}
+\bibitem{oeis}
+The OEIS Foundation Inc., \textit{The On-Line Encyclopedia of Integer
+Sequences}, entry A000522, ordered tuples of distinct elements.
+\url{https://oeis.org/A000522}. Accessed 27 October 2026.
+\bibitem{mirsalehi}
+M.~Mirsalehi and T.~K.~Gaylord,
+``Analytic expressions for the sizes of logically minimized truth tables
+for binary addition and subtraction,''
+\textit{Applied Optics} \textbf{29}(23) (1990), 3339--3344.
+\href{https://doi.org/10.1364/AO.29.003339}{doi:10.1364/AO.29.003339}.
+\bibitem{diaconis}
+P.~Diaconis and J.~Fulman,
+``Carries, shuffling, and an amazing matrix,''
+\textit{American Mathematical Monthly} \textbf{116}(9) (2009), 788--803.
+\href{https://doi.org/10.4169/000298909X474864}{doi:10.4169/000298909X474864}.
+\bibitem{jiraskova}
+G.~Jir\'askov\'a and A.~Okhotin,
+``Nondeterministic state complexity of positional addition,''
+\textit{Electronic Proceedings in Theoretical Computer Science}
+\textbf{3} (2009), 151--161.
+\href{https://doi.org/10.4204/EPTCS.3.14}{doi:10.4204/EPTCS.3.14}.
+\bibitem{two-stage}
+lmtlssss{\authorsymbol 🜐}, \textit{Exact State Complexity of Two-Stage Addition},
+version 1.0.0, 27 October 2026.
+\href{https://doi.org/10.5281/zenodo.23698617}{doi:10.5281/zenodo.23698617}.
+\end{thebibliography}
+\endgroup
+\end{document}
