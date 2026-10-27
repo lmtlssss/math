@@ -1,0 +1,362 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\itshape Affine fibers and a Fibonacci bound}
+\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\F}{\mathbb F_2}
+\newcommand{\andb}{\mathbin{\&}}
+\newcommand{\res}[1]{[#1]_M}
+\DeclareMathOperator{\wt}{wt}
+\DeclareMathOperator{\rank}{rank}
+\hypersetup{pdftitle={Affine Fibers and a Fibonacci Bound for Boolean–Modular Inversion},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: discrete mathematics and exact inversion},pdfkeywords={affine fibers, binary linear maps, Fibonacci numbers, carry automata}}
+\title{\LARGE Affine Fibers and a Fibonacci Bound\\for Boolean--Modular Inversion}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{27 October 2026}
+\begin{document}
+\maketitle\thispagestyle{plain}
+\begin{abstract}
+Let $L$ be an invertible binary-linear map on words of width $w$.
+We describe every solution of $L(a+D)+L(a)=S\pmod{2^w}$ as a disjoint
+union of affine subspaces over $\F$. A feasible XOR signature reduces both
+modular additions to linear mask equations. Two carry automata enumerate
+the input and output signatures, so the construction uses the smaller
+list. Each list has at most $F_{w+1}$ entries, where $F_0=0$ and $F_1=1$.
+This bound is attained for signature enumeration. Ordinary binary
+elimination gives a conservative $O(w^3F_{w+1})$ bit-operation bound for
+compact output. Two classes of target words require only one affine
+cell. We supply the complete proof, a worked five-cell fiber, and an
+executable verifier.
+\end{abstract}
+\noindent\textit{Mathematics Subject Classification (2020).}
+05A15; 11B39, 68W30.\par
+\noindent\textit{Keywords.} Affine subspaces; binary linear maps;
+modular arithmetic; carry automata.\par
+\noindent\textit{DOI.} \href{https://doi.org/10.5281/zenodo.23697726}{10.5281/zenodo.23697726}.
+
+\section{The inverse problem}
+Fix $w\geq1$ and put $M=2^w$. We identify $\F^w$ with the integers
+$0,\ldots,M-1$, using the least significant bit as coordinate zero.
+The symbols $\oplus$ and $\andb$ denote bitwise XOR and AND. An overbar
+means complement within $w$ bits. Write $\res z$ for the least nonnegative
+residue of $z$ modulo $M$. Addition inside an argument of $L$ is modular.
+The linearity of $L$ is with respect to $\oplus$, not integer addition.
+
+Given $D,S\in\{0,\ldots,M-1\}$ and an invertible map
+$L:\F^w\to\F^w$, define
+\begin{equation}\label{eq:fiber}
+\mathcal A_{D,S}(L)=\{a:L(\res{a+D})+L(a)\equiv S\pmod M\}.
+\end{equation}
+An affine cell $b+V$ means the set $\{b\oplus v:v\in V\}$ for a
+binary-linear subspace $V$. We return a base and an independent basis
+for each cell. This representation specifies all its members without
+listing them.
+
+Define the two sets of feasible signatures
+\begin{align}
+\Delta_D&=\{a\oplus\res{a+D}:0\leq a<M\},\label{eq:deltas}\\
+K_S&=\{x\oplus y:x+y\equiv S\pmod M\}.\label{eq:ks}
+\end{align}
+The unrestricted expression in \eqref{eq:ks} uses two words $x,y$.
+Its signatures become relevant to \eqref{eq:fiber} through the relation
+$k=L(\delta)$.
+
+\begin{theorem}\label{thm:main}
+For every invertible binary-linear $L$, the fiber
+$\mathcal A_{D,S}(L)$ is a disjoint union of at most
+\[
+N_{D,S}=\min\{|\Delta_D|,|K_S|\}\leq F_{w+1}
+\]
+affine cells. A constructive algorithm visits exactly one signature per
+entry of the selected smaller list, discards empty cells, and returns
+all remaining cells by binary linear elimination. Its conservative
+bit-operation cost is $O(w^3(1+N_{D,S}))$ for compact output.
+\end{theorem}
+
+Here the number of signatures is not the number of solutions. A single
+cell of dimension $d$ represents $2^d$ solutions. Expanding such a cell
+requires additional output work.
+
+Finite-state carry calculations are established. Mouha et al.\ \cite{mouha}
+use finite-state methods and matrix products to calculate differential
+probabilities and counts of possible differences. Velichkov et al.\ \cite{velichkov}
+extend that framework to compositions involving rotations. Qin and
+Wu\ \cite{qin} retain dependencies between consecutive modular additions.
+This note uses those familiar ingredients to state a complete affine
+partition for \eqref{eq:fiber}, with a bidirectional signature enumeration
+and an explicit certificate for each cell. The construction makes no
+locality assumption on the rows of $L$.
+
+\section{A signature gives linear equations}
+Put $\ell=2^{w-1}-1$. For a candidate output signature $k$, define
+\begin{equation}\label{eq:parameters}
+\delta=L^{-1}(k),\qquad d=\res{\delta-D},\qquad e=\res{S-k}.
+\end{equation}
+If $d$ and $e$ are even, set $u=d/2$ and $v=e/2$. These are ordinary
+integer halves of the canonical residues. Set
+\[
+p=\delta\andb\ell,\qquad q=\overline{k}\andb\ell.
+\]
+
+\begin{lemma}\label{lem:cell}
+The solutions with signature $k$ are exactly the solutions of
+\begin{equation}\label{eq:masks}
+a\andb p=u,\qquad L(a)\andb q=v,
+\end{equation}
+provided $d,e$ are even and
+\begin{equation}\label{eq:support}
+u\andb\overline p=0,\qquad v\andb\overline q=0.
+\end{equation}
+If any of these conditions fails, the cell is empty.
+\end{lemma}
+\begin{proof}
+The integer identity
+\[
+a\oplus\delta=a+\delta-2(a\andb\delta)
+\]
+shows that $\res{a+D}=a\oplus\delta$ if and only if
+$2(a\andb\delta)\equiv\delta-D\pmod M$.
+Multiplication by two removes the top bit modulo $M$. Thus this condition
+is equivalent to $d$ being even and $a\andb p=u$.
+The support condition on $u$ is necessary and sufficient for that mask
+equation to be consistent in isolation.
+
+Write $x=L(a)$. Under the input condition, linearity gives
+$L(\res{a+D})=x\oplus k$. The second integer identity
+\[
+x+(x\oplus k)=k+2(x\andb\overline k)
+\]
+then converts \eqref{eq:fiber} into $2(x\andb\overline k)\equiv S-k\pmod M$.
+This is equivalent to $e$ being even and $x\andb q=v$.
+The argument proves both directions, including the discarded top carry.
+\end{proof}
+
+If $r_i$ is row $i$ of the matrix of $L$, each one-bit position of $p$
+gives an equation $a_i=u_i$. Each one-bit position of $q$ gives
+$\langle r_i,a\rangle=v_i$ over $\F$. These are at most $2(w-1)$ linear
+equations in $w$ variables. Binary elimination returns either inconsistency
+or one base with a basis of its nullspace.
+
+\begin{proposition}\label{prop:partition}
+The nonempty cells from Lemma~\ref{lem:cell} form a disjoint partition of
+$\mathcal A_{D,S}(L)$ when all signatures of either $K_S$ or $\Delta_D$
+are considered, with $k=L(\delta)$ in the second case.
+\end{proposition}
+\begin{proof}
+Every solution $a$ determines the unique pair
+\[
+\delta=a\oplus\res{a+D},\qquad k=L(\delta).
+\]
+This pair belongs to $\Delta_D\times K_S$ and satisfies the two mask
+equations. Conversely, Lemma~\ref{lem:cell} makes every point of a returned
+cell a solution. A point in two different cells would have two different
+values of $a\oplus\res{a+D}$ or of its image under $L$, which is impossible.
+\end{proof}
+
+\section{Two carry automata and the Fibonacci bound}
+For the output list, let $c_i$ be the carry entering bit $i$ in $x+y=S$,
+with $c_0=0$. The XOR bit is
+\begin{equation}\label{eq:outbit}
+k_i=S_i\oplus c_i.
+\end{equation}
+If $k_i=1$, the two input bits differ and $c_{i+1}=c_i$. If $k_i=0$,
+the two input bits are equal and either outgoing carry is possible.
+The outgoing carry at bit $w-1$ is discarded.
+
+For the input list, let $t_i$ be the carry entering bit $i$ of $a+D$,
+with $t_0=0$. Then
+\begin{equation}\label{eq:inbit}
+\delta_i=D_i\oplus t_i.
+\end{equation}
+If $\delta_i=0$, then $D_i=t_i$ and $t_{i+1}=t_i$. If $\delta_i=1$,
+the bit $a_i$ selects either outgoing carry. Again the final carry is
+discarded.
+
+Each signature determines its entering carries from \eqref{eq:outbit}
+or \eqref{eq:inbit}. Therefore different paths give different signatures.
+Conversely, choose compatible operand bits at each branch of a path.
+This produces words realizing that signature. The automata are thus
+complete and duplicate-free.
+
+\begin{lemma}\label{lem:fib}
+For every $D,S$, both $|\Delta_D|$ and $|K_S|$ are at most $F_{w+1}$.
+For each width, this maximum is attained separately in each automaton.
+\end{lemma}
+\begin{proof}
+Let $(A,B)$ count partial paths with entering carry zero and one.
+The initial pair is $(1,0)$. According to the prescribed bit, the pair
+updates by one of the two rules
+\begin{equation}\label{eq:updates}
+(A,B)\longmapsto(A+B,B),\qquad
+(A,B)\longmapsto(A,A+B).
+\end{equation}
+The assignment of a prescribed bit to a rule is reversed between the
+input and output automata.
+
+After $i$ updates, write the counts in decreasing order $R\geq T$.
+Induction gives $R\leq F_{i+1}$ and $T\leq F_i$. An update has largest
+entry at most $R+T\leq F_{i+2}$ and smaller entry at most
+$R\leq F_{i+1}$. There are $w-1$ relevant outgoing-carry decisions.
+Hence the number of signatures is at most $F_w+F_{w-1}=F_{w+1}$.
+Starting with the rule that gives $(1,1)$ and alternating the two rules
+attains equality. The top prescribed bit does not change the count.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Count the two signature lists using \eqref{eq:updates}, then enumerate
+the smaller list. Invertibility of $L$ couples $k$ and $\delta$ uniquely;
+there is no Cartesian-product search over the two lists. For each
+signature, apply \eqref{eq:parameters}--\eqref{eq:support} and solve the
+linear system \eqref{eq:masks}. Proposition~\ref{prop:partition} proves
+completeness and disjointness. Lemma~\ref{lem:fib} proves the stated
+signature bound.
+
+An inverse matrix can be prepared in $O(w^3)$ bit operations. Each
+signature requires $O(w^2)$ work to apply the map or its inverse, and at
+most $O(w^3)$ work for elimination. A prefix traversal generates each
+signature with at most $w$ steps. The preliminary counts have $O(w)$
+bits and need $O(w^2)$ bit work. These estimates give
+$O(w^3(1+N_{D,S}))$ overall. The explicit bases occupy
+$O(w^2N_{D,S})$ bits if all cells are retained.
+\end{proof}
+
+Since $F_{w+1}=\Theta(\varphi^w)$ for
+$\varphi=(1+\sqrt5)/2$, this is an $O(w^3\varphi^w)$ compact-output
+bound. The Fibonacci maximum concerns the signature lists. It is not
+an optimality claim for inversion algorithms or for the number of
+nonempty cells. At width 32, $F_{33}=3{,}524{,}578$, whereas the word
+domain has $2^{32}=4{,}294{,}967{,}296$ members. A signature still incurs
+its compatibility and linear-algebra cost.
+
+\section{Reflection targets}
+\begin{proposition}\label{prop:reflection}
+If $S\in\{2^w-1,2^{w-1}-1\}$, the output list consists only of $k=S$.
+Set $\delta=L^{-1}(S)$ and $d=\res{\delta-D}$. If $d$ is even and
+$u=d/2$ is supported on $\delta\andb\ell$, then
+\begin{equation}\label{eq:reflection}
+\mathcal A_{D,S}(L)=\{a:a\andb(\delta\andb\ell)=u\},
+\qquad |\mathcal A_{D,S}(L)|=2^{w-\wt(\delta\andb\ell)}.
+\end{equation}
+Otherwise the fiber is empty.
+\end{proposition}
+\begin{proof}
+The lower $w-1$ target bits are one. Starting from zero carry,
+\eqref{eq:outbit} therefore forces $k_i=1$ and keeps the carry zero
+through those positions. The top bit then gives $k=S$. The output
+mask $\overline{k}\andb\ell$ vanishes, leaving only the input mask.
+Its one-bit positions fix exactly $\wt(\delta\andb\ell)$ independent
+coordinates.
+\end{proof}
+
+A concrete 32-bit example uses the linear map
+\begin{equation}\label{eq:map32}
+L(x)=\operatorname{ROR}_{17}(x)\oplus\operatorname{ROR}_{19}(x)
+       \oplus\operatorname{SHR}_{10}(x).
+\end{equation}
+Here rotations are cyclic within 32 bits and the right shift fills with
+zeros. The supplied verifier reduces its binary matrix to the identity
+and obtains
+\[
+L^{-1}(\mathtt{7fffffff})=\mathtt{59e0cce9}.
+\]
+Take $D=\mathtt{59e0cce9}$ and $S=\mathtt{7fffffff}$.
+Then $u=0$, and the single condition
+$a\andb\mathtt{59e0cce9}=0$ describes all $2^{16}=65{,}536$ solutions.
+The coefficient and inverse matrices are supplied with the example.
+
+More generally, let $L_w$ keep the low bit and XOR it into every higher
+bit. This map is an involution. For $D=1$ and $S=2^w-1$,
+$L_w^{-1}(S)=1$, so the complete fiber consists of the even words and
+has $2^{w-1}$ members. This family illustrates the difference between
+compact representation and explicit enumeration.
+
+\section{A complete eight-bit example}
+Represent a binary-linear map by its row masks, with row zero producing
+the least significant output bit. Consider
+\[
+(r_0,\ldots,r_7)=(34,68,134,14,213,186,122,142),\qquad D=30,
+\quad S=146.
+\]
+The row matrix is invertible. There are 13 input signatures and 26 output
+signatures. Selecting the input list yields the following five nonempty
+cells. Every table entry is a decimal word.
+\begin{center}
+\begin{tabular}{rrrrl r}
+\toprule
+$k$&$\delta$&Base&Dimension&Basis&Members\\
+\midrule
+138&62&209&0&$\varnothing$&1\\
+108&254&113&1&129&2\\
+18&38&140&1&1&2\\
+140&34&15&2&25, 205&4\\
+106&226&98&3&8, 17, 132&8\\
+\bottomrule
+\end{tabular}
+\end{center}
+Their disjoint union contains 17 points. Both complete signature lists,
+the eight discarded input cases, all bases, and all members are
+reproducible from \texttt{evidence/figure.json}. The accompanying
+three-dimensional figure uses these exact data.
+
+\section{Certificates and verification}
+For a nonempty cell, a certificate consists of $k,\delta$, a base, and
+independent direction vectors. A checker verifies $L(\delta)=k$, both
+mask equations at the base, and the corresponding homogeneous equations
+on every direction. It also checks that the basis dimension equals
+$w-\rank(A)$, where $A$ is the cell's equation matrix. These conditions
+certify the entire cell, including its dimension. Completeness across
+cells additionally requires the exact signature traversal proved above.
+
+The publication verifier uses a direct bit-by-bit forward evaluator that
+does not use the inverse construction. It compares complete fibers for
+every $D,S$ at widths 1 through 7, with the identity and two mixed
+invertible matrices at each width. The result is 65,532 fiber comparisons
+and 196,596 solver calls across input, output and automatic enumeration.
+Every returned set agrees, including empty fibers and multiplicities.
+
+A separate check constructs the feasible signature sets directly from
+addition at widths 1 through 8. All 1,020 comparisons agree with the
+carry automata. Exhaustive maxima through width 16 attain $F_{w+1}$
+on both sides. The two 32-bit reflection examples are expanded and
+checked in full. Wide certificates through 512 bits verify the
+closed-form family without expanding its output.
+
+The source package contains \texttt{atlas.py}, \texttt{verify.py}, the
+exact examples, and the figure builder. The proofs establish the general
+statements; finite checks establish the behavior of these implementations.
+The reported complexity counts compact affine output. No running-time
+or energy claim follows from the signature count alone.
+
+\begin{thebibliography}{9}
+\bibitem{mouha}
+N. Mouha, V. Velichkov, C. De Canni\`ere, and B. Preneel.
+The differential analysis of S-functions.
+In \emph{Selected Areas in Cryptography}, LNCS 6544, pp.~36--56.
+Springer, 2011. \href{https://doi.org/10.1007/978-3-642-19574-7_3}{doi:10.1007/978-3-642-19574-7\_3}.
+\bibitem{velichkov}
+V. Velichkov, N. Mouha, C. De Canni\`ere, and B. Preneel.
+The additive differential probability of ARX.
+In \emph{Fast Software Encryption}, LNCS 6733, pp.~342--358.
+Springer, 2011. \href{https://doi.org/10.1007/978-3-642-21702-9_20}{doi:10.1007/978-3-642-21702-9\_20}.
+\bibitem{qin}
+H. Qin and B. Wu.
+Towards non-independence of modular additions in searching differential
+trails of ARX ciphers: new automatic methods with application to SPECK
+and Chaskey. 2022. \href{https://arxiv.org/abs/2203.09741}{arXiv:2203.09741}.
+\end{thebibliography}
+\end{document}

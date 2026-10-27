@@ -1,0 +1,148 @@
+{
+  "width": 8,
+  "D": 30,
+  "S": 146,
+  "rows": [
+    34,
+    68,
+    134,
+    14,
+    213,
+    186,
+    122,
+    142
+  ],
+  "side": "input",
+  "input_signatures": 13,
+  "output_signatures": 26,
+  "signatures_examined": 13,
+  "count": 17,
+  "cells": [
+    {
+      "signature": 138,
+      "delta": 62,
+      "base": 209,
+      "basis": [],
+      "count": 1,
+      "members": [
+        209
+      ]
+    },
+    {
+      "signature": 108,
+      "delta": 254,
+      "base": 113,
+      "basis": [
+        129
+      ],
+      "count": 2,
+      "members": [
+        113,
+        240
+      ]
+    },
+    {
+      "signature": 18,
+      "delta": 38,
+      "base": 140,
+      "basis": [
+        1
+      ],
+      "count": 2,
+      "members": [
+        140,
+        141
+      ]
+    },
+    {
+      "signature": 140,
+      "delta": 34,
+      "base": 15,
+      "basis": [
+        25,
+        205
+      ],
+      "count": 4,
+      "members": [
+        15,
+        22,
+        194,
+        219
+      ]
+    },
+    {
+      "signature": 106,
+      "delta": 226,
+      "base": 98,
+      "basis": [
+        8,
+        17,
+        132
+      ],
+      "count": 8,
+      "members": [
+        98,
+        106,
+        115,
+        123,
+        230,
+        238,
+        247,
+        255
+      ]
+    }
+  ],
+  "input_signature_list": [
+    30,
+    62,
+    126,
+    254,
+    46,
+    110,
+    238,
+    38,
+    102,
+    230,
+    34,
+    98,
+    226
+  ],
+  "output_signature_list": [
+    146,
+    18,
+    82,
+    130,
+    2,
+    66,
+    98,
+    138,
+    10,
+    74,
+    106,
+    144,
+    16,
+    80,
+    128,
+    0,
+    64,
+    96,
+    136,
+    8,
+    72,
+    104,
+    140,
+    12,
+    76,
+    108
+  ],
+  "discarded_input_signatures": [
+    30,
+    126,
+    46,
+    110,
+    238,
+    102,
+    230,
+    98
+  ]
+}
