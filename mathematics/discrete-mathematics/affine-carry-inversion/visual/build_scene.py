@@ -132,7 +132,7 @@ for i,row in enumerate(rows):
   diamond('matrix row%d col%d=%d'%(i,j,bit),P,(-9.06+j*.19,-.08,-3.65-i*.19),.037 if bit else .018,cyan if bit else dim)
 text('L',-9.05,-3.28,.28,white)
 text('L(a + D) + L(a) = S   mod 2ʷ',-9.45,5.02,.32,white)
-text('N ≤ F',4.93,5.02,.46,gold);text('w+1',6.32,4.92,.245,gold)
+text('N ≤ F',4.93,5.02,.46,gold);text('w+1',5.72,4.92,.245,gold)
 text('256',-7.15,4.20,.31,white,True);text('13',-.55,4.20,.34,gold,True)
 text('5',6.03,4.40,.33,white,True)
 text('2',-2.8,-4.12,.83,white);text('8',-2.32,-3.60,.31,white)
