@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "Please cite the paper when using this result."
+title: "A Three-Bit Boundary for Cyclic Boolean–Modular Inversion"
+authors:
+  - name: "lmtlssss🜐"
+version: 1.0.0
+date-released: 2026-10-27
+doi: 10.5281/zenodo.23680529
+url: "https://github.com/lmtlssss/math/tree/main/mathematics/discrete-mathematics/three-bit-cyclic-inversion"
+license: CC-BY-4.0
+type: article

@@ -1,0 +1,74 @@
+{
+  "complete": true,
+  "exhaustive": [
+    {
+      "width": 4,
+      "all_masks": 16,
+      "complete_fibers": 256,
+      "max_fiber": 4
+    },
+    {
+      "width": 5,
+      "all_masks": 32,
+      "complete_fibers": 1024,
+      "max_fiber": 4
+    },
+    {
+      "width": 6,
+      "all_masks": 64,
+      "complete_fibers": 4096,
+      "max_fiber": 5
+    },
+    {
+      "width": 7,
+      "all_masks": 128,
+      "complete_fibers": 16384,
+      "max_fiber": 8
+    },
+    {
+      "width": 8,
+      "all_masks": 256,
+      "complete_fibers": 65536,
+      "max_fiber": 5
+    }
+  ],
+  "complete_fibers": 87296,
+  "wider_queries": 768,
+  "wider_widths": [
+    9,
+    12,
+    16,
+    24,
+    31,
+    32,
+    64,
+    127,
+    128,
+    255,
+    256,
+    1024
+  ],
+  "general_rotation_queries": 112,
+  "sharp_example": {
+    "width": 7,
+    "mask": 127,
+    "constant": 0,
+    "target": 127,
+    "preimages": [
+      11,
+      22,
+      44,
+      49,
+      69,
+      88,
+      98,
+      127
+    ]
+  },
+  "theorem_scope": "Exact prescribed cyclic Boolean-modular maps; all widths by proof.",
+  "extremal_family_widths_checked": [
+    4,
+    128
+  ],
+  "extremal_family_checks": 125
+}

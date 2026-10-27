@@ -1,0 +1,324 @@
+{
+  "parameters": {
+    "width": 7,
+    "mask": 127,
+    "constant": 0,
+    "target": 127,
+    "preimages": [
+      11,
+      22,
+      44,
+      49,
+      69,
+      88,
+      98,
+      127
+    ]
+  },
+  "paths": [
+    {
+      "seed": 0,
+      "initial_bits": [
+        0,
+        0,
+        0
+      ],
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "carry_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "closure_bits": [
+        0,
+        0,
+        0
+      ],
+      "accepted": true,
+      "candidate": 88,
+      "steps": 7
+    },
+    {
+      "seed": 1,
+      "initial_bits": [
+        1,
+        0,
+        0
+      ],
+      "bits": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "carry_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "closure_bits": [
+        1,
+        0,
+        0
+      ],
+      "accepted": true,
+      "candidate": 49,
+      "steps": 7
+    },
+    {
+      "seed": 2,
+      "initial_bits": [
+        0,
+        1,
+        0
+      ],
+      "bits": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "carry_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "closure_bits": [
+        0,
+        1,
+        0
+      ],
+      "accepted": true,
+      "candidate": 98,
+      "steps": 7
+    },
+    {
+      "seed": 3,
+      "initial_bits": [
+        1,
+        1,
+        0
+      ],
+      "bits": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "carry_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "closure_bits": [
+        1,
+        1,
+        0
+      ],
+      "accepted": true,
+      "candidate": 11,
+      "steps": 7
+    },
+    {
+      "seed": 4,
+      "initial_bits": [
+        0,
+        0,
+        1
+      ],
+      "bits": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "carry_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "closure_bits": [
+        0,
+        0,
+        1
+      ],
+      "accepted": true,
+      "candidate": 44,
+      "steps": 7
+    },
+    {
+      "seed": 5,
+      "initial_bits": [
+        1,
+        0,
+        1
+      ],
+      "bits": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "carry_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "closure_bits": [
+        1,
+        0,
+        1
+      ],
+      "accepted": true,
+      "candidate": 69,
+      "steps": 7
+    },
+    {
+      "seed": 6,
+      "initial_bits": [
+        0,
+        1,
+        1
+      ],
+      "bits": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "carry_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "closure_bits": [
+        0,
+        1,
+        1
+      ],
+      "accepted": true,
+      "candidate": 22,
+      "steps": 7
+    },
+    {
+      "seed": 7,
+      "initial_bits": [
+        1,
+        1,
+        1
+      ],
+      "bits": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "carry_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "closure_bits": [
+        1,
+        1,
+        1
+      ],
+      "accepted": true,
+      "candidate": 127,
+      "steps": 7
+    }
+  ]
+}
