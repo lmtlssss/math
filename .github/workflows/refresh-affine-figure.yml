@@ -1,0 +1,54 @@
+name: Refresh affine carry figure
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  figure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install native Blender
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt; fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt; fi
+          sudo apt-get -o Acquire::Retries=1 update -qq
+          sudo apt-get install -y --no-install-recommends blender python3-pil fonts-dejavu-core
+      - name: Preserve the verified PDF and render corrected typography
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd mathematics/discrete-mathematics/affine-carry-inversion
+          mkdir -p release
+          gh release download affine-carry-note-v1.0.0 --repo "$GITHUB_REPOSITORY" --pattern paper.pdf --dir release
+          echo 'e8e1c7bd8b82efa16d2c3fef5a719f14ae2dd9890d1c80b5a85769eead39ddc1  release/paper.pdf' | sha256sum -c -
+          FIGURE_OUTPUT="$PWD/release" blender -b --threads 4 --python visual/build_scene.py
+          /usr/bin/python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import hashlib,json,zipfile
+          root=Path('.');out=root/'release'
+          im=Image.open(out/'00-cover.png').convert('RGB')
+          im.quantize(colors=256,method=Image.Quantize.FASTOCTREE,dither=Image.Dither.NONE).save(out/'00-cover.png',optimize=True)
+          names=['paper.tex','atlas.py','verify.py','README.md','LICENSE.md','Makefile','CITATION.bib','CITATION.cff','VERIFICATION.md','VERIFICATION_PLAN.md','evidence/figure.json','evidence/verification.json','evidence/verification-summary.json','visual/build_scene.py']
+          with zipfile.ZipFile(out/'source-and-proof.zip','w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+              for name in names:z.write(root/name,'affine-carry-inversion/'+name)
+              z.write(out/'paper.pdf','affine-carry-inversion/paper.pdf')
+              z.write(out/'00-cover.png','affine-carry-inversion/visual/00-cover.png')
+          files=['00-cover.png','paper.pdf','affine-carry.blend','source-and-proof.zip']
+          manifest={n:{'bytes':(out/n).stat().st_size,'sha256':hashlib.sha256((out/n).read_bytes()).hexdigest(),'md5':hashlib.md5((out/n).read_bytes()).hexdigest()} for n in files}
+          (out/'MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Update only this draft's figure assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(gh release view affine-carry-note-v1.0.0 --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)" = true
+          R=mathematics/discrete-mathematics/affine-carry-inversion/release
+          gh release upload affine-carry-note-v1.0.0 "$R/00-cover.png" "$R/affine-carry.blend" "$R/source-and-proof.zip" --clobber --repo "$GITHUB_REPOSITORY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: affine-carry-final-assets
+          path: mathematics/discrete-mathematics/affine-carry-inversion/release/
