@@ -1,170 +1,307 @@
 #!/usr/bin/env python3
-"""Native Blender scene from exact eight-branch recurrence data.
-Author: lmtlssss🜐. License: MIT.
-Run: blender -b --python visual/build_scene.py
+"""Exact native Blender figure in the established graphite/cyan tensor visual system.
+All traces derive from the published three-bit source certificate.
+Author: lmtlssss🜐. The Blender file contains the full eight paths.
 """
-import json,math,os
+import bpy, json, math, hashlib, os
 from pathlib import Path
-import bpy
-from mathutils import Vector,Euler
-ROOT=Path(__file__).resolve().parents[1]
-DATA=json.loads((ROOT/'evidence/sharp-traces.json').read_text())
-OUT=Path(os.environ.get('FIGURE_OUTPUT',str(ROOT/'visual')))
-OUT.mkdir(parents=True,exist_ok=True)
-paths=DATA['paths']
-assert len(paths)==8 and all(p['accepted'] for p in paths)
+from mathutils import Vector
+from collections import defaultdict
+
+ROOT=Path(__file__).resolve().parent
+SOURCE=ROOT.parent/'evidence/sharp-traces.json'
+if not SOURCE.is_file():
+    SOURCE=ROOT.parent/'stage/paper/evidence/sharp-traces.json'
+DATA=json.loads(SOURCE.read_text(encoding='utf-8'))
+paths=sorted(DATA['paths'],key=lambda d:d['candidate'])
+assert len(paths)==8
 assert sorted(p['candidate'] for p in paths)==[11,22,44,49,69,88,98,127]
 for p in paths:
- assert p['bits'][7:10]==p['initial_bits']
- assert len(p['bits'])==10 and p['steps']==7
+    assert p['accepted'] and p['steps']==7 and len(p['bits'])==10
+    assert p['bits'][7:10]==p['initial_bits']
+    assert len(p['initial_bits'])==3
+
 bpy.ops.wm.read_factory_settings(use_empty=True)
-s=bpy.context.scene
-try:s.render.engine='BLENDER_EEVEE_NEXT'
-except TypeError:s.render.engine='BLENDER_EEVEE'
-s.render.resolution_x=2600;s.render.resolution_y=1650;s.render.resolution_percentage=100
-s.render.image_settings.file_format='PNG';s.render.filepath=str(OUT/'three-bit-boundary.png')
-s.render.film_transparent=False
-s.view_settings.view_transform='Standard'
-s.render.image_settings.color_mode='RGBA'
-world=bpy.data.worlds.new('Paper light');s.world=world;world.use_nodes=True
-world.node_tree.nodes['Background'].inputs['Color'].default_value=(0.89,0.88,0.84,1)
-world.node_tree.nodes['Background'].inputs['Strength'].default_value=.65
+scene=bpy.context.scene
+try: scene.render.engine='BLENDER_EEVEE_NEXT'
+except Exception: scene.render.engine='BLENDER_EEVEE'
+scene.render.resolution_x=2400
+scene.render.resolution_y=1650
+scene.render.resolution_percentage=100
+scene.render.image_settings.file_format='PNG'
+scene.render.image_settings.color_mode='RGB'
+scene.render.filepath=str(ROOT/'three-bit-boundary.png')
+scene.render.film_transparent=False
+scene.view_settings.view_transform='Standard'
+try: scene.view_settings.look='Medium High Contrast'
+except Exception: pass
 
-def collection(name):
- c=bpy.data.collections.new(name);s.collection.children.link(c);return c
-CUBE=collection('01 | eight boundary states')
-ROUTES=collection('02 | exact seed-to-branch routes')
-PATHS=collection('03 | 80 trace bits, 8 times 10')
-CLOSURE=collection('04 | three closure coordinates per branch')
-TYPE=collection('05 | mathematical notation')
-STUDIO=collection('06 | camera, lights, ground')
+world=bpy.data.worlds.new('Graphite / #080d12')
+scene.world=world;world.use_nodes=True
+world.node_tree.nodes['Background'].inputs['Color'].default_value=(.0046,.0078,.0115,1)
+world.node_tree.nodes['Background'].inputs['Strength'].default_value=.5
 
-def move(o,c):
- for old in list(o.users_collection):old.objects.unlink(o)
- c.objects.link(o);return o
+def col(name):
+    c=bpy.data.collections.new(name);scene.collection.children.link(c);return c
+A=col('01 / eight three-bit boundary conditions')
+B=col('02 / deterministic forced input bits')
+C=col('03 / closure, each bit repeats')
+D=col('04 / eight exact preimages')
+E=col('05 / seven-cycle sharpness certificate')
+F=col('06 / mathematical type and dimensions')
+G=col('07 / camera and background')
 
-def material(name,color,metal=0,rough=.5,emission=False):
- m=bpy.data.materials.new(name);m.diffuse_color=(*color,1);m.use_nodes=True
- bs=m.node_tree.nodes.get('Principled BSDF');bs.inputs['Base Color'].default_value=(*color,1)
- bs.inputs['Metallic'].default_value=metal;bs.inputs['Roughness'].default_value=rough
- if emission:
-  bs.inputs['Emission Color'].default_value=(*color,1);bs.inputs['Emission Strength'].default_value=.6
- return m
-BLACK=material('graphite',(.025,.032,.035),.15,.4)
-PAPER=material('warm white',(.92,.91,.865),0,.72)
-PALE=material('bit zero / porcelain',(.72,.74,.73),.12,.37)
-GOLD=material('boundary / ochre',(.83,.37,.075),.28,.3)
-GRAY=material('construction line',(.43,.47,.47),0,.65)
-DARK=material('notation',(.025,.032,.035),0,.9,True)
-ORANGE=material('notation ochre',(.68,.25,.03),0,.9,True)
+def make_emission(name, color, strength=1.0):
+    mat=bpy.data.materials.new(name)
+    mat.diffuse_color=tuple(color)+(1,)
+    mat.use_nodes=True
+    nodes=mat.node_tree.nodes;nodes.clear()
+    em=nodes.new('ShaderNodeEmission')
+    em.inputs['Color'].default_value=tuple(color)+(1,)
+    em.inputs['Strength'].default_value=strength
+    output=nodes.new('ShaderNodeOutputMaterial')
+    mat.node_tree.links.new(em.outputs['Emission'],output.inputs['Surface'])
+    return mat
 
-def sphere(name,position,radius,mat,c):
- bpy.ops.mesh.primitive_uv_sphere_add(segments=20,ring_count=12,radius=radius,location=position)
- o=move(bpy.context.object,c);o.name=name;o.data.materials.append(mat)
- for f in o.data.polygons:f.use_smooth=True
- return o
+ink=make_emission('white / foreground',(.84,.90,.93),1.15)
+pale=make_emission('soft white',(.54,.68,.73),.88)
+dim=make_emission('construction / graphite blue',(.17,.31,.38),.65)
+ghost=make_emission('zero bit dim',(.10,.16,.20),.49)
+gold=make_emission('sharp witness / 3-bit',(.96,.75,.38),1.3)
+goldsoft=make_emission('unlit witness gold',(.49,.38,.23),.78)
+green=make_emission('steps / cyan',(.45,.85,.79),1.1)
+palette=[
+  (.53,.79,.85),(.62,.78,.74),(.76,.70,.83),(.87,.75,.58),
+  (.56,.84,.80),(.84,.69,.78),(.62,.73,.94),(.95,.80,.55)
+]
+route_mats=[make_emission('route %d'%i,p,1.0) for i,p in enumerate(palette)]
+node_mats=[make_emission('node %d'%i,p,1.2) for i,p in enumerate(palette)]
 
-def line(name,points,mat,r=.014,c=ROUTES,bezier=False):
- d=bpy.data.curves.new(name,'CURVE');d.dimensions='3D';d.resolution_u=24;d.bevel_depth=r;d.bevel_resolution=3
- sp=d.splines.new('BEZIER' if bezier else 'POLY')
- if bezier:
-  sp.bezier_points.add(len(points)-1)
-  for p,co in zip(sp.bezier_points,points):p.co=co;p.handle_left_type='AUTO';p.handle_right_type='AUTO'
- else:
-  sp.points.add(len(points)-1)
-  for p,co in zip(sp.points,points):p.co=(*co,1)
- o=bpy.data.objects.new(name,d);c.objects.link(o);d.materials.append(mat);return o
+def mesh(name, collection, positions, faces, mat, props=None):
+    m=bpy.data.meshes.new(name);m.from_pydata(positions,[],faces);m.update()
+    ob=bpy.data.objects.new(name,m);collection.objects.link(ob)
+    m.materials.append(mat)
+    for k,v in (props or {}).items(): ob[k]=v
+    return ob
 
-sanspath='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
-serifpath='/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf'
-monopath='/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'
-fonts={}
-for key,p in [('sans',sanspath),('serif',serifpath),('mono',monopath),('symbol','/usr/share/fonts/truetype/noto/NotoSansSymbols-Regular.ttf')]:
- if Path(p).exists():fonts[key]=bpy.data.fonts.load(p)
+def diamond(name,collection,pos,r,mat,props=None):
+    x,y,z=pos
+    offsets=((r,0,0),(-r,0,0),(0,r*.57,0),(0,-r*.57,0),(0,0,r),(0,0,-r))
+    verts=[(x+a,y+b,z+c) for a,b,c in offsets]
+    faces=((0,2,4),(2,1,4),(1,3,4),(3,0,4),(2,0,5),(1,2,5),(3,1,5),(0,3,5))
+    return mesh(name,collection,verts,faces,mat,props)
 
-def text(body,x,z,size=.3,mat=DARK,align='LEFT',font='sans',y=-2):
- d=bpy.data.curves.new(body,'FONT');d.body=body;d.size=size;d.align_x=align;d.space_character=1.05
- if font in fonts:d.font=fonts[font]
- d.extrude=.0002
- o=bpy.data.objects.new('Text | '+body,d);TYPE.objects.link(o)
- o.location=(x,y,z);o.rotation_euler=(math.pi/2,0,0);d.materials.append(mat);o['text']=body
- # Keep native mesh typography and avoid embedding or distributing font files.
- bpy.ops.object.select_all(action='DESELECT');bpy.context.view_layer.objects.active=o;o.select_set(True)
- bpy.ops.object.convert(target='MESH');o.select_set(False)
- return o
+def line(name,collection,points,mat,thickness=.008,smooth=False):
+    curve=bpy.data.curves.new(name,'CURVE');curve.dimensions='3D'
+    curve.bevel_depth=thickness;curve.bevel_resolution=2;curve.resolution_u=15
+    spline=curve.splines.new('BEZIER' if smooth else 'POLY')
+    if smooth:
+        spline.bezier_points.add(len(points)-1)
+        for bp,p in zip(spline.bezier_points,points):
+            bp.co=p;bp.handle_left_type='AUTO';bp.handle_right_type='AUTO'
+    else:
+        spline.points.add(len(points)-1)
+        for sp,p in zip(spline.points,points):sp.co=(*p,1)
+    ob=bpy.data.objects.new(name,curve);collection.objects.link(ob)
+    curve.materials.append(mat)
+    return ob
 
-# A true three-dimensional cube: 8 seed vertices, 12 edges.
-rot=Euler((.32,.48,.16)).to_matrix();center=Vector((-6.9,.0,.2));scale=1.5
-points={}
-for p in paths:
- seed=p['seed'];b=p['initial_bits'];local=Vector(tuple((2*v-1)*scale for v in b));q=center+rot@local
- points[seed]=q
- o=sphere('Boundary '+''.join(map(str,b)),q,.14,GOLD,CUBE);o['seed']=seed;o['bits']=b
- text(''.join(map(str,b)),q.x-.12,q.z+.25,.215,font='mono',y=q.y-.4)
-for a in range(8):
- for bit in range(3):
-  b=a^(1<<bit)
-  if a<b:line('Cube edge %s-%s'%(a,b),[points[a],points[b]],BLACK,.02,CUBE)
+FONT='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+MONO='/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'
+font=bpy.data.fonts.load(FONT) if Path(FONT).exists() else None
+mono=bpy.data.fonts.load(MONO) if Path(MONO).exists() else None
 
-# Every row is an actual recurrence. The last three beads certify closure.
-xstart=-2.15; spacing=.94; top=3.02;dy=.77
-trace_positions={}
+def label(body,x,z,size=.28,material=ink,center=False,monospace=False):
+    curve=bpy.data.curves.new(body,'FONT')
+    curve.body=body;curve.size=size;curve.align_x='CENTER' if center else 'LEFT'
+    curve.space_character=1.0
+    if (mono if monospace else font) is not None:
+        curve.font=mono if monospace else font
+    curve.extrude=.0001
+    ob=bpy.data.objects.new('Text / '+body,curve);F.objects.link(ob)
+    ob.location=(x,-.78,z);ob.rotation_euler=(math.pi/2,0,0)
+    curve.materials.append(material)
+    # Convert to mesh so font binaries aren't embedded in the source archive.
+    bpy.ops.object.select_all(action='DESELECT')
+    bpy.context.view_layer.objects.active=ob;ob.select_set(True)
+    bpy.ops.object.convert(target='MESH');ob.select_set(False)
+    return ob
+
+# Header: one mathematical definition and one theorem, like the prior tensor plate.
+label('F(x) = (R₁x ⊕ R₃x) + (x ∧ c) + k    mod 2ʷ',-10.08,5.30,.31,ink)
+label('|F⁻¹(y)| ≤ 8',5.45,5.30,.45,gold)
+# Eight proof paths: every site comes from the published recurrence, not a conceptual illustration.
+# The initial three bit values are gold-marked, closure bits are pale-gold; intervening nodes show actual 0/1.
+source_x=-9.19
+x0=-5.93
+dx=.94
+top=3.75
+dy=.77
+yfront=-.15
+rows={}
+labels=[]
+for idx,p in enumerate(paths):
+    z=top-idx*dy
+    seed=p['initial_bits']
+    code=''.join(map(str,seed))
+    rgb=route_mats[idx]
+    dimbit=route_mats[idx]
+    # Three physical input bits, one per assigned coordinate.
+    for j,b in enumerate(seed):
+        x=source_x+j*.34
+        diamond('source bit seed=%s j=%d v=%d'%(code,j,b),A,
+                (x,yfront,z),.095 if b else .057,gold if b else goldsoft,
+                {'seed':code,'bit_index':j,'bit':b})
+    line('source port %s'%code,A,
+         [(source_x-.12,yfront,z),(source_x+.89,yfront,z)],dim,.008)
+    label(code,source_x-.98,z-.075,.245,pale,monospace=True)
+    positions=[]
+    for j,bit in enumerate(p['bits']):
+        x=x0+dx*j
+        extra=.12 if bit else -.09
+        # Use the bit value as a small measurable path displacement, not decoration.
+        pos=Vector((x,yfront-.10*bit,z+extra))
+        positions.append(pos)
+        if j<3:
+            material=gold if bit else goldsoft
+            size=.085 if bit else .065
+            target=A
+        elif j<7:
+            material=node_mats[idx] if bit else ghost
+            size=.075 if bit else .045
+            target=B
+        else:
+            material=gold if bit else goldsoft
+            size=.080 if bit else .062
+            target=C
+        diamond('row %d exact x_%d = %d'%(idx,j,bit),target,pos,size,material,
+                {'path':idx,'seed':code,'bit_index':j,'bit_value':bit,'closure':j>=7})
+        if j>0:
+            line('forced step %d / %d'%(idx,j),B,
+                 [positions[-2],pos],rgb,.010 if bit else .007)
+    rows[p['candidate']]=positions
+    # Across the source-to-trace junction, exact data are conveyed by 3 bits.
+    line('source → path %s'%code,B,
+         [(source_x+.91,yfront,z),(-7.20,-.36,z),positions[0]],rgb,.008,True)
+    # The three terminal coordinates repeat the first three by exact cyclic closure.
+    for j in range(3):
+        assert p['bits'][j]==p['bits'][j+7]
+    # Explicit expected inverse value, as the output sites in the reference tensor graphic.
+    dest=Vector((7.93,yfront,z))
+    line('validated inverse %d'%p['candidate'],D,
+         [positions[-1],(5.72,-.35,z+.035),dest],rgb,.010,True)
+    diamond('preimage '+str(p['candidate']),D,dest,.145,node_mats[idx],
+            {'preimage':p['candidate'],'seed':code})
+    label(str(p['candidate']),8.33,z-.07,.245,pale,monospace=True)
+
+# Each emitted bit depends on two earlier positions in the exact recurrence
+# x_(i+3) = t_i XOR x_(i+1) XOR (x_i AND c_i) XOR carry_i.
+# The thin threads show these genuine dependencies, analogous to source→factor
+# routes in the twelve-state tensor publication. None is randomly generated.
+dep=col('08 / exact local recurrence dependency threads')
+thread=make_emission('dependency cyan / substructure',(.18,.44,.49),.48)
+thread_gold=make_emission('dependency ochre / substructure',(.53,.39,.20),.47)
 for row,p in enumerate(paths):
- z=top-row*dy;seed=p['seed'];positions=[]
- for j,bit in enumerate(p['bits']):
-  x=xstart+j*spacing+(0.3 if j>=7 else 0)
-  co=Vector((x,-.20-.27*bit,z+.13*bit));positions.append(co)
-  mat=GOLD if j<3 or j>=7 else (BLACK if bit else PALE)
-  o=sphere('seed %d / x%d=%d'%(seed,j,bit),co,.105 if bit else .067,mat,CLOSURE if j>=7 else PATHS)
-  o['seed']=seed;o['coordinate']=j;o['bit']=bit
-  if j>0:line('path %d segment %d'%(seed,j),[positions[-2],co],BLACK,.009,PATHS)
- trace_positions[seed]=positions
- line('seed %d route'%seed,[points[seed],Vector((-4.2,-.08,z)),positions[0]],GRAY,.009,ROUTES,True)
- text(str(p['candidate']),8.05,z-.075,.23,font='mono')
- # Equality links, not new transitions: three links pair first and last bits.
- for j in range(3):
-  a=positions[j];b=positions[7+j]
-  line('closure %d coordinate %d'%(seed,j),[a,Vector((a.x+.45,.30,z-.22)),Vector((b.x-.45,.30,z-.22)),b],GOLD,.0045,CLOSURE,True)
+    pos=rows[p['candidate']]
+    for i in range(7):
+        a=pos[i];b=pos[i+1];target=pos[i+3]
+        # Two distinct causal bit inputs to every forced later bit.
+        lift=.22+0.045*(i%3)
+        line('recurrence x_%d → x_%d seed %d'%(i,i+3,row),dep,
+             [(a.x,.31,a.z),(a.x+.69,.35,a.z+lift),
+              (target.x-.55,.35,target.z+lift*.64),(target.x,.31,target.z)],
+             thread_gold if i<3 else thread,.0038,True)
+        line('recurrence x_%d → x_%d seed %d'%(i+1,i+3,row),dep,
+             [(b.x,.29,b.z),(b.x+.36,.31,b.z-lift*.68),
+              (target.x-.35,.31,target.z-lift*.58),(target.x,.29,target.z)],
+             thread,.0027,True)
 
-# Coordinate labels, separation marks and measured range.
-for j in range(10):
- x=xstart+j*spacing+(.3 if j>=7 else 0)
- subs=['₀','₁','₂','₃','₄','₅','₆','₇','₈','₉']
- text('x'+subs[j],x,3.7,.245,align='CENTER',font='serif')
-line('closure divider',[(4.11,.05,3.4),(4.11,.05,-2.65)],GRAY,.007,STUDIO)
-text('x',8.05,3.7,.3,font='serif')
-text('w = 7     c = y = 127     k = 0',-.55,-3.25,.27,align='CENTER',font='mono')
+# Guides and small labels reveal structure but do not repeat the theorem.
+line('boundary divider',G,[(-6.45,-.02,4.24),(-6.45,-.02,-2.31)],dim,.007)
+line('closure divider',G,[(.20,-.02,4.24),(.20,-.02,-2.31)],dim,.006)
+line('trace frame top',G,[(-6.13,-.02,4.28),(2.72,-.02,4.28)],dim,.006)
+line('trace frame bottom',G,[(-6.13,-.02,-2.30),(2.72,-.02,-2.30)],dim,.006)
+label('3',-8.72,4.48,.34,gold)
+label('7',-1.83,4.48,.34,pale)
+label('8',7.89,4.48,.34,ink)
+label('x₀',-5.95,4.42,.16,pale,center=True)
+label('x₉',2.55,4.42,.16,pale,center=True)
 
-# Sparse equation hierarchy. Superscripts are explicit geometry where needed.
-text('2',-8.65,4.66,1.2,font='serif');text('w',-7.85,5.36,.48,font='serif')
-text('→',-6.42,4.8,.9)
-text('2',-4.85,4.66,1.2,font='serif');text('3',-4.04,5.36,.48,font='serif')
-text('= 8',-3.45,4.66,1.2,ORANGE,font='serif')
-text('|F⁻¹(y)| ≤ 8',8.75,4.9,.63,align='RIGHT',font='serif')
-line('header rule',[(-9.1,-.6,4.3),(9.1,-.6,4.3)],BLACK,.007,STUDIO)
-text('F(x) = ((R₁x ⊕ R₃x) + (x ∧ c) + k) mod 2ʷ',0,-4.33,.44,align='CENTER',font='serif')
-text('(x₇, x₈, x₉) = (x₀, x₁, x₂)',-8.9,-5.23,.30,font='serif')
-text('≤ 8w',8.8,-5.23,.65,ORANGE,align='RIGHT',font='serif')
-line('footer rule',[(-9.1,-.6,-5.7),(9.1,-.6,-5.7)],BLACK,.006,STUDIO)
-text('lmtlssss',-9.05,-6.15,.22,font='mono')
-text('🜐',-7.89,-6.15,.22,font='symbol')
-text('10.5281/zenodo.23680529',9.05,-6.15,.22,align='RIGHT',font='mono')
-text('w ≥ 4',0,-6.15,.23,align='CENTER',font='serif')
+# Exact seven-cycle plus fixed point for the sharpness witness.
+# T(a,b,c)=(b,c,1 ⊕ b ⊕ a) when w=7 and c=y=127, k=0.
+def transition(state):
+    a,b,c=state
+    return (b,c,1^b^a)
+states=[tuple((i>>j)&1 for j in range(3)) for i in range(8)]
+fixed=[s for s in states if transition(s)==s]
+assert fixed==[(1,1,1)]
+ring=[(0,0,0)]
+for _ in range(6): ring.append(transition(ring[-1]))
+assert len(set(ring))==7 and transition(ring[-1])==ring[0]
+cx=-8.52;cz=-4.62;radius=1.08
+orbit={}
+for j,state in enumerate(ring):
+    a=math.tau*j/7-math.pi/2
+    pos=Vector((cx+radius*math.cos(a),-.22,cz+radius*math.sin(a)))
+    orbit[state]=pos
+    diamond('period-seven state '+''.join(map(str,state)),E,pos,.11,gold)
+for s in ring:
+    nxt=transition(s)
+    p=orbit[s];q=orbit[nxt]
+    line('seven-cycle arrow '+''.join(map(str,s)),E,[p,q],route_mats[3],.012)
+diamond('fixed point 111',E,(cx,-.20,cz),.15,ink,
+        {'state':111,'fixed_point':True})
+label('7 + 1',-6.96,-4.67,.30,pale)
 
-# Background panel and light, all in the native Blender scene.
-bpy.ops.mesh.primitive_plane_add(size=200,location=(0,2,0),rotation=(math.pi/2,0,0))
-o=move(bpy.context.object,STUDIO);o.name='paper plane';o.data.materials.append(PAPER)
-bpy.ops.object.camera_add(location=(0,-38,0));cam=move(bpy.context.object,STUDIO)
-cam.name='Orthographic publication view';cam.rotation_euler=(Vector((0,0,-.15))-cam.location).to_track_quat('-Z','Y').to_euler()
-cam.data.type='ORTHO';cam.data.ortho_scale=20.7;s.camera=cam
-for name,loc,power,size in [('key',(-5,-11,9),1350,9),('fill',(8,-7,2),900,7)]:
- bpy.ops.object.light_add(type='AREA',location=loc);l=move(bpy.context.object,STUDIO);l.name=name;l.data.energy=power;l.data.shape='DISK';l.data.size=size
- l.rotation_euler=(Vector((0,0,0))-l.location).to_track_quat('-Z','Y').to_euler()
-for f in list(bpy.data.fonts):
- if f.name!='Bfont' and f.users==0:bpy.data.fonts.remove(f)
-s['author']='lmtlssss🜐';s['source']='evidence/sharp-traces.json';s['boundary_states']=8;s['trace_bits']=80;s['closure_equalities']=24
-s['meaning']='Exact recurrence paths for the sharp seven-bit fiber; three chosen bits and zero initial carry.'
-t=bpy.data.texts.new('EXACT_TRACE.json');t.write(json.dumps(DATA,indent=2))
-bpy.ops.wm.save_as_mainfile(filepath=str(OUT/'three-bit-boundary.blend'),compress=True)
-if os.environ.get('RENDER','1')=='1':bpy.ops.render.render(write_still=True)
-print('SCENE_OK',str(OUT/'three-bit-boundary.blend'),'TRACE_PATHS',len(paths),'BIT_NODES',80,flush=True)
+# The main claim, one visual hierarchy: input domain to eight source seeds.
+label('2',-1.92,-4.41,.86,ink)
+label('w',-1.35,-3.91,.36,pale)
+label('→',-.55,-4.40,.78,ink)
+label('8',.77,-4.42,.94,gold)
+label('≤ 8w',-.24,-5.23,.42,green,center=True)
+label('w = 7     c = y = 127     k = 0',4.84,-4.23,.225,pale,monospace=True)
+
+# Quiet footer, no decorative slogan, no re-captioning of every quantity.
+label('lmtlssss',7.66,-6.00,.23,ink,monospace=True)
+label('10.5281/zenodo.23680529',-1.95,-6.00,.195,pale,monospace=True)
+# Embed source for audit and reproducibility.
+tt=bpy.data.texts.new('EXACT_EIGHT_PREIMAGES.json')
+tt.write(json.dumps(DATA,sort_keys=True,indent=2))
+readme=bpy.data.texts.new('SCENE_STRUCTURE')
+readme.write('Graphite figure for the exact three-bit inversion theorem. Eight input triples feed eight deterministic seven-step recurrences. Every preimage is exact. T has a seven-cycle and the fixed point (1,1,1). No simulated branches.\n')
+scene['author']='lmtlssss🜐'
+scene['doi']='10.5281/zenodo.23680529'
+scene['proof']='sharp-traces.json'
+scene['exact_preimages']=str(sorted(rows))
+scene['three_bit_states']=8
+scene['forced_updates']=8*7
+scene['sharpness_cycles']='7 + 1'
+scene['source_sha256']=hashlib.sha256(SOURCE.read_bytes()).hexdigest()
+
+# Native orthographic camera, not a rasterized SVG.
+bpy.ops.object.camera_add(location=(1.8,-35,7.0))
+camera=bpy.context.object;camera.name='Proof plate / orthographic'
+for co in list(camera.users_collection):co.objects.unlink(camera)
+G.objects.link(camera)
+target=Vector((-.04,0,-.18))
+camera.rotation_euler=(target-camera.location).to_track_quat('-Z','Y').to_euler()
+camera.data.type='ORTHO'
+camera.data.ortho_scale=22.8
+scene.camera=camera
+
+# An opaque, matte world plane eliminates soft gradients and spotlight artifacts.
+background=make_emission('flat graphite field',(.0066,.0105,.0148),1.0)
+bpy.ops.mesh.primitive_plane_add(size=200,location=(0,1.0,0),rotation=(math.pi/2,0,0))
+ob=bpy.context.object;ob.name='Backdrop / graphite'
+for co in list(ob.users_collection):co.objects.unlink(ob)
+G.objects.link(ob);ob.data.materials.append(background)
+for o in bpy.data.objects:
+    if o.type=='MESH':
+        o.hide_set(False)
+try:bpy.ops.file.pack_all()
+except Exception:pass
+blend=ROOT/'three-bit-boundary.blend'
+bpy.ops.wm.save_as_mainfile(filepath=str(blend),compress=True)
+bpy.ops.render.render(write_still=True)
+assert blend.is_file() and Path(scene.render.filepath).is_file()
+print('RENDER_COMPLETE',blend,scene.render.filepath,'SHA256',scene['source_sha256'],flush=True)
