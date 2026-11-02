@@ -3,8 +3,8 @@ message: "Please cite the accompanying mathematical preprint."
 title: "Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences"
 authors:
   - name: "lmtlssss🜐"
-version: 1.0.0
+version: 1.0.1
 date-released: 2026-11-02
-doi: 10.5281/zenodo.23897133
+doi: 10.5281/zenodo.23900237
 url: https://github.com/lmtlssss/math/tree/main/mathematics/analysis/damped-recurrence-certificates
 license: CC-BY-4.0

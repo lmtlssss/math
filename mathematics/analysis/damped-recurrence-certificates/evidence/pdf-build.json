@@ -1,14 +1,16 @@
 {
   "author": "lmtlssss🜐",
   "characters": 14510,
-  "doi": "10.5281/zenodo.23897133",
+  "doi": "10.5281/zenodo.23900237",
   "mathematics_only": true,
   "native_typesetter": "Tectonic 0.17.0",
   "pages": 6,
   "slug": "damped-recurrence-certificates",
   "title": "Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences",
   "unresolved_references": false,
-  "layout_review": "Native page images inspected",
+  "layout_review": "All six pages rendered and inspected. The corrected row-action matrix is visible in Lemma 6 on page 4.",
   "source_derived_figure_review": "Native Blender output inspected",
-  "typesetting_issues": []
+  "typesetting_issues": [],
+  "version": "1.0.1",
+  "pdf_sha256": "021dff76b085ff0d5ca00f366976854222796838fc6e3f4493c4bec0450eaac4"
 }

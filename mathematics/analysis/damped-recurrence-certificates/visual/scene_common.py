@@ -6,6 +6,7 @@ from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[1]
 D=json.loads((ROOT/'evidence/figure.json').read_text())
 META=json.loads((ROOT/'metadata.json').read_text())
+FIGURE_DOI=META.get('figure_origin_doi',META['doi'])
 OUT=Path(os.environ.get('FIGURE_OUTPUT',str(ROOT/'release')));OUT.mkdir(parents=True,exist_ok=True)
 # Start Blender with the saved canonical .blend as its positional input. The
 # original file is read only; every new artifact has a distinct output path.
@@ -92,12 +93,12 @@ def finish(scene_name,meaning):
  bpy.ops.object.camera_add(location=(1.8,-36,5.3));cam=bpy.context.object
  for col in list(cam.users_collection):col.objects.unlink(cam)
  S.objects.link(cam);cam.name='Mathematical publication / orthographic';cam.rotation_euler=(Vector((0,0,-.2))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=22.8;s.camera=cam
- text(META['doi'],-9.0,-6.6,.16,DIM);text('lmtlssss',7.0,-6.6,.22)
+ text(FIGURE_DOI,-9.0,-6.6,.16,DIM);text('lmtlssss',7.0,-6.6,.22)
  # All type is converted to geometry; no external or packed font files.
  for f in list(bpy.data.fonts):
   if f.name!='Bfont':bpy.data.fonts.remove(f)
  proof=bpy.data.texts.new('MATHEMATICAL_CERTIFICATE.json');proof.write(json.dumps(D,indent=2))
- s['author']='lmtlssss🜐';s['doi']=META['doi'];s['title']=META['title'];s['meaning']=meaning
+ s['author']='lmtlssss🜐';s['doi']=FIGURE_DOI;s['title']=META['title'];s['meaning']=meaning
  s['style_source']='tensor-note-v1.0.0';s['style_source_sha256']=TEMPLATE_HASH
  blend=OUT/(scene_name+'.blend');png=OUT/'00-cover.png';s.render.filepath=str(png)
  bpy.ops.wm.save_as_mainfile(filepath=str(blend),compress=True)
@@ -105,6 +106,6 @@ def finish(scene_name,meaning):
  h=png.read_bytes()[:24];assert h[:8]==b'\x89PNG\r\n\x1a\n'
  width,height=struct.unpack('>II',h[16:24]);assert width==3840 and height==s.render.resolution_y
  assert hashlib.sha256(TEMPLATE.read_bytes()).hexdigest()==TEMPLATE_HASH
- receipt={'blender':bpy.app.version_string,'engine':s.render.engine,'source_style':'tensor-note-v1.0.0','source_style_sha256':TEMPLATE_HASH,'original_settings':original,'resolution':[width,height],'certificate_sha256':hashlib.sha256((ROOT/'evidence/figure.json').read_bytes()).hexdigest(),'png_sha256':hashlib.sha256(png.read_bytes()).hexdigest(),'blend_sha256':hashlib.sha256(blend.read_bytes()).hexdigest(),'source_template_preserved':True,'font_assets_distributed':False,'objects':len(s.objects),'title':META['title'],'doi':META['doi']}
+ receipt={'blender':bpy.app.version_string,'engine':s.render.engine,'source_style':'tensor-note-v1.0.0','source_style_sha256':TEMPLATE_HASH,'original_settings':original,'resolution':[width,height],'certificate_sha256':hashlib.sha256((ROOT/'evidence/figure.json').read_bytes()).hexdigest(),'png_sha256':hashlib.sha256(png.read_bytes()).hexdigest(),'blend_sha256':hashlib.sha256(blend.read_bytes()).hexdigest(),'source_template_preserved':True,'font_assets_distributed':False,'objects':len(s.objects),'title':META['title'],'doi':FIGURE_DOI}
  (OUT/'render-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
  print('NATIVE_MATHEMATICS_4K_VERIFIED',json.dumps(receipt),flush=True)

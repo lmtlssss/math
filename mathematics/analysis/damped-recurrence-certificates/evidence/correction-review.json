@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "version": "1.0.1",
+  "doi": "10.5281/zenodo.23900237",
+  "correction": "Right multiplication of observation row vectors uses A=((0,1),(-s,q)).",
+  "basis_identities": [
+    "(1,0) A = (0,1)",
+    "(0,1) A = (-s,q)"
+  ],
+  "theorem_regions_unchanged": true,
+  "certificate_grid_pairs": 8478,
+  "independent_primal_region_counts": {
+    "horizon_2": 2869,
+    "horizon_3": 3014,
+    "horizon_at_least_4": 2595,
+    "disagreements": 0
+  },
+  "review": "Independent mathematical proof review and exact primal-strip coefficient-grid comparison.",
+  "figure_geometry_unchanged": true
+}

@@ -1,7 +1,7 @@
 # Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences
 
-**lmtlssss🜐 · 2 November 2026 · Version 1.0.0**
-DOI: [10.5281/zenodo.23897133](https://doi.org/10.5281/zenodo.23897133)
+**lmtlssss🜐 · 2 November 2026 · Version 1.0.1**
+DOI: [10.5281/zenodo.23900237](https://doi.org/10.5281/zenodo.23900237)
 
 Exact coefficient inequalities classify the stable conjugate-root recurrences with minimal uniform peak horizon two or three. A symmetric observation hexagon supplies necessity and sufficiency. An explicit rational boundary example has shortest uniform horizon three. Sharp observation constants, rational adaptive certificates and exact Stein sums accompany the new coefficient-region result.
 
@@ -13,7 +13,7 @@ The principal result is the closed necessary-and-sufficient coefficient classifi
 
 `paper.tex` is the mathematical manuscript. `verify.py` reconstructs the foundational examples; `verify_extension.py` reconstructs the principal discovery and its independent comparisons. `evidence/verification.json` and `evidence/discovery.json` contain the observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.
 
-The release includes `paper.pdf`, `00-cover.png` at native 3840-pixel width, `damped-recurrence-certificates.blend`, and `source-and-proof.zip`. The saved scene and image embed the publication DOI. The figure follows the author's established mathematical visual series.
+The release includes `paper.pdf`, `00-cover.png` at native 3840-pixel width, `damped-recurrence-certificates.blend`, and `source-and-proof.zip`. The saved scene and image retain the original figure DOI, 10.5281/zenodo.23897133. The figure geometry and exact certificate are unchanged. The manuscript and citation files identify version 1.0.1. The figure follows the author's established mathematical visual series.
 
 ## Reproduce
 
@@ -32,6 +32,10 @@ FIGURE_OUTPUT="$PWD/release" MATHEMATICS_FONT=/path/to/DejaVuSans.ttf \
 ```
 
 The style authority is the author's [tensor-note-v1.0.0 release](https://github.com/lmtlssss/math/releases/tag/tensor-note-v1.0.0). The builder preserves the source scene file, reuses its world and render/color settings, and records its SHA-256 in `render-receipt.json`. Text is converted to mesh geometry. The published package contains no font files.
+
+## Version correction
+
+Version 1.0.1 corrects the matrix for right multiplication of observation row vectors in Lemma 6. The exact coefficient regions and verification results remain unchanged. See CORRECTION.md.
 
 ## Citation and licence
 

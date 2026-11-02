@@ -4,7 +4,7 @@
   "short_title": "Minimal peak horizons for damped recurrences",
   "author": "lmtlssss🜐",
   "date": "2026-11-02",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "cc-by-4.0",
   "type": "preprint",
   "keywords": [
@@ -14,9 +14,10 @@
     "exact peak",
     "sharp observation bound"
   ],
-  "doi": "10.5281/zenodo.23897133",
+  "doi": "10.5281/zenodo.23900237",
   "repository_path": "mathematics/analysis/damped-recurrence-certificates",
-  "zenodo_record_id": 23897133,
+  "zenodo_record_id": 23900237,
   "abstract": "Exact coefficient inequalities classify the stable conjugate-root recurrences with minimal uniform peak horizon two or three. A symmetric observation hexagon supplies necessity and sufficiency. An explicit rational boundary example has shortest uniform horizon three. Sharp observation constants, rational adaptive certificates and exact Stein sums accompany the new coefficient-region result.",
-  "principal_contribution": "The principal result is the closed necessary-and-sufficient coefficient classification for minimal horizons two and three, including all boundary equalities. General finite determination, polar invariant sets and Stein identities are classical. The paper gives the exact second-order regions rather than presenting those general tools as new."
+  "principal_contribution": "The principal result is the closed necessary-and-sufficient coefficient classification for minimal horizons two and three, including all boundary equalities. General finite determination, polar invariant sets and Stein identities are classical. The paper gives the exact second-order regions rather than presenting those general tools as new.",
+  "figure_origin_doi": "10.5281/zenodo.23897133"
 }
