@@ -1,0 +1,27 @@
+{
+  "blender": "5.2.3 LTS",
+  "engine": "BLENDER_EEVEE",
+  "source_style": "tensor-note-v1.0.0",
+  "source_style_sha256": "b9e3c857d3e700f8db7f95cd32c283264d10b1944a287b3fd72670370b491417",
+  "original_settings": {
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      2200,
+      1550
+    ],
+    "view_transform": "Standard",
+    "world": "Technical stage / graphite"
+  },
+  "resolution": [
+    3840,
+    2705
+  ],
+  "certificate_sha256": "34840ca4cdb16bf67a52187253f30ef8c17eda18ab808189678a1d100fff7cf6",
+  "png_sha256": "f2afcbe3efce9e7eda924f996eb1f4c8ff12835087bb695be1c1f95449adf66e",
+  "blend_sha256": "52a0fe2f1291d6124e60114b7930da6b76e65173e27425f32a7627b94e3b2790",
+  "source_template_preserved": true,
+  "font_assets_distributed": false,
+  "objects": 545,
+  "title": "Exact Amplitude Elimination under Robust and Quantized Constraints",
+  "doi": "10.5281/zenodo.23897131"
+}

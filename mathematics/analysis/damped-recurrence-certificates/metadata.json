@@ -1,0 +1,20 @@
+{
+  "title": "Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences",
+  "slug": "damped-recurrence-certificates",
+  "short_title": "Finite peak certificates for damped recurrences",
+  "author": "lmtlssss🜐",
+  "date": "2026-11-02",
+  "version": "1.0.0",
+  "license": "cc-by-4.0",
+  "type": "preprint",
+  "keywords": [
+    "linear recurrence",
+    "sharp bound",
+    "observability",
+    "peak certificate",
+    "Stein equation"
+  ],
+  "doi": "10.5281/zenodo.23897133",
+  "repository_path": "mathematics/analysis/damped-recurrence-certificates",
+  "zenodo_record_id": 23897133
+}

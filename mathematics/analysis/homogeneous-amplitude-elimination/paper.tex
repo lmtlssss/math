@@ -1,0 +1,322 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Exact amplitude elimination}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{example}[theorem]{Example}
+\DeclareMathOperator{\rank}{rank}\DeclareMathOperator{\spanop}{span}\DeclareMathOperator{\diag}{diag}
+\newcommand{\R}{\mathbb R}\newcommand{\C}{\mathbb C}\newcommand{\Z}{\mathbb Z}\newcommand{\N}{\mathbb N}\newcommand{\ip}[2]{\langle #1,#2\rangle}\newcommand{\norm}[1]{\lVert #1\rVert}\newcommand{\one}{\mathbf 1}
+\hypersetup{pdftitle={Exact Amplitude Elimination under Robust and Quantized Constraints},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: optimization and homogeneous systems},pdfkeywords={homogeneous optimization, amplitude elimination, robust constraints, quantization, exact arithmetic}}
+\title{\LARGE Exact Amplitude Elimination under\\Robust and Quantized Constraints}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{2 November 2026\\[3pt]\small\href{https://doi.org/10.5281/zenodo.23897131}{10.5281/zenodo.23897131}}
+\begin{document}\maketitle\thispagestyle{plain}
+
+\begin{abstract}
+We give an exact elimination of a positive amplitude parameter from a family
+of homogeneous constrained optimization problems. A design determines positive
+lower and upper response coefficients and a positive homogeneous cost.
+Finite robust scenarios reduce to one admissible amplitude interval. On an
+affine amplitude lattice, the least feasible grid point gives the exact
+reduced objective. We prove a sharp rounding-factor bound, characterize the
+feasibility condition needed to transfer a continuous minimizer to a grid,
+and give exact examples where quantization reverses the preferred design.
+Relative coefficient bounds yield interval certificates for robust design
+selection. Homogeneous linear recurrences supply a constructive source of
+the response coefficients. All worked comparisons are verified with rational
+arithmetic and independent finite enumeration.
+\end{abstract}
+\noindent\textit{Keywords.} Homogeneous optimization; parameter elimination;
+robust constraints; lattice quantization; fractional objectives; exact arithmetic.
+
+\section{The scale and the design}
+Let $\mathcal P$ be an arbitrary nonempty design set and let $a>0$ be an
+amplitude. For every $p\in\mathcal P$, consider positive response coefficients
+$m_s(p),M_s(p)$ and positive cost coefficients $e_s(p)$, indexed by a finite
+nonempty scenario set $\mathcal S$. Let $F_s,H_s>0$ be required lower and
+upper limits. The constraints are
+\begin{equation}\label{eq:constraints}
+ a m_s(p)\ge F_s,\qquad a M_s(p)\le H_s
+ \quad(s\in\mathcal S).
+\end{equation}
+Let the objective be
+\begin{equation}\label{eq:cost}
+ C(a,p)=a^\nu e(p),\qquad
+ e(p)=\max_{s\in\mathcal S}e_s(p),\qquad \nu>0.
+\end{equation}
+The maximum describes a robust cost; a positive weighted sum of coefficients
+has the same amplitude law. No convexity or continuity of $\mathcal P$ is
+needed for the pointwise reduction below.
+
+Define
+\begin{equation}\label{eq:interval}
+ L(p)=\max_s\frac{F_s}{m_s(p)},\qquad
+ U(p)=\min_s\frac{H_s}{M_s(p)}.
+\end{equation}
+All coefficients are assumed finite. In particular, $L(p)>0$.
+
+\begin{theorem}[Continuous amplitude elimination]\label{thm:continuous}
+A design $p$ is feasible exactly when $L(p)\le U(p)$.
+For a feasible design, the unique amplitude minimizing~\eqref{eq:cost} is
+$a^*(p)=L(p)$, and the reduced value is
+\begin{equation}\label{eq:reduced}
+ \boxed{J(p)=e(p)L(p)^\nu.}
+\end{equation}
+Consequently,
+\[
+ \inf_{p,a\text{ satisfying }\eqref{eq:constraints}}C(a,p)
+ =\inf_{p:L(p)\le U(p)}J(p).
+\]
+Whenever the right-hand infimum is attained, its minimizer together with
+$a=L(p)$ is a minimizer of the original problem.
+\end{theorem}
+\begin{proof}
+The lower inequalities in~\eqref{eq:constraints} are jointly equivalent to
+$a\ge L(p)$; the upper inequalities are equivalent to $a\le U(p)$.
+Their intersection is the closed interval $[L(p),U(p)]$, or the empty set.
+For fixed $p$, the function $a\mapsto e(p)a^\nu$ is strictly increasing on
+positive amplitudes. Its minimum on a nonempty interval is therefore at
+$L(p)$, with value~\eqref{eq:reduced}. Taking the infimum over designs proves
+the remaining statements.
+\end{proof}
+
+For a single lower constraint, a common floor $F$ and a quadratic cost,
+\begin{equation}\label{eq:quotient}
+ a^*(p)=\frac{F}{m(p)},\qquad
+ J(p)=F^2\frac{e(p)}{m(p)^2},
+\end{equation}
+provided the upper bound accepts that amplitude. Thus the quotient
+$e/m^2$ is the exact design objective obtained by eliminating scale.
+
+\section{Affine amplitude lattices}
+Fix $a_0\ge0$ and $\Delta>0$, and restrict amplitudes to
+\[
+ \mathcal A=\{a_0+k\Delta:k\in\Z_{\ge0}\}\cap\R_{>0}.
+\]
+Set $L_0(p)=\max\{L(p),a_0\}$ and define
+\begin{equation}\label{eq:grid}
+ k_\Delta(p)=\max\left\{0,
+    \left\lceil\frac{L(p)-a_0}{\Delta}\right\rceil\right\},\qquad
+ a_\Delta(p)=a_0+\Delta k_\Delta(p).
+\end{equation}
+Because $L(p)>0$, this chosen amplitude is positive even when $a_0=0$.
+
+\begin{theorem}[Exact grid reduction]\label{thm:grid}
+The grid-constrained problem at a design $p$ is feasible exactly when
+$a_\Delta(p)\le U(p)$. In that case its unique minimum is
+\begin{equation}\label{eq:gridobj}
+ \boxed{J_\Delta(p)=e(p)a_\Delta(p)^\nu.}
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:round}
+ L_0(p)\le a_\Delta(p)<L_0(p)+\Delta,
+\end{equation}
+so
+\begin{equation}\label{eq:factor}
+ 1\le\frac{J_\Delta(p)}{e(p)L_0(p)^\nu}
+ <\left(1+\frac{\Delta}{L_0(p)}\right)^\nu.
+\end{equation}
+The upper factor is a sharp supremum when the location of the interval
+relative to the grid varies.
+\end{theorem}
+\begin{proof}
+The integer $k_\Delta(p)$ is the least permitted index whose amplitude is
+at least $L(p)$. Every other feasible grid point is larger and has larger
+cost. Thus feasibility is exactly its acceptance by the upper bound, and
+\eqref{eq:gridobj} follows. The definition of the ceiling proves
+\eqref{eq:round}; positivity gives~\eqref{eq:factor}.
+For sharpness, place $L(p)$ immediately above a grid point and keep the next
+point below $U(p)$. The rounding increment approaches $\Delta$ from below,
+so the ratio approaches the displayed upper factor.
+\end{proof}
+
+\begin{corollary}[Transfer of a continuous minimizer]\label{cor:transfer}
+Suppose $p_*$ minimizes $e(p)L_0(p)^\nu$ over the designs with
+$L_0(p)\le U(p)$, and suppose $a_\Delta(p_*)\le U(p_*)$.
+Let $J^*_0$ and $J^*_\Delta$ be the corresponding continuous and grid
+optimal values. Then
+\[
+ J^*_0\le J^*_\Delta
+ <\left(1+\frac{\Delta}{L_0(p_*)}\right)^\nu J^*_0.
+\]
+\end{corollary}
+\begin{proof}
+Every grid-feasible choice is continuous-feasible, which gives the lower
+bound. The rounded choice at $p_*$ is a feasible grid candidate, so its cost
+bounds the grid optimum from above. Apply~\eqref{eq:factor}.
+\end{proof}
+
+The acceptance of the rounded point is part of the hypothesis. For example,
+the interval $[101/100,102/100]$ is nonempty, while the lattice with origin
+zero and spacing $1/10$ misses it. This exact example identifies the upper
+feasibility condition required by Corollary~\ref{cor:transfer}.
+
+\section{Quantization can change the selected design}
+Take $F=1$, $\nu=2$, $a_0=0$ and $\Delta=1/10$.
+For three designs, choose $(m,e)$ as in Table~\ref{tab:reversal}, and impose
+an upper constraint $a m\le2$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}c c c c c c@{}}
+\toprule
+Design & $m$ & $e$ & $J=e/m^2$ & $a_\Delta$ & $J_\Delta$\\
+\midrule
+A & $1$ & $1$ & $1$ & $1$ & $1$\\
+B & $21/20$ & $27/25$ & $48/49$ & $1$ & $27/25$\\
+C & $4/5$ & $3/5$ & $15/16$ & $13/10$ & $507/500$\\
+\bottomrule
+\end{tabular}
+\caption{An exact change of the minimizing design after amplitude quantization.}
+\label{tab:reversal}
+\end{table}
+
+Design C uniquely minimizes the continuous objective, whereas A uniquely
+minimizes the grid objective. All displayed amplitudes satisfy the upper
+constraint. Thus optimizing the continuous quotient and rounding only its
+winning design need not solve the joint grid problem. The exact reduction
+in Theorem~\ref{thm:grid} instead evaluates the least feasible grid amplitude
+for every candidate design.
+
+For a finite design set of size $D$ and $S$ scenarios, constructing all
+interval endpoints takes $O(DS)$ arithmetic operations. Evaluating one
+exact ceiling and one reduced objective for each feasible design gives the
+complete discrete search without enumerating the amplitude axis.
+For rational inputs and $\nu=2$, every comparison and grid index can be
+computed by integer arithmetic. Bit cost also depends on the lengths of
+the rational numerators and denominators.
+
+\section{Interval certificates for uncertain coefficients}
+Suppose a single-scenario design has nominal coefficients $e,m>0$ and
+relative enclosures
+\[
+ (1-\varepsilon)e\le\widetilde e\le(1+\varepsilon)e,\qquad
+ (1-\delta)m\le\widetilde m\le(1+\delta)m,
+\]
+with $0\le\varepsilon<1$ and $0\le\delta<1$.
+
+\begin{proposition}[Reduced-value enclosure]\label{prop:interval}
+For a fixed positive floor $F$,
+\begin{equation}\label{eq:uncertain}
+ \frac{1-\varepsilon}{(1+\delta)^\nu}\,J
+ \le F^\nu\frac{\widetilde e}{\widetilde m^\nu}
+ \le\frac{1+\varepsilon}{(1-\delta)^\nu}\,J,
+ \qquad J=F^\nu e/m^\nu.
+\end{equation}
+Both endpoints are attained by allowed coefficient choices.
+If one design's upper endpoint is strictly below every competitor's lower
+endpoint, it is the unique reduced-value minimizer throughout these
+independent coefficient intervals, among designs that remain feasible.
+\end{proposition}
+\begin{proof}
+The reduced value increases with its numerator and decreases with its
+positive denominator. Substituting opposite interval endpoints proves the
+two bounds and their attainability. The strict comparison of intervals
+then orders every allowed realization of the design values.
+\end{proof}
+
+For a robust feasibility certificate, coefficient enclosures can be used
+directly in~\eqref{eq:interval}: use the smallest allowed $m_s$ in the
+lower constraint and the largest allowed $M_s$ in the upper constraint.
+Independent positive interval uncertainty gives
+\[
+ L_{\rm rob}(p)=\max_s\frac{F_s}{m_s^-(p)},\qquad
+ U_{\rm rob}(p)=\min_s\frac{H_s}{M_s^+(p)}.
+\]
+The continuous and grid theorems apply to this exact robust interval.
+
+\begin{proposition}[Grid-index stability]\label{prop:gridstable}
+Let the uncertain effective lower endpoint range in
+$[L_-,L_+]$, with $L_->a_0$. If an integer $k\ge1$ satisfies
+\[
+ a_0+(k-1)\Delta<L_-\le L_+\le a_0+k\Delta,
+\]
+then every realization has the same least grid amplitude $a_0+k\Delta$.
+It is robustly feasible when its value is at most the smallest allowed
+upper endpoint. A lower endpoint interval crossing a grid boundary can
+change the minimizing grid index under an arbitrarily small perturbation.
+\end{proposition}
+\begin{proof}
+The displayed half-open grid cell is exactly the inverse image of $k$ under
+$\lceil(L-a_0)/\Delta\rceil$. The upper-feasibility statement follows from
+interval intersection. Values immediately on either side of a boundary
+have different ceilings, proving the last statement.
+\end{proof}
+
+\section{Homogeneous recurrences and normalized responses}
+The coefficient model can arise from a fixed linear recurrence whose
+forcing and initial state share an amplitude. Let a design $p$ specify
+matrices $A_n(p)$, input vectors $b_n(p)$ and an initial state $z_0(p)$.
+Consider
+\begin{equation}\label{eq:system}
+ x_{n+1}=A_n(p)x_n+a b_n(p),\qquad x_0=a z_0(p).
+\end{equation}
+The matrices and the design sequence are fixed during the amplitude
+comparison. Let $z_n$ denote the solution with $a=1$.
+
+\begin{lemma}[Exact normalization]\label{lem:homogeneous}
+For every $n$, $x_n=a z_n$. Every output linear in state and forcing
+scales by $a$. Every quadratic functional of those outputs scales by $a^2$.
+The same conclusion holds for piecewise-continuous linear differential
+equations with amplitude-scaled initial state and forcing, including
+homogeneous jumps $x^+=Jx^-+a k$.
+\end{lemma}
+\begin{proof}
+The discrete statement follows by induction: substituting $x_n=a z_n$
+into~\eqref{eq:system} yields $x_{n+1}=a(A_nz_n+b_n)=a z_{n+1}$.
+Linearity and quadratic homogeneity give the output and cost laws.
+For a differential equation, $a z(t)$ satisfies the scaled equation and
+initial condition; uniqueness of the linear initial-value problem gives
+the result between jumps. The stated jump rule preserves the identity.
+\end{proof}
+
+When normalized response extrema are positive, they give $m_s$ and $M_s$.
+Lemma~\ref{lem:homogeneous} then allows one normalized trajectory per design
+and scenario. Changing amplitude within this model reuses that trajectory
+and applies Theorem~\ref{thm:continuous} or~\ref{thm:grid}.
+
+A useful scalar instance has local minimum $a(1-d)$ with $0\le d<1$.
+For floor $F>0$, the iteration $a_{n+1}=F+d a_n$ satisfies
+\[
+ a_n-a^*=d^n(a_0-a^*),\qquad a^*=F/(1-d).
+\]
+The fixed point is exactly the eliminated amplitude. Its derivation is
+an elementary contraction calculation, and supplies a direct check for
+an implementation that otherwise repeats the amplitude iteration.
+
+\section{Verification and mathematical context}
+The rational verifier compares the closed-form grid rule with direct
+enumeration in 2400 finite robust instances, including 1533 feasible cases.
+It checks the exact rounding inequality in every feasible instance,
+verifies the design reversal in Table~\ref{tab:reversal}, retains the narrow
+infeasible interval example, and checks 200 independently advanced rational
+state-scaling steps. The figure contains twelve rational designs and
+sixteen explicit amplitude grid points; its incidence data are included.
+
+Eliminating a monotone scalar over an interval is elementary. The quotient
+form belongs naturally to fractional programming, whose classical
+parametric and transformation methods include Dinkelbach~\cite{dinkelbach}
+and Schaible~\cite{schaible}. The contribution of this note is the explicit
+joint treatment of robust interval construction, affine-grid feasibility,
+sharp rounding control, design-order reversal and coefficient certificates,
+with a complete exact implementation. The reduction leaves the design
+optimization in its original mathematical class; it introduces no
+convexity assumption.
+
+\begin{thebibliography}{9}
+\bibitem{dinkelbach} W. Dinkelbach, On nonlinear fractional programming,
+Management Science 13(7) (1967), 492--498.
+\href{https://doi.org/10.1287/mnsc.13.7.492}{doi:10.1287/mnsc.13.7.492}.
+\bibitem{schaible} S. Schaible, Duality in fractional programming: a unified
+approach, Operations Research 24(3) (1976), 452--461.
+\href{https://doi.org/10.1287/opre.24.3.452}{doi:10.1287/opre.24.3.452}.
+\end{thebibliography}
+\end{document}

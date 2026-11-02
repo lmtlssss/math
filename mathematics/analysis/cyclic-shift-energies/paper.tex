@@ -1,0 +1,304 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Exact cyclic-shift energies}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{example}[theorem]{Example}
+\DeclareMathOperator{\rank}{rank}\DeclareMathOperator{\spanop}{span}\DeclareMathOperator{\diag}{diag}
+\newcommand{\R}{\mathbb R}\newcommand{\C}{\mathbb C}\newcommand{\Z}{\mathbb Z}\newcommand{\N}{\mathbb N}\newcommand{\ip}[2]{\langle #1,#2\rangle}\newcommand{\norm}[1]{\lVert #1\rVert}\newcommand{\one}{\mathbf 1}
+\hypersetup{pdftitle={Exact Cyclic-Shift Energies: Minimal State and Integral Bounds},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: harmonic analysis and discrete optimization},pdfkeywords={cyclic shifts, quadratic forms, circulant matrices, exact state, integer occupancy}}
+\title{\LARGE Exact Cyclic-Shift Energies:\\Minimal State and Integral Bounds}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{2 November 2026\\[3pt]\small\href{https://doi.org/10.5281/zenodo.23897127}{10.5281/zenodo.23897127}}
+\begin{document}\maketitle\thispagestyle{plain}
+
+\begin{abstract}
+We give an exact representation of cyclic-shift quadratic costs that separates
+linear response state from pairwise interactions. For real vector-valued profiles
+on $\Z/P\Z$ and a positive semidefinite shift-invariant quadratic form, the minimum
+dimension of a linear summary preserving the cost of every real superposition is
+$\sum_{k=0}^{P-1}\rank G_k$, where $G_k$ is the frequency-wise Gram matrix.
+For a common profile with fixed real weights, one correlation kernel and one
+retained potential determine every single-coordinate cost and admit an $O(P)$
+exact update. For unweighted copies, integer occupancy gives a spectral lower
+bound with the sharp residue term $r(P-r)/P$, where $r=N\bmod P$.
+A spectrum-flat family attains the bound exactly at the balanced occupancies.
+The paper includes proofs, integer and rational verification, and a
+source-derived figure.
+\end{abstract}
+\noindent\textit{Keywords.} Cyclic shifts; quadratic forms; sufficient linear
+state; circulant matrices; discrete optimization; integer occupancy.
+
+\section{Cyclic profiles and the quadratic cost}
+Let $P\ge2$ and let $\mathcal V=(\R^m)^P$. Indices are taken modulo $P$.
+For $d\in\Z/P\Z$, define $(T_dx)(t)=x(t-d)$.
+Let $A:\mathcal V\to\mathcal V$ be symmetric positive semidefinite and commute
+with every $T_d$. The associated seminorm is
+$\norm{x}_A^2=x^\mathsf T A x$.
+For fixed profiles $x_1,\ldots,x_N\in\mathcal V$ and shift choices
+$d=(d_1,\ldots,d_N)$, put
+\begin{equation}\label{eq:cost}
+ E(d)=\left\|\sum_{j=1}^N T_{d_j}x_j\right\|_A^2.
+\end{equation}
+We use the unitary discrete Fourier transform
+\[
+ \widehat x(k)=P^{-1/2}\sum_{t=0}^{P-1}x(t)e^{-2\pi i kt/P}.
+\]
+After complexification, $A$ has a Hermitian positive semidefinite symbol
+$A_k\in\C^{m\times m}$ at frequency $k$. Real coefficients give conjugate
+symmetry between $k$ and $P-k$. Define
+\begin{equation}\label{eq:gram}
+ X_k=[\widehat x_1(k)\ \cdots\ \widehat x_N(k)],\qquad
+ G_k=X_k^*A_kX_k.
+\end{equation}
+The Fourier basis is a standard diagonalization of cyclic translation;
+see Gray~\cite{gray}. Our first result specifies the exact state dimension
+for a precise linear-summary contract.
+
+\section{Minimum linear state for all superpositions}
+Allow arbitrary real coefficients $c_{j,d}$ and form
+\[
+ Lc=\sum_{j=1}^N\sum_{d=0}^{P-1}c_{j,d}T_dx_j,
+ \qquad Q(c)=\norm{Lc}_A^2.
+\]
+A linear summary is a linear map $S:\R^{NP}\to\R^q$ for which a function
+$f$ satisfies $Q(c)=f(Sc)$ for every $c\in\R^{NP}$. The decoder $f$ may be
+arbitrary. This definition states both the retained input family and the
+information required from the summary.
+
+\begin{theorem}[Minimum linear dimension]\label{thm:rank}
+The least possible $q$ is
+\begin{equation}\label{eq:rank}
+ \boxed{q_{\min}=\rank(L^\mathsf T A L)
+       =\sum_{k=0}^{P-1}\rank G_k.}
+\end{equation}
+A linear summary of that dimension can be updated additively after any
+change of the superposition coefficients.
+\end{theorem}
+\begin{proof}
+Write $B=A^{1/2}L$. Then $Q(c)=\norm{Bc}_2^2$ and
+$\rank(B)=\rank(B^\mathsf T B)$.
+If $Sc=0$, the summary contract gives
+$\norm{Bc}_2^2=f(0)=Q(0)=0$. Hence $\ker S\subseteq\ker B$ and
+$\rank S\ge\rank B$. Conversely, choose orthonormal coordinates on
+$\operatorname{im}B$. These coordinates of $Bc$ give a summary with
+$\rank B$ real entries, and their squared Euclidean norm recovers $Q$.
+The coordinates are linear, so coefficient changes give additive updates.
+
+For the frequency formula, apply a Fourier transform to the cyclic
+coefficient sequence $(c_{j,d})_{d=0}^{P-1}$ for each $j$. At frequency $k$,
+$L$ becomes $\sqrt P X_k$, and $B$ becomes
+$\sqrt P A_k^{1/2}X_k$. Thus the complexified rank is the sum of these
+block ranks. Each block has rank $\rank(X_k^*A_kX_k)$.
+Complexification preserves the rank of a real matrix. Equivalently,
+conjugate frequency pairs contribute twice their complex rank as a real
+subspace; frequencies $0$ and, for even $P$, $P/2$ contribute their real
+ranks once. This proves~\eqref{eq:rank}.
+\end{proof}
+
+The contract includes all real superpositions of translated profiles.
+For a finite set of shift assignments alone, the information model is
+different. Theorem~\ref{thm:rank} gives the minimum for a linear encoder
+under the stated all-superposition contract.
+
+\begin{corollary}[Scalar common profile]\label{cor:scalar}
+For $m=1$, a single common profile $p$ and scalar symbol $A_k\ge0$, the
+minimum dimension is the number of frequencies satisfying
+$A_k|\widehat p(k)|^2>0$. In particular, a positive symbol and a profile
+with all Fourier coefficients nonzero require exactly $P$ real coordinates.
+\end{corollary}
+\begin{proof}
+The one-profile Gram block is the scalar $A_k|\widehat p(k)|^2$.
+Its rank is either zero or one. Apply Theorem~\ref{thm:rank}.
+\end{proof}
+
+\section{One retained potential for exact coordinate updates}
+Suppose $x_j=a_jp$ for fixed real weights $a_j$ and a common profile
+$p\in\mathcal V$. Define the real symmetric correlation kernel
+\begin{equation}\label{eq:kernel}
+ g(u)=\ip{p}{T_up}_A,
+ \qquad g(-u)=g(u),
+\end{equation}
+and the retained potential
+\begin{equation}\label{eq:potential}
+ \Phi_d(s)=\sum_{j=1}^N a_jg(d_j-s).
+\end{equation}
+The notation $\ip{x}{y}_A=x^\mathsf T A y$ is used throughout.
+
+\begin{theorem}[Coordinate-cost and update identities]\label{thm:update}
+For every shift vector and every real weight vector,
+\begin{align}
+ E(d)&=\sum_i a_i\Phi_d(d_i),\label{eq:ephi}\\
+ E(d_1,\ldots,s,\ldots,d_N)
+ &=E_{-i}+a_i^2g(0)+2a_i\bigl[\Phi_d(s)-a_i g(d_i-s)\bigr],\label{eq:coord}
+\end{align}
+where $E_{-i}=\norm{\sum_{j\ne i}a_jT_{d_j}p}_A^2$.
+If coordinate $i$ changes from $u$ to $v$, then
+\begin{equation}\label{eq:phiupdate}
+ \Phi_{d'}(s)=\Phi_d(s)+a_i\{g(v-s)-g(u-s)\}.
+\end{equation}
+After construction of $g$ and $\Phi$, evaluating all $P$ choices of one
+coordinate and updating the retained potential cost $O(P)$ arithmetic
+operations. The kernel and potential occupy $2P$ scalar entries, in
+addition to $O(N)$ weights and shifts.
+\end{theorem}
+\begin{proof}
+Translation invariance gives
+$\ip{T_up}{T_vp}_A=g(v-u)$. Expanding the square proves
+\eqref{eq:ephi}. Separating the $i$th term into its self contribution and
+its inner product with the remaining sum gives~\eqref{eq:coord}.
+Only one summand in~\eqref{eq:potential} changes, which gives
+\eqref{eq:phiupdate}. Each displayed formula needs a constant number of
+scalar operations at each cyclic position. The two length-$P$ arrays
+and the weights and shifts give the stated storage.
+\end{proof}
+
+The preprocessing cost is explicit. For a scalar profile, first apply $A$ to $p$, charging that operation
+explicitly; the $P$ direct correlations then require $O(P^2)$ arithmetic
+operations. A Fourier implementation instead uses the known symbol and
+its transform costs. Directly
+forming~\eqref{eq:potential} costs $O(NP)$ operations. These are separate
+from the $O(P)$ cost of an accepted move. A table storing all $N^2$
+pair kernels contains $N^2P$ scalar entries; the common-profile
+factorization replaces that table by one kernel.
+
+A coordinate method can choose the smallest minimizing shift under a
+fixed tie rule. Strict-decrease moves terminate because the shift space
+is finite. The identities are exact objective evaluations; a fixed point
+of coordinate search is a coordinatewise minimum. A global certificate
+is supplied by the next section for a specified spectral family.
+
+\section{Integer occupancy and a sharp spectral bound}
+Take $a_j=1$ and define
+$h_u=|\{j:d_j=u\}|$. Then $h\in\Z_{\ge0}^P$, $\one^\mathsf Th=N$, and
+\[
+ E=h^\mathsf TKh,\qquad K_{uv}=g(v-u).
+\]
+The real symmetric circulant matrix $K$ is positive semidefinite.
+Let $\lambda_0$ be its eigenvalue on $\one$, and let
+$\lambda_*\ge0$ be its smallest eigenvalue on $\one^\perp$.
+Write $N=qP+r$, with $q\ge0$ and $0\le r<P$.
+
+\begin{lemma}[The integer residue term]\label{lem:balance}
+Every nonnegative integer occupancy of total mass $N$ satisfies
+\begin{equation}\label{eq:integer}
+ \left\|h-\frac NP\one\right\|_2^2
+ \ge\frac{r(P-r)}P.
+\end{equation}
+Equality holds precisely when $r$ entries equal $q+1$ and the remaining
+$P-r$ entries equal $q$.
+\end{lemma}
+\begin{proof}
+If two entries differ by at least two, transferring one unit from the
+larger to the smaller reduces $\sum h_u^2$ by
+$2(h_{\max}-h_{\min}-1)>0$. Repeating this operation ends at entries that
+differ by at most one. Their sum forces the stated multiplicities.
+Their squared norm is $Pq^2+2qr+r$. Subtracting $N^2/P$ gives
+$r(P-r)/P$. Conversely, any unbalanced vector admits the strict reduction.
+\end{proof}
+
+\begin{theorem}[Sharp integral spectral bound]\label{thm:occupancy}
+For every shift assignment,
+\begin{equation}\label{eq:lower}
+ \boxed{E\ge\frac{\lambda_0N^2}{P}
+              +\lambda_*\frac{r(P-r)}P.}
+\end{equation}
+If $K=\alpha I+\beta\one\one^\mathsf T$ with $\alpha>0$ and $\beta\ge0$,
+the exact minimum is
+\begin{equation}\label{eq:flat}
+ E_{\min}=\alpha(Pq^2+2qr+r)+\beta N^2,
+\end{equation}
+and its occupancies are exactly the $\binom Pr$ balanced vectors.
+For a general $K$ with $\lambda_*>0$, equality in~\eqref{eq:lower} holds
+precisely when the occupancy is balanced and its centered vector belongs
+to the $\lambda_*$ eigenspace (with the zero vector allowed).
+\end{theorem}
+\begin{proof}
+Set $v=h-(N/P)\one$. Since $v\perp\one$ and $K\one=\lambda_0\one$,
+\[
+ h^\mathsf TKh=\lambda_0N^2/P+v^\mathsf TKv
+ \ge\lambda_0N^2/P+\lambda_*\norm v_2^2.
+\]
+Lemma~\ref{lem:balance} proves~\eqref{eq:lower}. In the flat family,
+$\lambda_0=\alpha+\beta P$ and $K$ acts by $\alpha$ on $\one^\perp$;
+all balanced occupancies therefore attain~\eqref{eq:flat}.
+For positive $\lambda_*$, equality requires equality in both inequalities,
+which gives the final characterization.
+\end{proof}
+
+If $P$ divides $N$, uniform occupancy removes every nonconstant Fourier
+coefficient and attains the constant-mode lower bound for every such
+positive semidefinite $K$. When $\lambda_*>0$, this occupancy is unique.
+The residue term describes exactly the integrality obstruction to that
+uniform assignment when $P$ does not divide $N$.
+
+\section{Exact examples and verification}
+Take $P=16$, $N=64$, $A=I$, and
+$p=(2,1,0,\ldots,0)$. Its circulant correlation symbol is
+\[
+ \lambda_k=|2+e^{-2\pi i k/16}|^2
+ =5+4\cos(2\pi k/16).
+\]
+Every eigenvalue is positive; the constant eigenvalue is nine and the
+smallest eigenvalue is one. Corollary~\ref{cor:scalar} therefore gives a
+minimum all-superposition linear summary of sixteen real coordinates.
+
+Put four copies at every shift. Each output position receives four
+contributions of weight two and four of weight one. Thus
+\[
+ h=(4,\ldots,4),\qquad
+ \sum_jT_{d_j}p=(12,\ldots,12),\qquad E=16\cdot12^2=2304.
+\]
+Theorem~\ref{thm:occupancy} gives the same lower bound,
+$\lambda_0N^2/P=9\cdot64^2/16=2304$, so this assignment is globally
+optimal. The occupancy is unique, while permutations of labelled copies
+produce multiple shift vectors with that occupancy.
+
+If all copies are aligned, the only nonzero output values are $128$ and
+$64$, giving $E=128^2+64^2=20480$. These are two exact evaluations of the
+same quadratic objective on the same profile family.
+
+The standard pair-kernel table has $64^2\cdot16=65536$ scalar entries.
+The common-profile kernel and retained potential use $2\cdot16=32$.
+Weights and shifts occupy their separate $O(N)$ arrays, and construction
+cost is charged as in Theorem~\ref{thm:update}. The sixteen-coordinate
+minimum and the thirty-two-entry implementation refer respectively to
+the linear-summary contract and the named kernel-plus-potential arrays.
+
+The companion verifier uses integer and rational arithmetic. It checks
+6822 coordinate costs against direct profile summation and filtering,
+1200 retained-potential updates against reconstruction, and 19437 integer
+occupancies against~\eqref{eq:flat}. Thirty-two independently generated
+two-component, four-position examples check~\eqref{eq:rank} using exact
+Gaussian-integer matrix ranks. The figure is generated from the
+$P=16$, $N=64$ exact occupancy certificate.
+
+\section{Relation to established methods}
+Fourier diagonalization of circulant forms is classical~\cite{gray}.
+Quadratic optimization over unit-modulus variables and coordinate
+methods have a substantial literature; Ragi, Chong and Mittelmann
+provide approximation methods and guarantees for a related unimodular
+problem~\cite{ragi}. Here a coordinate is a cyclic shift, which ties its
+phase across all frequencies. The results specify an exact linear-state
+contract, a complete retained-coordinate identity with charged storage,
+and a sharp integer-occupancy certificate. Their proofs are independent
+of an approximation or a claim of general global coordinate convergence.
+
+\begin{thebibliography}{9}
+\bibitem{gray} R. M. Gray, \emph{Toeplitz and Circulant Matrices: A Review},
+Foundations and Trends in Communications and Information Theory 2(3)
+(2006), 155--239. \href{https://doi.org/10.1561/0100000006}{doi:10.1561/0100000006}.
+\bibitem{ragi} S. Ragi, E. K. P. Chong and H. D. Mittelmann,
+Polynomial-time methods to solve unimodular quadratic programs with performance
+guarantees, IEEE Transactions on Aerospace and Electronic Systems 55(5)
+(2019), 2118--2127. \href{https://doi.org/10.1109/TAES.2018.2881366}{doi:10.1109/TAES.2018.2881366}.
+\end{thebibliography}
+\end{document}

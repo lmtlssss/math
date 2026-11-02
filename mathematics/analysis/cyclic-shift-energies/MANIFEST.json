@@ -1,0 +1,103 @@
+{
+  "schema": "mathematics.source.v1",
+  "title": "Exact Cyclic-Shift Energies: Minimal State and Integral Bounds",
+  "doi": "10.5281/zenodo.23897127",
+  "version": "1.0.0",
+  "files": [
+    {
+      "path": "CITATION.bib",
+      "bytes": 285,
+      "sha256": "6d5aac6b2dfd3dd30f73f9c60420edde7d49ee80d984c5033db4813b1f1bba56"
+    },
+    {
+      "path": "CITATION.cff",
+      "bytes": 368,
+      "sha256": "60e9020aaba9f3eb748cd8f85d49e8056bef005164e15a1915b878eb09c19110"
+    },
+    {
+      "path": "LICENSE.md",
+      "bytes": 1265,
+      "sha256": "ea805b08d02038a58aa80a036ad0c05c0c31e81161363e6deeb165de1d365c25"
+    },
+    {
+      "path": "Makefile",
+      "bytes": 196,
+      "sha256": "2673b339d49296898a6fb9d4296e11e041422ede7d3a6733df44bf5320b8f16e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2530,
+      "sha256": "6e65a165658cb92d35d400b40a6d9f0d4831bf36594b5734bb7172e2e6e10709"
+    },
+    {
+      "path": "VERIFICATION.md",
+      "bytes": 714,
+      "sha256": "b8bbea6f9ef3bfd85fc39a896d4a9c59703fa1972c9a42890caf0cef2ced4758"
+    },
+    {
+      "path": "VERIFICATION_PLAN.md",
+      "bytes": 940,
+      "sha256": "79d31b2afaa154c004f61f80217a26f790030ee0c14514f6adca908ad79f3086"
+    },
+    {
+      "path": "evidence/PRIOR_ART.md",
+      "bytes": 704,
+      "sha256": "01acf9a0adc4831f638a4514b9a716351be5298dd433668a0b27332070afa7a3"
+    },
+    {
+      "path": "evidence/environment.json",
+      "bytes": 186,
+      "sha256": "c730b34e95bd65f2416c7272592293703e396c95096c7c5d5b30cf595d5b3b39"
+    },
+    {
+      "path": "evidence/figure.json",
+      "bytes": 1183,
+      "sha256": "f3ba15dc86f602ea07ec7cc9b5d3959085b2d507b1594d8989fe1f9df0160961"
+    },
+    {
+      "path": "evidence/pdf-build.json",
+      "bytes": 221,
+      "sha256": "cbd805485e0b771aadf885f8166c12fe0127fb36159de049b5be5faae46ac18c"
+    },
+    {
+      "path": "evidence/render-receipt.json",
+      "bytes": 886,
+      "sha256": "cace454652c3de7ee9ae6bc55672033723696306e8a1c60bf31224ddffa1e6a6"
+    },
+    {
+      "path": "evidence/verification.json",
+      "bytes": 1747,
+      "sha256": "47bbab8bc63ca52291f73365345957530ef3687955f135bb26ceda594acbc43f"
+    },
+    {
+      "path": "metadata.json",
+      "bytes": 554,
+      "sha256": "48239ea3bcf241bb2f8aa12d264048c88123564de5d9527b336314041c1398d8"
+    },
+    {
+      "path": "paper.tex",
+      "bytes": 15256,
+      "sha256": "cb5941ea3b22cbd6859bbde1574a5dbcce13b751f560889695df1e818595417a"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 14,
+      "sha256": "25f9f1fb1988b230147a1d3092d34e09c069eb7a6c6d6df46b3973b9f2d36efc"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 5735,
+      "sha256": "658ec9e19eb49d7881e7f5516c213d7583f95210c2c604e615ad51bf637248cf"
+    },
+    {
+      "path": "visual/build_scene.py",
+      "bytes": 2384,
+      "sha256": "b06de3cfbb9f0c5f2845c696d5b172125d297e5d1c89f6d9eaa28840e5cdf6c2"
+    },
+    {
+      "path": "visual/scene_common.py",
+      "bytes": 7497,
+      "sha256": "40901aa41e799b38c2d6a7c57a787344d3d912ac78b74ae33dfe44dec18a2381"
+    }
+  ]
+}

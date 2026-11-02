@@ -1,0 +1,103 @@
+{
+  "schema": "mathematics.source.v1",
+  "title": "Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences",
+  "doi": "10.5281/zenodo.23897133",
+  "version": "1.0.0",
+  "files": [
+    {
+      "path": "CITATION.bib",
+      "bytes": 307,
+      "sha256": "09e44eaee99c861177bc3f845e74ede18cbae34ec532ca1de8c86dab8684da4d"
+    },
+    {
+      "path": "CITATION.cff",
+      "bytes": 390,
+      "sha256": "e8fdc1fe994f4b3a7fc7b10b8c45877d6f4c9ac08bf9595f8c6fbe5e91631551"
+    },
+    {
+      "path": "LICENSE.md",
+      "bytes": 1265,
+      "sha256": "ea805b08d02038a58aa80a036ad0c05c0c31e81161363e6deeb165de1d365c25"
+    },
+    {
+      "path": "Makefile",
+      "bytes": 196,
+      "sha256": "2673b339d49296898a6fb9d4296e11e041422ede7d3a6733df44bf5320b8f16e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2617,
+      "sha256": "20340e8c49afbb464bc07ee4e0db791abfad2af500f49ad625dda388257995cc"
+    },
+    {
+      "path": "VERIFICATION.md",
+      "bytes": 760,
+      "sha256": "30027ba9687eab09f2ccaba7b1433d8a1e87f8d5d5814cd9d46285768000bb9a"
+    },
+    {
+      "path": "VERIFICATION_PLAN.md",
+      "bytes": 968,
+      "sha256": "982c72e63624e64c560e4599118d79ef7bb923827ffb5a7deaf15e3d785c88eb"
+    },
+    {
+      "path": "evidence/PRIOR_ART.md",
+      "bytes": 804,
+      "sha256": "db60fe0f1928d8f2360049dd63965789aa6a8b498d276867dc599448f324bccd"
+    },
+    {
+      "path": "evidence/environment.json",
+      "bytes": 165,
+      "sha256": "2ae5220ca27223063864c4e092abde3207ba670ef983e8f65d4a188d0863a0d1"
+    },
+    {
+      "path": "evidence/figure.json",
+      "bytes": 1474,
+      "sha256": "9719c8151ac6f5a34c5706c4e37b61c82e20f3fdc37e3bb781ac1976bebf6e80"
+    },
+    {
+      "path": "evidence/pdf-build.json",
+      "bytes": 230,
+      "sha256": "7169d402a24d8c1621ae76c400b5d1fbe66bcc51b6a85d1f85f4a216653f4dbb"
+    },
+    {
+      "path": "evidence/render-receipt.json",
+      "bytes": 898,
+      "sha256": "bbf0a342090c968d4ed2f7d3b107e77803619c1716a82b59c034644923a49e5e"
+    },
+    {
+      "path": "evidence/verification.json",
+      "bytes": 1976,
+      "sha256": "f27114b3537df82b46b9b1fe7e3064473ce7472f5154eca065939873deea1168"
+    },
+    {
+      "path": "metadata.json",
+      "bytes": 602,
+      "sha256": "44ece1de77edb35658e3f409fb0d790154a9b377a2162ebe24283369efe6ff8e"
+    },
+    {
+      "path": "paper.tex",
+      "bytes": 14287,
+      "sha256": "b5def1fc8698d3e1a470fd89b796764ff157842e17bff5eb7b09e2b354a31a7d"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 32,
+      "sha256": "74c1b9d7e6103576c1f8c7bf2bf255e088ee5ab2c8f5d7f70dc757c0ae596011"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 7417,
+      "sha256": "34cccf82b4d4626b01404499fcfa2ca55af34505c883c2d978a757dea370c222"
+    },
+    {
+      "path": "visual/build_scene.py",
+      "bytes": 2609,
+      "sha256": "0b81984f7cecc58dad20173073222012c53004e1ea5d7553aeb8b574c4fa2a88"
+    },
+    {
+      "path": "visual/scene_common.py",
+      "bytes": 7497,
+      "sha256": "40901aa41e799b38c2d6a7c57a787344d3d912ac78b74ae33dfe44dec18a2381"
+    }
+  ]
+}

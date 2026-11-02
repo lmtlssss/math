@@ -1,0 +1,20 @@
+{
+  "title": "Exact Cyclic-Shift Energies: Minimal State and Integral Bounds",
+  "slug": "cyclic-shift-energies",
+  "short_title": "Exact cyclic-shift energies",
+  "author": "lmtlssss🜐",
+  "date": "2026-11-02",
+  "version": "1.0.0",
+  "license": "cc-by-4.0",
+  "type": "preprint",
+  "keywords": [
+    "cyclic shifts",
+    "quadratic forms",
+    "circulant matrices",
+    "exact state",
+    "integer occupancy"
+  ],
+  "doi": "10.5281/zenodo.23897127",
+  "repository_path": "mathematics/analysis/cyclic-shift-energies",
+  "zenodo_record_id": 23897127
+}

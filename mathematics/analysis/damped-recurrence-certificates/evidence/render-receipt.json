@@ -1,0 +1,27 @@
+{
+  "blender": "5.2.3 LTS",
+  "engine": "BLENDER_EEVEE",
+  "source_style": "tensor-note-v1.0.0",
+  "source_style_sha256": "b9e3c857d3e700f8db7f95cd32c283264d10b1944a287b3fd72670370b491417",
+  "original_settings": {
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      2200,
+      1550
+    ],
+    "view_transform": "Standard",
+    "world": "Technical stage / graphite"
+  },
+  "resolution": [
+    3840,
+    2705
+  ],
+  "certificate_sha256": "9719c8151ac6f5a34c5706c4e37b61c82e20f3fdc37e3bb781ac1976bebf6e80",
+  "png_sha256": "74b23971cdfa98ae91a6864aefe691ca6f18093437fbf07e7480a88515819e1e",
+  "blend_sha256": "26ad1652063ad668dd9891c9d7051dbf785452d923077645a789996d649f7025",
+  "source_template_preserved": true,
+  "font_assets_distributed": false,
+  "objects": 96,
+  "title": "Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences",
+  "doi": "10.5281/zenodo.23897133"
+}
