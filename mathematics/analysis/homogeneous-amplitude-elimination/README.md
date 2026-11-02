@@ -1,19 +1,25 @@
-# Exact Amplitude Elimination under Robust and Quantized Constraints
+# Robust Amplitude Elimination and Exact Lattice-Phase Selection
 
-**lmtlssss🜐 · 2 November 2026 · Version 1.0.0**  
+**lmtlssss🜐 · 2 November 2026 · Version 1.0.0**
 DOI: [10.5281/zenodo.23897131](https://doi.org/10.5281/zenodo.23897131)
 
-Scenario constraints reduce a positive homogeneous amplitude to one exact interval. An affine grid admits a closed-form least feasible point; quantization can reverse the selected design. Coefficient intervals give exact robust certificates.
+A complete exact selection law for a translating common lattice reduces finite robust designs to residue cells and affine envelopes. It gives rational selection probabilities, expected optima and boundary decisions. A four-design example separates the continuous winner from the phase-selection probabilities. A second theorem proves persistent reversal under arbitrarily fine lattice refinement.
+
+## Principal contribution
+
+The principal contributions are the common-lattice phase-selection law, its exact probability and expectation formula, and the persistent-refinement reversal theorem. Scalar monotonicity, interval elimination, homogeneity and line-envelope geometry are established foundations, not separate originality claims.
 
 ## Files
 
-`paper.tex` is the mathematical manuscript. `verify.py` reconstructs the exact examples and independent comparisons. `evidence/verification.json` contains its observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.
+`paper.tex` is the mathematical manuscript. `verify.py` reconstructs the foundational examples; `verify_extension.py` reconstructs the principal discovery and its independent comparisons. `evidence/verification.json` and `evidence/discovery.json` contain the observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.
 
 The release includes `paper.pdf`, `00-cover.png` at native 3840-pixel width, `homogeneous-amplitude-elimination.blend`, and `source-and-proof.zip`. The saved scene and image embed the publication DOI. The figure follows the author's established mathematical visual series.
 
 ## Reproduce
 
-Run `python3 verify.py --output evidence/verification.json` from this directory. Python 3.11 or later is sufficient; the cyclic-shift verifier also requires SymPy as listed in `requirements.txt`. The exact checks are: 2400 direct grid instances, including 1533 feasible cases; 200 exact independently propagated state-scaling steps; exact design reversal and empty-grid interval.
+Run `python3 verify.py --output evidence/verification.json`, then `python3 verify_extension.py`, from this directory. The second command writes the current figure certificate. Use Python 3.11 or later and the dependencies in `requirements.txt`. The exact checks are: 2400 direct grid instances, including 1533 feasible cases; 200 exact independently propagated state-scaling steps; exact design reversal and empty-grid interval.
+
+The principal-discovery checks are: An exact four-design phase diagram, independent origin comparisons and 400 direct grid enumerations; 425 strict refinement-reversal comparisons; exact boundary ties and one-sided feasibility events.
 
 Typeset with `xelatex -interaction=nonstopmode -halt-on-error paper.tex` twice. The manuscript uses Latin Modern and Noto Sans Symbols, following earlier notes in the series. The release PDF was also built natively with `tectonic --keep-logs paper.tex` (Tectonic 0.17.0).
 

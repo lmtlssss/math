@@ -4,6 +4,10 @@
 
 Reversal of correlation orientation; negative and zero weights; zero Fourier modes; real/complex rank counting; invalid global claims for coordinate minima; divisibility and nondivisibility of occupancy mass.
 
+## Principal-discovery failure modes
+
+Composite periods with vanishing Fourier coefficients; empty and full binary indicators; zero spectral minimum; flat nonconstant spectrum; balanced versus unbalanced occupancies; norm normalization and the factor 1/P.
+
 ## Acceptance
 
 The manuscript supplies the proofs. The executable compares the derived formulas with independently evaluated whole objects. Numerical checks use integers, rational fractions or exact Gaussian-integer ranks. Worked examples produce the figure certificate. The PDF, code, citations, metadata and figure use the same definitions, coefficients and DOI. Public artifacts are mathematical and standalone.

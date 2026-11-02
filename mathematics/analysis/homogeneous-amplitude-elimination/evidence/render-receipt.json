@@ -16,12 +16,12 @@
     3840,
     2705
   ],
-  "certificate_sha256": "34840ca4cdb16bf67a52187253f30ef8c17eda18ab808189678a1d100fff7cf6",
-  "png_sha256": "f2afcbe3efce9e7eda924f996eb1f4c8ff12835087bb695be1c1f95449adf66e",
-  "blend_sha256": "52a0fe2f1291d6124e60114b7930da6b76e65173e27425f32a7627b94e3b2790",
+  "certificate_sha256": "af9bc2d722052e92b8400b2b2e9053bba4d1fa2562567f5ce89c491163597f28",
+  "png_sha256": "5d5827c5e38568e04df7472154af0e0d708574180be8f51b4e0baf5ca1182e07",
+  "blend_sha256": "7f7dc76b1ea06357f9a5fad91ba6fa868d712d9323d08b0493bb6006c08b15ea",
   "source_template_preserved": true,
   "font_assets_distributed": false,
-  "objects": 545,
-  "title": "Exact Amplitude Elimination under Robust and Quantized Constraints",
+  "objects": 509,
+  "title": "Robust Amplitude Elimination and Exact Lattice-Phase Selection",
   "doi": "10.5281/zenodo.23897131"
 }

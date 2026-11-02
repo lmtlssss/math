@@ -1,7 +1,7 @@
-# Executed verification
+# Verification record
 
-The actual `verify.py` run completed successfully. 6822 direct coordinate evaluations; 1200 retained-potential updates; 19437 exact occupancies; 32 exact frequency-rank instances.
+The manuscript contains the proofs. `verify.py` checks the retained foundational constructions. `verify_extension.py` checks the principal result against independently evaluated whole objects and produces the current figure certificate.
 
-The verifier output is `evidence/verification.json`. Its exact figure inputs are `evidence/figure.json`. These examples test implementations of the proved statements; mathematical claims are established by the proofs in `paper.tex`.
+162 exact prime binary norm certificates; 7,172 supplementary primitive-root numerical cross-checks of exact polynomial divisibility; all 210 integer occupancies in the attained-gap example.
 
-`visual/build_scene.py` constructs its geometry from the same certificate. Native render, source-style preservation and release hashes are recorded in the accompanying render receipt and release manifest. PDF rendering is reviewed separately from mathematical verification.
+Exact records: `evidence/verification.json` and `evidence/discovery.json`. Native render and PDF receipts are added at release construction.

@@ -1,7 +1,7 @@
 {
-  "title": "Exact Cyclic-Shift Energies: Minimal State and Integral Bounds",
+  "title": "Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps",
   "slug": "cyclic-shift-energies",
-  "short_title": "Exact cyclic-shift energies",
+  "short_title": "Cyclic-shift energies and cyclotomic gaps",
   "author": "lmtlssss🜐",
   "date": "2026-11-02",
   "version": "1.0.0",
@@ -9,12 +9,14 @@
   "type": "preprint",
   "keywords": [
     "cyclic shifts",
-    "quadratic forms",
-    "circulant matrices",
-    "exact state",
-    "integer occupancy"
+    "cyclotomic polynomials",
+    "integer occupancy",
+    "spectral gap",
+    "quadratic forms"
   ],
   "doi": "10.5281/zenodo.23897127",
   "repository_path": "mathematics/analysis/cyclic-shift-energies",
-  "zenodo_record_id": 23897127
+  "zenodo_record_id": 23897127,
+  "abstract": "A cyclotomic divisibility criterion decides equality in an integer-occupancy spectral bound. At prime periods, algebraic norms yield a quantitative positive gap for nonflat spectra. The bound is attained at exactly five occupancies in a complete 210-state example. Minimal linear state and retained-potential identities supply the representation framework.",
+  "principal_contribution": "The principal result is the quantitative cyclotomic spectral gap, its equality obstruction and the attained five-cycle certificate. The Fourier diagonalization, positive-semidefinite rank argument, cyclotomic irreducibility and field-norm integrality are established ingredients and receive attribution."
 }

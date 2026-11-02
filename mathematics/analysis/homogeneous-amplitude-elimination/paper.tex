@@ -9,30 +9,33 @@
 \usepackage{microtype}
 \usepackage[hidelinks,unicode]{hyperref}
 \usepackage{fancyhdr}
-\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Exact amplitude elimination}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Robust amplitude and lattice-phase selection}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
 \setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}\setlength{\emergencystretch}{2em}
 \newtheorem{theorem}{Theorem}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{example}[theorem]{Example}
 \DeclareMathOperator{\rank}{rank}\DeclareMathOperator{\spanop}{span}\DeclareMathOperator{\diag}{diag}
 \newcommand{\R}{\mathbb R}\newcommand{\C}{\mathbb C}\newcommand{\Z}{\mathbb Z}\newcommand{\N}{\mathbb N}\newcommand{\ip}[2]{\langle #1,#2\rangle}\newcommand{\norm}[1]{\lVert #1\rVert}\newcommand{\one}{\mathbf 1}
-\hypersetup{pdftitle={Exact Amplitude Elimination under Robust and Quantized Constraints},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: optimization and homogeneous systems},pdfkeywords={homogeneous optimization, amplitude elimination, robust constraints, quantization, exact arithmetic}}
-\title{\LARGE Exact Amplitude Elimination under\\Robust and Quantized Constraints}
+\hypersetup{pdftitle={Robust Amplitude Elimination and Exact Lattice-Phase Selection},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: optimization and homogeneous systems},pdfkeywords={homogeneous optimization, amplitude elimination, robust constraints, quantization, exact arithmetic}}
+\title{\LARGE Robust Amplitude Elimination and\\Exact Lattice-Phase Selection}
 \author{lmtlssss{\authorsymbol 🜐}}
 \date{2 November 2026\\[3pt]\small\href{https://doi.org/10.5281/zenodo.23897131}{10.5281/zenodo.23897131}}
 \begin{document}\maketitle\thispagestyle{plain}
 
 \begin{abstract}
-We give an exact elimination of a positive amplitude parameter from a family
-of homogeneous constrained optimization problems. A design determines positive
-lower and upper response coefficients and a positive homogeneous cost.
-Finite robust scenarios reduce to one admissible amplitude interval. On an
-affine amplitude lattice, the least feasible grid point gives the exact
-reduced objective. We prove a sharp rounding-factor bound, characterize the
-feasibility condition needed to transfer a continuous minimizer to a grid,
-and give exact examples where quantization reverses the preferred design.
-Relative coefficient bounds yield interval certificates for robust design
-selection. Homogeneous linear recurrences supply a constructive source of
-the response coefficients. All worked comparisons are verified with rational
-arithmetic and independent finite enumeration.
+We determine how a common translating amplitude lattice selects among
+finitely many robust homogeneous designs. Lower and upper response
+constraints give one feasible interval per design. During one lattice
+period, at most $2D$ internal residue events partition the phase axis
+into cells on which the reduced root costs are affine. Their lower
+envelopes give an exact selection diagram with at most $D(2D+1)$
+positive-length labelled pieces and a direct $O(D^3)$ arithmetic
+construction. Rational data give exact selection probabilities and,
+for positive integer cost exponent, exact expected optimum values.
+A four-design example has probabilities $(1/4,1/12,5/12,1/4)$ even though
+the fourth design uniquely minimizes the continuous objective.
+We also prove persistent design-order reversals along arbitrarily fine
+zero-origin lattices and supply exact robust, rounding and uncertainty
+certificates. Proofs, rational source and a native mathematical figure
+accompany the construction.
 \end{abstract}
 \noindent\textit{Keywords.} Homogeneous optimization; parameter elimination;
 robust constraints; lattice quantization; fractional objectives; exact arithmetic.
@@ -194,6 +197,137 @@ For rational inputs and $\nu=2$, every comparison and grid index can be
 computed by integer arithmetic. Bit cost also depends on the lengths of
 the rational numerators and denominators.
 
+\section{Exact selection under a translating lattice}\label{sec:phase}
+The scalar elimination also determines the complete dependence of the
+selected design on the lattice origin. Let the design set have $D$ members.
+Write its robust intervals as $[L_i,U_i]$ with $0<L_i\le U_i$,
+and set $\alpha_i=e_i^{1/\nu}>0$. Fix $\Delta>0$ and let the common
+origin $\theta$ vary over $[0,\Delta)$. Define
+\[
+ k_i(\theta)=\max\{0,\lceil(L_i-\theta)/\Delta\rceil\},\qquad
+ a_i(\theta)=\theta+\Delta k_i(\theta).
+\]
+A design is available at $\theta$ when $a_i(\theta)\le U_i$.
+Its objective is $(\alpha_i a_i(\theta))^\nu$.
+We use a fixed total order to choose among exact ties, while retaining
+all tying designs in the mathematical certificate.
+
+\begin{theorem}[Lattice-phase selection law]\label{thm:phase}
+Form the residue breakpoints
+\[
+ \mathcal B=\{0,\Delta\}\cup
+ \{L_i\bmod\Delta,\ U_i\bmod\Delta:1\le i\le D\}.
+\]
+There are at most $2D+1$ open intervals between consecutive members of
+$\mathcal B$. On each such interval, the available design set and every
+index $k_i$ are constant. The minimizing designs are the lower envelope of
+\begin{equation}\label{eq:phaselines}
+ f_i(\theta)=\alpha_i\theta+\alpha_i k_i\Delta
+\end{equation}
+for the available indices. Each design occupies at most one interval of
+this envelope in a base interval, with coincident lines treated as one
+tie group. Thus a complete labelled diagram has at most $D(2D+1)$
+positive-length pieces.
+
+For rational $L_i,U_i,\Delta,\alpha_i$, every interval endpoint and
+boundary decision is exact rational data. A direct construction uses
+$O(D^3)$ arithmetic operations after the robust intervals are formed.
+\end{theorem}
+\begin{proof}
+The integer $\lceil(L_i-\theta)/\Delta\rceil$ changes in one period
+only at the residue of $L_i$. Clipping at zero preserves this property.
+Between these events, feasibility is $\theta+k_i\Delta\le U_i$;
+its only possible transition is the residue of $U_i$.
+This proves constancy on the stated base intervals.
+
+Taking the strictly increasing $\nu$th root preserves the ordering of
+positive costs and gives~\eqref{eq:phaselines}. For a fixed available
+$i$, its minimizing set is the base interval intersected with the
+half-lines $f_i\le f_j$ for all other available $j$. This is an interval,
+a point or the empty set. Coincident lines share the same set. There are
+at most $D$ labelled positive-length pieces per base interval.
+
+Intersecting the $D-1$ half-lines for every candidate costs $O(D^2)$
+arithmetic operations in one base interval. Repeating across $O(D)$
+base intervals gives $O(D^3)$. The endpoints of all nonempty intervals,
+and the original residue breakpoints, form a complete list of boundary
+events. Evaluate the original ceiling and upper constraint at these
+points to retain singleton feasible designs and all ties. There are
+$O(D^2)$ such points, each requiring $O(D)$ operations. All half-line
+endpoints are ratios of rational differences, proving exactness.
+\end{proof}
+
+For uniform $\theta$ on $[0,\Delta)$, the probability of selecting a
+design is exactly its total winning interval length divided by $\Delta$.
+Endpoints have measure zero. On a winning interval $(u,v)$ with index
+$k_i$, the contribution to the expected optimum is
+\begin{equation}\label{eq:phaseexpectation}
+ \frac{\alpha_i^\nu}{\Delta(\nu+1)}
+ \bigl[(v+k_i\Delta)^{\nu+1}-(u+k_i\Delta)^{\nu+1}\bigr].
+\end{equation}
+Summing gives the expectation whenever at least one design is available
+almost everywhere. For positive integer $\nu$ and rational data, both
+the probabilities and the expectation are rational.
+
+\begin{example}[Exact selection probabilities]\label{ex:phase}
+Use $\Delta=1/5$, $\nu=2$, and the following rational data:
+\[
+\begin{array}{c|cccc}
+ i&A&B&C&D\\\hline
+ L_i&1&21/20&5/4&11/10\\
+ U_i&3/2&7/5&8/5&23/20\\
+ \alpha_i&1&19/20&4/5&9/10
+\end{array}
+\]
+The minimizing designs on the successive open intervals are
+\[
+\begin{array}{c|ccccc}
+ \theta&(0,1/20)&(1/20,1/15)&(1/15,1/10)&(1/10,3/20)&(3/20,1/5)\\\hline
+ i&A&B&C&D&C
+\end{array}
+\]
+The internal crossing $1/15$ is obtained from
+$(19/20)(\theta+1)=(4/5)(\theta+6/5)$.
+At that point B and C tie. At $\theta=3/20$, D is still feasible and
+is the unique winner; immediately to its right D exceeds its upper bound.
+All other boundary choices follow directly from the ceiling.
+The exact selection probabilities are
+\begin{equation}\label{eq:probabilities}
+ (\Pr A,\Pr B,\Pr C,\Pr D)
+ =\left(\frac14,\frac1{12},\frac5{12},\frac14\right).
+\end{equation}
+The unquantized root costs are $(1,399/400,1,99/100)$, so D is the unique
+continuous minimizer. Nevertheless its lattice-phase selection probability
+is $1/4$, while C is selected with probability $5/12$.
+The figure shows 120 equal-width phase representatives, the five winning
+intervals and the four exact probabilities. The probabilities follow from
+interval lengths, rather than a sampling estimate.
+\end{example}
+
+\begin{proposition}[Persistent reversal under refinement]\label{prop:persistent}
+Let two designs have lower endpoints $L_1=1$, $L_2=\rho>0$ and root cost
+weights $\alpha_1=1$, $\alpha_2=1/\rho$. Give each a fixed positive
+upper margin. Their continuous optima are equal.
+If $\rho$ is irrational, or $\rho=m/n$ in lowest terms with $m,n\ge2$,
+then there are two sequences of zero-origin spacings tending to zero:
+on one sequence design 1 uniquely wins, and on the other design 2 uniquely
+wins. The selected design therefore has no eventual constant value as
+the spacing tends to zero.
+\end{proposition}
+\begin{proof}
+At spacing $\Delta=1/j$, design 1 attains root cost $1$; design 2 has
+root cost $\lceil\rho j\rceil/(\rho j)>1$ whenever $\rho j$ is not
+an integer. At spacing $\Delta=\rho/j$, design 2 attains root cost $1$;
+design 1 has root cost $(\rho/j)\lceil j/\rho\rceil>1$ whenever
+$j/\rho$ is not an integer. An irrational $\rho$ satisfies both
+nonintegrality conditions for every positive $j$. For $\rho=m/n$, choose
+infinitely many $j$ not divisible by $n$ for the first sequence and not
+divisible by $m$ for the second. The rounding increments tend to zero,
+so both designs satisfy their fixed upper margins for all sufficiently
+large selected $j$. Raising root costs to $\nu>0$ preserves strict order.
+\end{proof}
+
+
 \section{Interval certificates for uncertain coefficients}
 Suppose a single-scenario design has nominal coefficients $e,m>0$ and
 relative enclosures
@@ -252,64 +386,48 @@ have different ceilings, proving the last statement.
 \end{proof}
 
 \section{Homogeneous recurrences and normalized responses}
-The coefficient model can arise from a fixed linear recurrence whose
-forcing and initial state share an amplitude. Let a design $p$ specify
-matrices $A_n(p)$, input vectors $b_n(p)$ and an initial state $z_0(p)$.
-Consider
+The response coefficients have a direct linear-system realization.
+For a fixed design $p$, consider
 \begin{equation}\label{eq:system}
  x_{n+1}=A_n(p)x_n+a b_n(p),\qquad x_0=a z_0(p).
 \end{equation}
-The matrices and the design sequence are fixed during the amplitude
-comparison. Let $z_n$ denote the solution with $a=1$.
-
+Let $z_n$ be the trajectory at amplitude one.
 \begin{lemma}[Exact normalization]\label{lem:homogeneous}
-For every $n$, $x_n=a z_n$. Every output linear in state and forcing
-scales by $a$. Every quadratic functional of those outputs scales by $a^2$.
-The same conclusion holds for piecewise-continuous linear differential
-equations with amplitude-scaled initial state and forcing, including
-homogeneous jumps $x^+=Jx^-+a k$.
+For every $n$, $x_n=a z_n$. Linear outputs scale by $a$ and quadratic
+functionals of those outputs scale by $a^2$.
 \end{lemma}
 \begin{proof}
-The discrete statement follows by induction: substituting $x_n=a z_n$
-into~\eqref{eq:system} yields $x_{n+1}=a(A_nz_n+b_n)=a z_{n+1}$.
-Linearity and quadratic homogeneity give the output and cost laws.
-For a differential equation, $a z(t)$ satisfies the scaled equation and
-initial condition; uniqueness of the linear initial-value problem gives
-the result between jumps. The stated jump rule preserves the identity.
+The initial condition has the required form. Substitution of $x_n=a z_n$
+into~\eqref{eq:system} gives $x_{n+1}=a(A_nz_n+b_n)=a z_{n+1}$, proving
+the state identity by induction. Linear and quadratic homogeneity give
+the output and cost identities.
 \end{proof}
-
-When normalized response extrema are positive, they give $m_s$ and $M_s$.
-Lemma~\ref{lem:homogeneous} then allows one normalized trajectory per design
-and scenario. Changing amplitude within this model reuses that trajectory
-and applies Theorem~\ref{thm:continuous} or~\ref{thm:grid}.
-
-A useful scalar instance has local minimum $a(1-d)$ with $0\le d<1$.
-For floor $F>0$, the iteration $a_{n+1}=F+d a_n$ satisfies
-\[
- a_n-a^*=d^n(a_0-a^*),\qquad a^*=F/(1-d).
-\]
-The fixed point is exactly the eliminated amplitude. Its derivation is
-an elementary contraction calculation, and supplies a direct check for
-an implementation that otherwise repeats the amplitude iteration.
+Positive normalized response extrema give $m_s$ and $M_s$. One normalized
+trajectory per design and scenario therefore supplies the coefficients for
+both continuous elimination and exact lattice-phase selection.
 
 \section{Verification and mathematical context}
-The rational verifier compares the closed-form grid rule with direct
-enumeration in 2400 finite robust instances, including 1533 feasible cases.
-It checks the exact rounding inequality in every feasible instance,
-verifies the design reversal in Table~\ref{tab:reversal}, retains the narrow
-infeasible interval example, and checks 200 independently advanced rational
-state-scaling steps. The figure contains twelve rational designs and
-sixteen explicit amplitude grid points; its incidence data are included.
+The original rational verifier compares the grid formula with direct
+enumeration in $2400$ robust instances, including $1533$ feasible cases,
+and checks $200$ independent state-scaling steps. The phase verifier
+checks the entire exact four-design interval diagram against rational
+phase queries and $400$ independent whole-grid enumerations. It verifies
+all boundary winners, the probabilities in~\eqref{eq:probabilities},
+the exact expected optimum $18688271/17280000$, and $425$ strict
+refinement-reversal comparisons. The source-derived figure displays
+$120$ equal-width phase representatives, five winning intervals and four
+probability outputs. Its exact interval measure is part of the certificate.
 
-Eliminating a monotone scalar over an interval is elementary. The quotient
-form belongs naturally to fractional programming, whose classical
-parametric and transformation methods include Dinkelbach~\cite{dinkelbach}
-and Schaible~\cite{schaible}. The contribution of this note is the explicit
-joint treatment of robust interval construction, affine-grid feasibility,
-sharp rounding control, design-order reversal and coefficient certificates,
-with a complete exact implementation. The reduction leaves the design
-optimization in its original mathematical class; it introduces no
-convexity assumption.
+Scalar elimination follows monotonicity, and the quotient belongs to the
+classical fractional-programming setting~\cite{dinkelbach,schaible}.
+Line-envelope algorithms are established computational geometry; see
+Hershberger~\cite{hershberger}. The principal result here is the complete
+common-lattice selection law in Theorem~\ref{thm:phase}, joining residue
+events, robust availability, affine root costs and exact selection measure.
+Proposition~\ref{prop:persistent} adds a sharp refinement phenomenon: equal
+continuous values can lead to indefinitely reversing grid winners.
+The direct cubic construction is an elementary exact implementation;
+its theorem claims completeness and the stated upper bound.
 
 \begin{thebibliography}{9}
 \bibitem{dinkelbach} W. Dinkelbach, On nonlinear fractional programming,
@@ -318,5 +436,9 @@ Management Science 13(7) (1967), 492--498.
 \bibitem{schaible} S. Schaible, Duality in fractional programming: a unified
 approach, Operations Research 24(3) (1976), 452--461.
 \href{https://doi.org/10.1287/opre.24.3.452}{doi:10.1287/opre.24.3.452}.
+\bibitem{hershberger} J. Hershberger,
+Finding the upper envelope of $n$ line segments in $O(n\log n)$ time,
+Information Processing Letters 33(4) (1989), 169--174.
+\href{https://doi.org/10.1016/0020-0190(89)90136-1}{doi:10.1016/0020-0190(89)90136-1}.
 \end{thebibliography}
 \end{document}

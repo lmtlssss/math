@@ -1,19 +1,25 @@
-# Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences
+# Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences
 
-**lmtlssss🜐 · 2 November 2026 · Version 1.0.0**  
+**lmtlssss🜐 · 2 November 2026 · Version 1.0.0**
 DOI: [10.5281/zenodo.23897133](https://doi.org/10.5281/zenodo.23897133)
 
-A sharp two-sample inequality yields a finite prefix for the infinite absolute peak of stable conjugate-root recurrences. An exact strip-polygon formulation handles larger observation sets; rational adaptive certificates and finite Stein sums give complete worked examples.
+Exact coefficient inequalities classify the stable conjugate-root recurrences with minimal uniform peak horizon two or three. A symmetric observation hexagon supplies necessity and sufficiency. An explicit rational boundary example has shortest uniform horizon three. Sharp observation constants, rational adaptive certificates and exact Stein sums accompany the new coefficient-region result.
+
+## Principal contribution
+
+The principal result is the closed necessary-and-sufficient coefficient classification for minimal horizons two and three, including all boundary equalities. General finite determination, polar invariant sets and Stein identities are classical. The paper gives the exact second-order regions rather than presenting those general tools as new.
 
 ## Files
 
-`paper.tex` is the mathematical manuscript. `verify.py` reconstructs the exact examples and independent comparisons. `evidence/verification.json` contains its observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.
+`paper.tex` is the mathematical manuscript. `verify.py` reconstructs the foundational examples; `verify_extension.py` reconstructs the principal discovery and its independent comparisons. `evidence/verification.json` and `evidence/discovery.json` contain the observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.
 
 The release includes `paper.pdf`, `00-cover.png` at native 3840-pixel width, `damped-recurrence-certificates.blend`, and `source-and-proof.zip`. The saved scene and image embed the publication DOI. The figure follows the author's established mathematical visual series.
 
 ## Reproduce
 
-Run `python3 verify.py --output evidence/verification.json` from this directory. Python 3.11 or later is sufficient; the cyclic-shift verifier also requires SymPy as listed in `requirements.txt`. The exact checks are: 507 observation inequalities; 5 two-sample equality witnesses; 2420 strip-polygon inequalities and 20 equality witnesses; 120 exact peak certificates; 720 finite energy sums.
+Run `python3 verify.py --output evidence/verification.json`, then `python3 verify_extension.py`, from this directory. The second command writes the current figure certificate. Use Python 3.11 or later and the dependencies in `requirements.txt`. The exact checks are: 507 observation inequalities; 5 two-sample equality witnesses; 2420 strip-polygon inequalities and 20 equality witnesses; 120 exact peak certificates; 720 finite energy sums.
+
+The principal-discovery checks are: 8,478 exact rational coefficient pairs against an independently constructed convex hull: 2,869 horizon-two, 3,014 horizon-three and 2,595 requiring at least four samples; an explicit irredundancy witness and 101 observation rows for the rational example.
 
 Typeset with `xelatex -interaction=nonstopmode -halt-on-error paper.tex` twice. The manuscript uses Latin Modern and Noto Sans Symbols, following earlier notes in the series. The release PDF was also built natively with `tectonic --keep-logs paper.tex` (Tectonic 0.17.0).
 

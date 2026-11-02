@@ -1,38 +1,46 @@
 #!/usr/bin/env python3
-"""Exact incidence of 64 translated profiles, sixteen occupancies and sixteen outputs."""
+"""Native source-derived figure for the attained cyclotomic spectral gap."""
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from scene_common import *
-assert D['P']==16 and D['N']==64 and D['occupancy']==[4]*16 and D['aggregate']==[12]*16
-centers=[(-.65,-.1,3.65-.43*k) for k in range(16)]
-outputs=[(7.0,0,3.65-.43*k) for k in range(16)]
-for i,d in enumerate(D['shifts']):
- row,col=divmod(i,8);p=(-8.8+.40*col,0,3.55-.40*row);mat=PALETTE[d%12]
- diamond('copy '+str(i),N,p,.05,mat,{'copy':i,'shift':d})
- q=centers[d];curve('copy %d → occupancy %d'%(i,d),R,[p,(-3.8,.18,.5*p[2]+.5*q[2]),q],mat,.004,True,{'shift':d})
- if col<7:curve('source-row '+str(i),N,[p,(p[0]+.4,0,p[2])],GRID,.003,False)
- if row<7:curve('source-col '+str(i),N,[p,(p[0],0,p[2]-.4)],GRID,.003,False)
-for d,p in enumerate(centers):
- mat=PALETTE[d%12];bar('occupancy '+str(d),B,p,mat,props={'shift':d,'copies':4})
- text(str(d),-1.18,p[2]-.07,.15,mat)
- for off,w in enumerate(D['profile']):
-  if not w:continue
-  j=(d+off)%16;q=outputs[j]
-  curve('shift %d contributes %d to sample %d'%(d,4*w,j),R,[p,(3.6,.1,.55*p[2]+.45*q[2]),q],mat,.004+w*.002,True,{'source_shift':d,'output_position':j,'coefficient':4*w})
-for j,q in enumerate(outputs):
- diamond('aggregate sample '+str(j),O,q,.095,PALETTE[j%12],{'value':12,'position':j});text('12',7.35,q[2]-.07,.18)
-# Exact integer aggregate values, shown as two small independent coordinate plots.
-for label,values,x0 in [('aligned',[128,64]+[0]*14,-8.8),('balanced',[12]*16,-5.8)]:
- pts=[(x0+.15*i,0,-3.95+.0125*v) for i,v in enumerate(values)]
- curve(label+' exact samples',N,pts,GOLD if label=='aligned' else CYAN,.012,False)
- for i,p in enumerate(pts):diamond(label+' sample '+str(i),N,p,.022,GOLD if label=='aligned' else CYAN)
- text(label,x0,-4.35,.19)
-text('E(d) = ‖ Σ T_d p ‖²',-9.0,5.2,.31)
-text('q_min = 16',4.65,5.2,.39,GOLD)
-text('64',-7.7,4.2,.36);text('16',-.84,4.2,.36,GOLD);text('16',6.85,4.2,.32)
-text('20 480  →  2 304',-.6,-4.8,.56)
-text('exact quadratic energy',.15,-5.3,.2,CYAN)
-text('65 536  →  32',3.8,-5.85,.35,GOLD)
-text('pair-kernel entries → retained arrays',3.2,-6.18,.16)
-finish('cyclic-shift-energies','64 actual profiles, exact shift occupancy and coefficient-labelled output relations; energy values evaluated from the certified integer aggregate.')
+states=D['states'];example=D['example'];levels=example['energy_levels']
+assert len(states)==210 and example['minimum']==38 and len(levels)==20
+winners=[v for v in states if v['energy']==38]
+assert len(winners)==5
+centers={e:(-.10,-.12,3.85-.29*i) for i,e in enumerate(levels)}
+for i,row in enumerate(states):
+ h=row['occupancy'];E=row['energy']
+ assert len(h)==5 and sum(h)==6
+ assert E==3*sum(x*x for x in h)+2*sum(h[j]*h[(j+1)%5] for j in range(5))
+ rr,cc=divmod(i,15);p=(-9+.33*cc,0,3.8-.36*rr)
+ mat=GOLD if E==38 else PALETTE[levels.index(E)%12]
+ diamond('occupancy '+','.join(map(str,h)),N,p,.055 if E==38 else .029,mat,{'occupancy':h,'energy':E})
+ q=centers[E]
+ curve('occupancy %d to energy %d'%(i,E),R,[p,(-2.7,.20,.48*p[2]+.52*q[2]),q],mat,.006 if E==38 else .0018)
+ if cc<14:curve('grid-row-'+str(i),N,[p,(p[0]+.33,0,p[2])],DIM,.002,False)
+ if rr<13:curve('grid-col-'+str(i),N,[p,(p[0],0,p[2]-.36)],DIM,.002,False)
+for j,E in enumerate(levels):
+ mat=GOLD if E==38 else PALETTE[j%12]
+ bar('exact energy '+str(E),B,centers[E],mat,w=.52,h=.095,props={'energy':E,'state_count':sum(v['energy']==E for v in states)})
+ text(str(E),.34,centers[E][2]-.065,.17,mat)
+for j,row in enumerate(winners):
+ q=(6.25,-.10,3.25-.93*j)
+ diamond('minimizer '+str(j),O,q,.13,GOLD,{'occupancy':row['occupancy'],'energy':38})
+ curve('minimum to witness '+str(j),R,[centers[38],(3.2,-.12,.45*centers[38][2]+.55*q[2]),q],GOLD,.009)
+ text('('+','.join(map(str,row['occupancy']))+')',6.62,q[2]-.065,.22,INK)
+text('E = 3Σ hᵢ² + 2Σ hᵢhᵢ₊₁',-9,5.15,.31)
+text('E ≥ 38',5.75,5.15,.42,GOLD)
+text('210',-7.3,4.4,.33);text('20',-.27,4.4,.33);text('5',6.12,4.15,.33,GOLD)
+text('210  →  5',-.80,-4.25,.72)
+text('exact integer minimizers',-.76,-4.95,.23,CYAN)
+text('p = 5    N = 6',-8.7,-4.85,.28)
+text('Γ = 2√5 / 5',5.30,-4.35,.32,GOLD)
+text('36 + 4λ_* / 5 + Γ = 38',3.75,-5.05,.23)
+# A true five-cycle encodes the off-diagonal terms of K.
+import math
+cycle=[(-7.4+.65*math.cos(2*math.pi*j/5),0,-3.4+.65*math.sin(2*math.pi*j/5)) for j in range(5)]
+for j,p in enumerate(cycle):
+ diamond('cycle vertex '+str(j),B,p,.06,CYAN)
+ curve('cycle edge '+str(j),B,[p,cycle[(j+1)%5]],GRID,.008,False)
+finish('cyclic-shift-energies','All 210 integer occupancies of six units on a five-cycle; twenty exact energy values and five witnesses attaining the cyclotomic bound 38.')

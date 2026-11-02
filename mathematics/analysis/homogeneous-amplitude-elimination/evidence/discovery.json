@@ -1,0 +1,159 @@
+{
+  "status": "PASS",
+  "designs": [
+    [
+      "A",
+      "1",
+      "3/2",
+      "1"
+    ],
+    [
+      "B",
+      "21/20",
+      "7/5",
+      "19/20"
+    ],
+    [
+      "C",
+      "5/4",
+      "8/5",
+      "4/5"
+    ],
+    [
+      "D",
+      "11/10",
+      "23/20",
+      "9/10"
+    ]
+  ],
+  "spacing": "1/5",
+  "breakpoints": [
+    "0",
+    "1/20",
+    "1/10",
+    "3/20",
+    "1/5"
+  ],
+  "winner_segments": [
+    {
+      "left": "0",
+      "right": "1/20",
+      "design": "A",
+      "k": 5,
+      "alpha": "1"
+    },
+    {
+      "left": "1/20",
+      "right": "1/15",
+      "design": "B",
+      "k": 5,
+      "alpha": "19/20"
+    },
+    {
+      "left": "1/15",
+      "right": "1/10",
+      "design": "C",
+      "k": 6,
+      "alpha": "4/5"
+    },
+    {
+      "left": "1/10",
+      "right": "3/20",
+      "design": "D",
+      "k": 5,
+      "alpha": "9/10"
+    },
+    {
+      "left": "3/20",
+      "right": "1/5",
+      "design": "C",
+      "k": 6,
+      "alpha": "4/5"
+    }
+  ],
+  "boundary_winners": [
+    {
+      "theta": "0",
+      "winners": [
+        [
+          "A",
+          5,
+          "1"
+        ]
+      ]
+    },
+    {
+      "theta": "1/20",
+      "winners": [
+        [
+          "B",
+          5,
+          "21/20"
+        ]
+      ]
+    },
+    {
+      "theta": "1/10",
+      "winners": [
+        [
+          "D",
+          5,
+          "11/10"
+        ]
+      ]
+    },
+    {
+      "theta": "3/20",
+      "winners": [
+        [
+          "D",
+          5,
+          "23/20"
+        ]
+      ]
+    }
+  ],
+  "independent_origin_comparisons": 1996,
+  "persistent_reversal_checks": 425,
+  "all_boundary_winners": [
+    {
+      "theta": "0",
+      "winners": [
+        "A"
+      ]
+    },
+    {
+      "theta": "1/20",
+      "winners": [
+        "B"
+      ]
+    },
+    {
+      "theta": "1/15",
+      "winners": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "theta": "1/10",
+      "winners": [
+        "D"
+      ]
+    },
+    {
+      "theta": "3/20",
+      "winners": [
+        "D"
+      ]
+    }
+  ],
+  "selection_probabilities": {
+    "A": "1/4",
+    "B": "1/12",
+    "C": "5/12",
+    "D": "1/4"
+  },
+  "expected_optimum_quadratic_cost": "18688271/17280000",
+  "independent_grid_enumeration_cases": 400
+}

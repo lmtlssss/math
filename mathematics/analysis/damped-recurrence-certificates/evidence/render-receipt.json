@@ -16,12 +16,12 @@
     3840,
     2705
   ],
-  "certificate_sha256": "9719c8151ac6f5a34c5706c4e37b61c82e20f3fdc37e3bb781ac1976bebf6e80",
-  "png_sha256": "74b23971cdfa98ae91a6864aefe691ca6f18093437fbf07e7480a88515819e1e",
-  "blend_sha256": "26ad1652063ad668dd9891c9d7051dbf785452d923077645a789996d649f7025",
+  "certificate_sha256": "cf1bd666c46923ff8f809be8ec5748b9a5091d6cafe344119c70476dbf5da235",
+  "png_sha256": "6695d18a65941cb12cf246645a678a10f969aa69d1dcad7ab1864e9e9cff3ac1",
+  "blend_sha256": "6d86c7f0ba572c354894c50229d3218e5f85a06bef047224e00b9c47d1d712bf",
   "source_template_preserved": true,
   "font_assets_distributed": false,
-  "objects": 96,
-  "title": "Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences",
+  "objects": 166,
+  "title": "Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences",
   "doi": "10.5281/zenodo.23897133"
 }

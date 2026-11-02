@@ -1,20 +1,22 @@
 {
-  "title": "Exact Amplitude Elimination under Robust and Quantized Constraints",
+  "title": "Robust Amplitude Elimination and Exact Lattice-Phase Selection",
   "slug": "homogeneous-amplitude-elimination",
-  "short_title": "Exact amplitude elimination",
+  "short_title": "Robust amplitude and lattice-phase selection",
   "author": "lmtlssss🜐",
   "date": "2026-11-02",
   "version": "1.0.0",
   "license": "cc-by-4.0",
   "type": "preprint",
   "keywords": [
+    "parametric optimization",
+    "lattice phase",
     "homogeneous optimization",
-    "amplitude elimination",
     "robust constraints",
-    "quantization",
-    "exact arithmetic"
+    "exact selection probability"
   ],
   "doi": "10.5281/zenodo.23897131",
   "repository_path": "mathematics/analysis/homogeneous-amplitude-elimination",
-  "zenodo_record_id": 23897131
+  "zenodo_record_id": 23897131,
+  "abstract": "A complete exact selection law for a translating common lattice reduces finite robust designs to residue cells and affine envelopes. It gives rational selection probabilities, expected optima and boundary decisions. A four-design example separates the continuous winner from the phase-selection probabilities. A second theorem proves persistent reversal under arbitrarily fine lattice refinement.",
+  "principal_contribution": "The principal contributions are the common-lattice phase-selection law, its exact probability and expectation formula, and the persistent-refinement reversal theorem. Scalar monotonicity, interval elimination, homogeneity and line-envelope geometry are established foundations, not separate originality claims."
 }

@@ -1,18 +1,18 @@
 {
   "schema": "mathematics.source.v1",
-  "title": "Exact Cyclic-Shift Energies: Minimal State and Integral Bounds",
+  "title": "Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps",
   "doi": "10.5281/zenodo.23897127",
   "version": "1.0.0",
   "files": [
     {
       "path": "CITATION.bib",
-      "bytes": 285,
-      "sha256": "6d5aac6b2dfd3dd30f73f9c60420edde7d49ee80d984c5033db4813b1f1bba56"
+      "bytes": 279,
+      "sha256": "a6955ec0ab8f9a3fcc391603f3c3f6f54810a7e37ab39f9c07d7f95c64671e8f"
     },
     {
       "path": "CITATION.cff",
-      "bytes": 368,
-      "sha256": "60e9020aaba9f3eb748cd8f85d49e8056bef005164e15a1915b878eb09c19110"
+      "bytes": 362,
+      "sha256": "39c4d79210cad9406ee8760535764e2001b593cea80a643f37727520f3887fd9"
     },
     {
       "path": "LICENSE.md",
@@ -21,28 +21,38 @@
     },
     {
       "path": "Makefile",
-      "bytes": 196,
-      "sha256": "2673b339d49296898a6fb9d4296e11e041422ede7d3a6733df44bf5320b8f16e"
+      "bytes": 225,
+      "sha256": "832793da2a6bc4e3751d13137299eeb81256f72811aea1c56200578808854a95"
     },
     {
       "path": "README.md",
-      "bytes": 2530,
-      "sha256": "6e65a165658cb92d35d400b40a6d9f0d4831bf36594b5734bb7172e2e6e10709"
+      "bytes": 3333,
+      "sha256": "a6affc838703870b199000f3229b10f9c7656fda4edc28c594823a2260288367"
     },
     {
       "path": "VERIFICATION.md",
-      "bytes": 714,
-      "sha256": "b8bbea6f9ef3bfd85fc39a896d4a9c59703fa1972c9a42890caf0cef2ced4758"
+      "bytes": 594,
+      "sha256": "0db66caefec4daec81f9489bafaf01c5d726d23ba1a7b1af8b5b67302dc339f0"
     },
     {
       "path": "VERIFICATION_PLAN.md",
-      "bytes": 940,
-      "sha256": "79d31b2afaa154c004f61f80217a26f790030ee0c14514f6adca908ad79f3086"
+      "bytes": 1197,
+      "sha256": "706f81ee849bb2512cfa3a01d98cd594ed8b74c5dde3b8814b380be901e32e25"
+    },
+    {
+      "path": "evidence/NOVELTY.md",
+      "bytes": 1370,
+      "sha256": "96b06817321b55a27da5212a01b35e76e8df7a55e06990405e252e3005ac21d2"
     },
     {
       "path": "evidence/PRIOR_ART.md",
-      "bytes": 704,
-      "sha256": "01acf9a0adc4831f638a4514b9a716351be5298dd433668a0b27332070afa7a3"
+      "bytes": 783,
+      "sha256": "10863d6a72637a877400c082046842aece1adb8959c654941ebaecc00f350d5e"
+    },
+    {
+      "path": "evidence/discovery.json",
+      "bytes": 25755,
+      "sha256": "10c39810b1513d5233e2a45d5efed39fe40a31a3a5ba638dc1d73c8864283597"
     },
     {
       "path": "evidence/environment.json",
@@ -51,18 +61,18 @@
     },
     {
       "path": "evidence/figure.json",
-      "bytes": 1183,
-      "sha256": "f3ba15dc86f602ea07ec7cc9b5d3959085b2d507b1594d8989fe1f9df0160961"
+      "bytes": 25755,
+      "sha256": "10c39810b1513d5233e2a45d5efed39fe40a31a3a5ba638dc1d73c8864283597"
     },
     {
       "path": "evidence/pdf-build.json",
-      "bytes": 221,
-      "sha256": "cbd805485e0b771aadf885f8166c12fe0127fb36159de049b5be5faae46ac18c"
+      "bytes": 462,
+      "sha256": "6dc0419e0dd1a9881d1dd101b2b712d4182782e59cdc3154e9c9ae621e8d798f"
     },
     {
       "path": "evidence/render-receipt.json",
-      "bytes": 886,
-      "sha256": "cace454652c3de7ee9ae6bc55672033723696306e8a1c60bf31224ddffa1e6a6"
+      "bytes": 880,
+      "sha256": "d3a9532c6d126bd427756b64ee4de71165eca422b64aced23ab9d08a52c75629"
     },
     {
       "path": "evidence/verification.json",
@@ -71,13 +81,13 @@
     },
     {
       "path": "metadata.json",
-      "bytes": 554,
-      "sha256": "48239ea3bcf241bb2f8aa12d264048c88123564de5d9527b336314041c1398d8"
+      "bytes": 1276,
+      "sha256": "7e2eb4e20f5c4807d53e840593ff415aab28895a0c3aa7ffff3e606116346669"
     },
     {
       "path": "paper.tex",
-      "bytes": 15256,
-      "sha256": "cb5941ea3b22cbd6859bbde1574a5dbcce13b751f560889695df1e818595417a"
+      "bytes": 20028,
+      "sha256": "728c8e8c70e19471e4328ad1e31acea1e629b6c6ca9700fe40aa366fb523b139"
     },
     {
       "path": "requirements.txt",
@@ -90,9 +100,14 @@
       "sha256": "658ec9e19eb49d7881e7f5516c213d7583f95210c2c604e615ad51bf637248cf"
     },
     {
+      "path": "verify_extension.py",
+      "bytes": 2742,
+      "sha256": "d8fcbe4bcfbae114cc5f1a5c3ce3fe6059caac34deea04956d95cf41ba572fa8"
+    },
+    {
       "path": "visual/build_scene.py",
-      "bytes": 2384,
-      "sha256": "b06de3cfbb9f0c5f2845c696d5b172125d297e5d1c89f6d9eaa28840e5cdf6c2"
+      "bytes": 2574,
+      "sha256": "7a21d7104d63fb2bee162d10b879f31b79bfac7e69efd98f71374899c55c3e00"
     },
     {
       "path": "visual/scene_common.py",
