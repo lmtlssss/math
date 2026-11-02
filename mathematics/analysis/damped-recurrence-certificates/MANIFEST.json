@@ -1,18 +1,23 @@
 {
   "schema": "mathematics.source.v1",
   "title": "Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences",
-  "doi": "10.5281/zenodo.23897133",
-  "version": "1.0.0",
+  "doi": "10.5281/zenodo.23900237",
+  "version": "1.0.1",
   "files": [
     {
       "path": "CITATION.bib",
       "bytes": 305,
-      "sha256": "7843f93be4937e510312875c693e3742a5969be5cc72bdfadafe464eeddf8a4f"
+      "sha256": "23d8c7e247b91b1d29c39fc24b9fc70bd73f5c13278a818e19463b40f1b31afe"
     },
     {
       "path": "CITATION.cff",
       "bytes": 388,
-      "sha256": "dd54f0683974438e857cdf45700985fa45149e2ac496e71fc2daa0d1605ba6ab"
+      "sha256": "a9b06811e8e5418731f3eed0462247f3ddc34028e4b31c09f66a8f1ce3ea3529"
+    },
+    {
+      "path": "CORRECTION.md",
+      "bytes": 809,
+      "sha256": "2329f40458d40835da40d8271e6e20719e9ab40b2e5b88afaf7fd821148e3036"
     },
     {
       "path": "LICENSE.md",
@@ -26,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 3545,
-      "sha256": "e98153d7b48099b5f055cc55c88bd8ccf88555e52b4acb8d4e453ccbf816096e"
+      "bytes": 3904,
+      "sha256": "c340fbd8b8908471a78edaeb58722f9de448906d65961fd06875d5a31d7a4481"
     },
     {
       "path": "VERIFICATION.md",
@@ -50,6 +55,11 @@
       "sha256": "728c0332400cd31a29dd09f97788f321f882ef092a08bcbaec7030d8f2ddea51"
     },
     {
+      "path": "evidence/correction-review.json",
+      "bytes": 605,
+      "sha256": "29ec9d847ab398a8fca6908fb8bd34c1e3260fb720f3be657cd48a4ea19bdcc6"
+    },
+    {
       "path": "evidence/discovery.json",
       "bytes": 728,
       "sha256": "c2361ee34878f0dc49260e8de3cc6b95107e7e3212c7a2bd6b5ca19222e78e62"
@@ -66,13 +76,13 @@
     },
     {
       "path": "evidence/pdf-build.json",
-      "bytes": 488,
-      "sha256": "b06cb03a503b93d57ed94b20792b6473ac0ca2226c139d6de836803db20a5537"
+      "bytes": 668,
+      "sha256": "6e70c9807f9211e138630e85bd2997841b1da00f94ae6e06b91cf719a101267a"
     },
     {
       "path": "evidence/render-receipt.json",
-      "bytes": 897,
-      "sha256": "54fcbd289674f98c6dcfbd36c859fc8abd32c27fb2cc09b81b07e5a511788a27"
+      "bytes": 1244,
+      "sha256": "bf5ba32bfc672bdbcded640e3f3f73c4725e05e0c08f84aa40461626e0922b87"
     },
     {
       "path": "evidence/verification.json",
@@ -81,13 +91,13 @@
     },
     {
       "path": "metadata.json",
-      "bytes": 1398,
-      "sha256": "078aa15dbb3cfc83e06e8f00abf7fb93b52f6cb5fe6308a3482fc43315e857d7"
+      "bytes": 1448,
+      "sha256": "3bfda8e18fd3090b3f5dc9efc16965642f78775c599fdda3eb5464251fa6a96d"
     },
     {
       "path": "paper.tex",
       "bytes": 19670,
-      "sha256": "90a0f15d2a8055809be8cbf31d1eb7370ba4ec994f09d5db83b52f694d1e0a60"
+      "sha256": "c31fa6fda9b415ae143d3d2cf3d5bbb9f19a18ed94358274d2b2a8f5cf0d26a6"
     },
     {
       "path": "requirements.txt",
@@ -111,8 +121,8 @@
     },
     {
       "path": "visual/scene_common.py",
-      "bytes": 7497,
-      "sha256": "40901aa41e799b38c2d6a7c57a787344d3d912ac78b74ae33dfe44dec18a2381"
+      "bytes": 7547,
+      "sha256": "c480c92c876d53c23af10e546a180417c3f4ce342dfb8c08ce9f7b5789c4c078"
     }
   ]
 }

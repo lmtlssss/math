@@ -23,5 +23,13 @@
   "font_assets_distributed": false,
   "objects": 166,
   "title": "Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences",
-  "doi": "10.5281/zenodo.23897133"
+  "doi": "10.5281/zenodo.23897133",
+  "publication_doi": "10.5281/zenodo.23900237",
+  "figure_origin_doi": "10.5281/zenodo.23897133",
+  "reuse": {
+    "version": "1.0.0",
+    "reason": "The row-action matrix correction changes the proof notation. The figure geometry and exact certificate remain unchanged.",
+    "same_native_scene_bytes": true,
+    "same_4k_image_bytes": true
+  }
 }
