@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying mathematical preprint."
+title: "Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences"
+authors:
+  - name: "lmtlssss🜐"
+version: 1.0.0
+date-released: 2026-11-02
+doi: 10.5281/zenodo.23897133
+url: https://github.com/lmtlssss/math/tree/main/mathematics/analysis/damped-recurrence-certificates
+license: CC-BY-4.0

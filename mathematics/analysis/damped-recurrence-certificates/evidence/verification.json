@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "observability_inequalities": 507,
+  "sharp_equality_witnesses": 5,
+  "strip_polygon_inequalities": 2420,
+  "strip_polygon_equality_witnesses": 20,
+  "exact_peak_instances": 120,
+  "exact_finite_energy_checks": 720,
+  "largest_instance_prefix": 7,
+  "figure": {
+    "a": "3/5",
+    "b": "1/5",
+    "rho_squared": "2/5",
+    "initial": [
+      "0",
+      "1"
+    ],
+    "sharp_constant_squared": "1/65",
+    "universal_prefix": 5,
+    "instance_prefix": 4,
+    "peak": "6/5",
+    "peak_index": 2,
+    "tail_envelope_squared": "16/25",
+    "amplitude_squared": "25",
+    "sample_values": [
+      "0",
+      "1",
+      "6/5",
+      "26/25",
+      "96/125",
+      "316/625",
+      "936/3125",
+      "2456/15625",
+      "5376/78125",
+      "7696/390625",
+      "-7584/1953125",
+      "-122464/9765625",
+      "-658944/48828125",
+      "-2729024/244140625",
+      "-9784704/1220703125",
+      "-31417984/6103515625",
+      "-90660864/30517578125",
+      "-229785344/152587890625",
+      "-472103424/762939453125",
+      "-534767104/3814697265625",
+      "1512431616/19073486328125",
+      "14422260736/95367431640625",
+      "71409248256/476837158203125",
+      "284232882176/2384185791015625",
+      "991304810496/11920928955078125",
+      "3105500041216/59604644775390625",
+      "8719952142336/298023223876953125",
+      "21264712441856/1490116119384765625"
+    ],
+    "exact_infinite_square_sum": "175/39",
+    "finite_64_square_sum": "2109861655322054501482347082383014229422985227078323106535895977777706769223038142358601/470197740328915003187494614888898271127466222708835008603500682511366903781890869140625",
+    "stein_matrix": [
+      [
+        "58/39",
+        "3/13"
+      ],
+      [
+        "3/13",
+        "7/39"
+      ]
+    ],
+    "interpretation": "Four rational samples plus a geometric envelope certify the infinite absolute peak."
+  },
+  "arithmetic": "fractions, direct recurrence, independent rational Stein solve and matrix powers"
+}

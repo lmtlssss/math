@@ -1,0 +1,136 @@
+{
+  "designs": [
+    {
+      "name": "A",
+      "m": "1",
+      "e": "1",
+      "a_continuous": "1",
+      "continuous_value": "1",
+      "a_grid": "1",
+      "grid_value": "1"
+    },
+    {
+      "name": "B",
+      "m": "21/20",
+      "e": "27/25",
+      "a_continuous": "20/21",
+      "continuous_value": "48/49",
+      "a_grid": "1",
+      "grid_value": "27/25"
+    },
+    {
+      "name": "C",
+      "m": "4/5",
+      "e": "3/5",
+      "a_continuous": "5/4",
+      "continuous_value": "15/16",
+      "a_grid": "13/10",
+      "grid_value": "507/500"
+    },
+    {
+      "name": "D",
+      "m": "7/10",
+      "e": "147/250",
+      "a_continuous": "10/7",
+      "continuous_value": "6/5",
+      "a_grid": "3/2",
+      "grid_value": "1323/1000"
+    },
+    {
+      "name": "E",
+      "m": "4/5",
+      "e": "96/125",
+      "a_continuous": "5/4",
+      "continuous_value": "6/5",
+      "a_grid": "13/10",
+      "grid_value": "4056/3125"
+    },
+    {
+      "name": "F",
+      "m": "9/10",
+      "e": "243/250",
+      "a_continuous": "10/9",
+      "continuous_value": "6/5",
+      "a_grid": "6/5",
+      "grid_value": "4374/3125"
+    },
+    {
+      "name": "G",
+      "m": "1",
+      "e": "6/5",
+      "a_continuous": "1",
+      "continuous_value": "6/5",
+      "a_grid": "1",
+      "grid_value": "6/5"
+    },
+    {
+      "name": "H",
+      "m": "11/10",
+      "e": "363/250",
+      "a_continuous": "10/11",
+      "continuous_value": "6/5",
+      "a_grid": "1",
+      "grid_value": "363/250"
+    },
+    {
+      "name": "I",
+      "m": "6/5",
+      "e": "216/125",
+      "a_continuous": "5/6",
+      "continuous_value": "6/5",
+      "a_grid": "9/10",
+      "grid_value": "4374/3125"
+    },
+    {
+      "name": "J",
+      "m": "13/10",
+      "e": "507/250",
+      "a_continuous": "10/13",
+      "continuous_value": "6/5",
+      "a_grid": "4/5",
+      "grid_value": "4056/3125"
+    },
+    {
+      "name": "K",
+      "m": "7/5",
+      "e": "294/125",
+      "a_continuous": "5/7",
+      "continuous_value": "6/5",
+      "a_grid": "4/5",
+      "grid_value": "4704/3125"
+    },
+    {
+      "name": "L",
+      "m": "3/2",
+      "e": "27/10",
+      "a_continuous": "2/3",
+      "continuous_value": "6/5",
+      "a_grid": "7/10",
+      "grid_value": "1323/1000"
+    }
+  ],
+  "grid": [
+    "1/2",
+    "3/5",
+    "7/10",
+    "4/5",
+    "9/10",
+    "1",
+    "11/10",
+    "6/5",
+    "13/10",
+    "7/5",
+    "3/2",
+    "8/5",
+    "17/10",
+    "9/5",
+    "19/10",
+    "2"
+  ],
+  "grid_step": "1/10",
+  "lower_floor": "1",
+  "continuous_winner": "C",
+  "grid_winner": "A",
+  "full_grid_points": 192,
+  "eliminated_candidates": 12
+}

@@ -1,0 +1,27 @@
+{
+  "blender": "5.2.3 LTS",
+  "engine": "BLENDER_EEVEE",
+  "source_style": "tensor-note-v1.0.0",
+  "source_style_sha256": "b9e3c857d3e700f8db7f95cd32c283264d10b1944a287b3fd72670370b491417",
+  "original_settings": {
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      2200,
+      1550
+    ],
+    "view_transform": "Standard",
+    "world": "Technical stage / graphite"
+  },
+  "resolution": [
+    3840,
+    2705
+  ],
+  "certificate_sha256": "f3ba15dc86f602ea07ec7cc9b5d3959085b2d507b1594d8989fe1f9df0160961",
+  "png_sha256": "04a1b9fd59886ffca2450d7f55489530b96c10e76be48f094ba4926e90c3e91e",
+  "blend_sha256": "67b55b941d4d44a9ea4b3781d2d2fd8d147aa96cdadacd6cb5f6bded857ef395",
+  "source_template_preserved": true,
+  "font_assets_distributed": false,
+  "objects": 384,
+  "title": "Exact Cyclic-Shift Energies: Minimal State and Integral Bounds",
+  "doi": "10.5281/zenodo.23897127"
+}

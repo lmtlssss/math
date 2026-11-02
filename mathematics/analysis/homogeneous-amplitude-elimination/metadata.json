@@ -1,0 +1,20 @@
+{
+  "title": "Exact Amplitude Elimination under Robust and Quantized Constraints",
+  "slug": "homogeneous-amplitude-elimination",
+  "short_title": "Exact amplitude elimination",
+  "author": "lmtlssss🜐",
+  "date": "2026-11-02",
+  "version": "1.0.0",
+  "license": "cc-by-4.0",
+  "type": "preprint",
+  "keywords": [
+    "homogeneous optimization",
+    "amplitude elimination",
+    "robust constraints",
+    "quantization",
+    "exact arithmetic"
+  ],
+  "doi": "10.5281/zenodo.23897131",
+  "repository_path": "mathematics/analysis/homogeneous-amplitude-elimination",
+  "zenodo_record_id": 23897131
+}

@@ -1,0 +1,6 @@
+{
+  "python": "3.13.5",
+  "exact_arithmetic": "Python int and fractions.Fraction",
+  "verification_entry": "python3 verify.py --output evidence/verification.json",
+  "sympy": "1.14.0"
+}

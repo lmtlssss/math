@@ -1,0 +1,308 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Finite peak certificates for damped recurrences}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{example}[theorem]{Example}
+\DeclareMathOperator{\rank}{rank}\DeclareMathOperator{\spanop}{span}\DeclareMathOperator{\diag}{diag}
+\newcommand{\R}{\mathbb R}\newcommand{\C}{\mathbb C}\newcommand{\Z}{\mathbb Z}\newcommand{\N}{\mathbb N}\newcommand{\ip}[2]{\langle #1,#2\rangle}\newcommand{\norm}[1]{\lVert #1\rVert}\newcommand{\one}{\mathbf 1}
+\hypersetup{pdftitle={Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: linear recurrences and exact certification},pdfkeywords={linear recurrence, sharp bound, observability, peak certificate, Stein equation}}
+\title{\LARGE Sharp Two-Sample Bounds and Finite\\Peak Certificates for Damped Recurrences}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{2 November 2026\\[3pt]\small\href{https://doi.org/10.5281/zenodo.23897133}{10.5281/zenodo.23897133}}
+\begin{document}\maketitle\thispagestyle{plain}
+
+\begin{abstract}
+Consider a real second-order recurrence with distinct stable conjugate roots
+$a\pm ib$, where $b>0$ and $a^2+b^2<1$.
+We prove the sharp two-sample bound
+$\max\{x_0^2,x_1^2\}\ge
+ b^2R^2/(1+a^2+b^2+2|a|)$,
+where $R^2=x_0^2+((x_1-a x_0)/b)^2$.
+It yields a finite, coefficient-dependent prefix containing the absolute
+maximum of every infinite trajectory. An adaptive rational certificate can
+terminate earlier by comparing the observed peak with the remaining
+geometric envelope. We extend the sharp observation constant to arbitrary
+finite sample sets through a two-dimensional strip polygon, and combine the
+peak certificate with exact finite quadratic-sum formulas.
+A worked rational recurrence attains its infinite absolute peak $6/5$ at
+index two; four samples certify the peak, and its infinite square sum is
+$175/39$. Exact independent computations accompany the proofs.
+\end{abstract}
+\noindent\textit{Keywords.} Linear recurrence; damped oscillation; sharp
+observability bound; finite peak certificate; quadratic sums; rational arithmetic.
+
+\section{A two-dimensional recurrence representation}
+Fix $a\in\R$ and $b>0$ such that
+\begin{equation}\label{eq:stable}
+ r^2=a^2+b^2<1.
+\end{equation}
+Thus $0<r<1$. Consider arbitrary real initial values $x_0,x_1$ and
+\begin{equation}\label{eq:recurrence}
+ x_{n+2}=2a x_{n+1}-r^2x_n\qquad(n\ge0).
+\end{equation}
+Set
+\begin{equation}\label{eq:state}
+ z=\begin{pmatrix}u\\v\end{pmatrix}
+ =\begin{pmatrix}x_0\\(x_1-a x_0)/b\end{pmatrix},\quad
+ S=\begin{pmatrix}a&b\\-b&a\end{pmatrix},\quad
+ R^2=u^2+v^2.
+\end{equation}
+Then $x_n=e_1^\mathsf TS^n z$. The characteristic equation of $S$ gives
+\eqref{eq:recurrence}, and its first two outputs are $x_0,x_1$.
+Since $S^\mathsf TS=r^2I$,
+\begin{equation}\label{eq:envelope}
+ |x_n|\le Rr^n.
+\end{equation}
+Write $(a+ib)^k=a_k+ib_k$. Equivalently,
+$x_k=a_ku+b_kv$.
+
+\section{The sharp two-sample constant}
+\begin{theorem}[Sharp adjacent-sample bound]\label{thm:two}
+For all real $x_0,x_1$,
+\begin{equation}\label{eq:sharp}
+ \boxed{\max\{x_0^2,x_1^2\}\ge c^2R^2,
+ \qquad c^2=\frac{b^2}{1+r^2+2|a|}.}
+\end{equation}
+The coefficient $c^2$ is the largest constant for which this inequality
+holds for every pair of initial values.
+\end{theorem}
+\begin{proof}
+Put $M=\max\{|x_0|,|x_1|\}$. If $M=0$, the result is immediate.
+For fixed $M$, the squared radius is
+\[
+ R^2=x_0^2+\frac{(x_1-a x_0)^2}{b^2}.
+\]
+This convex quadratic function attains its maximum over the square
+$[-M,M]^2$ at a vertex. Choosing the endpoint signs so that
+$|x_1-a x_0|=(1+|a|)M$ gives
+\[
+ R^2\le M^2\left(1+\frac{(1+|a|)^2}{b^2}\right)
+ =M^2\frac{1+r^2+2|a|}{b^2}.
+\]
+Rearrangement proves~\eqref{eq:sharp}. Equality is attained with
+$x_0=M$ and $x_1=-\operatorname{sgn}(a)M$ when $a\ne0$; for $a=0$,
+any endpoint signs attain equality. Hence the constant is sharp.
+\end{proof}
+
+\begin{corollary}[Separated samples]\label{cor:separated}
+Let $k\ge1$ and $b_k\ne0$. Then
+\begin{equation}\label{eq:separated}
+ \max\{x_0^2,x_k^2\}\ge c_k^2R^2,\qquad
+ c_k^2=\frac{b_k^2}{1+r^{2k}+2|a_k|}.
+\end{equation}
+The constant is sharp. If $b_k=0$, these two samples alone admit no
+positive constant multiplying $R^2$.
+\end{corollary}
+\begin{proof}
+The pair $(x_0,x_k)=(u,a_ku+b_kv)$ has the same form used in
+Theorem~\ref{thm:two}; replace $a,b$ there by $a_k,b_k$ and use
+$a_k^2+b_k^2=r^{2k}$. If $b_k=0$, choose $u=0$ and $v\ne0$.
+Both observed samples vanish while $R>0$.
+\end{proof}
+
+\section{A finite prefix for the infinite absolute peak}
+For a nonzero trajectory, its absolute peak is positive and attained,
+because~\eqref{eq:envelope} tends to zero.
+
+\begin{theorem}[Uniform prefix certificate]\label{thm:prefix}
+Let $N\ge2$ satisfy $r^{2N}<c^2$, with $c^2$ as in~\eqref{eq:sharp}.
+Then every solution of~\eqref{eq:recurrence} satisfies
+\begin{equation}\label{eq:prefix}
+ \boxed{\max_{n\ge0}|x_n|=\max_{0\le n<N}|x_n|.}
+\end{equation}
+One may choose
+\begin{equation}\label{eq:N}
+ N=\max\left\{2,1+\left\lfloor
+             \frac{\log c^2}{\log r^2}\right\rfloor\right\}.
+\end{equation}
+For separated samples, the same assertion holds whenever $N>k$ and
+$r^{2N}<c_k^2$.
+\end{theorem}
+\begin{proof}
+If $R=0$, all values vanish. Otherwise, for every $n\ge N$,
+\[
+ |x_n|^2\le R^2r^{2n}\le R^2r^{2N}<R^2c^2
+ \le\max\{x_0^2,x_1^2\}.
+\]
+Both comparison samples belong to the prefix. This proves~\eqref{eq:prefix}.
+Because $\log r^2<0$, the strict inequality $r^{2N}<c^2$ is equivalent
+to $N>\log(c^2)/\log(r^2)$, which gives~\eqref{eq:N}.
+The separated-sample result follows from Corollary~\ref{cor:separated}
+with both observed indices retained in the prefix.
+\end{proof}
+
+The sharpness in Theorem~\ref{thm:two} concerns the observation constant.
+The sufficient prefix in Theorem~\ref{thm:prefix} can be shortened for
+specific coefficients or initial values.
+
+\begin{theorem}[Adaptive rational certificate]\label{thm:adaptive}
+Suppose $a,b,x_0,x_1$ are rational and satisfy~\eqref{eq:stable}.
+After evaluating $x_0,\ldots,x_{n-1}$, define
+$M_n^2=\max_{0\le j<n}x_j^2$. If
+\begin{equation}\label{eq:stop}
+ R^2r^{2n}<M_n^2,
+\end{equation}
+then $M_n$ is the infinite absolute peak. The all-zero trajectory is
+recognized from $x_0=x_1=0$; every other trajectory eventually satisfies
+\eqref{eq:stop}. Every operation and comparison in this certificate can be
+performed with rational arithmetic.
+\end{theorem}
+\begin{proof}
+For all future indices $j\ge n$,~\eqref{eq:envelope} and
+\eqref{eq:stop} give $x_j^2<M_n^2$. Thus the observed peak is global.
+A nonzero trajectory has a positive initial maximum, while $R^2r^{2n}$
+tends to zero. Exact fractions represent the recurrence, squared radius,
+powers of $r^2$, and the comparison, so no trigonometric or logarithmic
+approximation is required by the algorithm.
+\end{proof}
+
+Strict comparison also certifies that all peak ties occur in the retained
+prefix. It gives the earliest maximizing index by scanning the prefix in
+order. The same certificate answers every finite-horizon query of length
+at least $n$; shorter horizons use their observed prefix maximum.
+
+\section{Optimal constants for a finite observation set}
+Let $T\subset\Z_{\ge0}$ be a finite set and define row vectors
+$\ell_k=(a_k,b_k)$. Assume these rows span $\R^2$.
+Form the strip polygon
+\begin{equation}\label{eq:polygon}
+ \mathcal K_T=\{z\in\R^2:|\ell_kz|\le1\text{ for all }k\in T\}.
+\end{equation}
+It is bounded, contains a neighborhood of the origin, and is centrally
+symmetric. Let $\operatorname{vert}(\mathcal K_T)$ be its vertices.
+
+\begin{theorem}[Sharp finite-observation certificate]\label{thm:polygon}
+The largest constant $c_T$ satisfying
+\[
+ \max_{k\in T}|x_k|\ge c_T R\quad\text{for every trajectory}
+\]
+is given by
+\begin{equation}\label{eq:polygonconstant}
+ \boxed{c_T^{-2}=\max_{z\in\operatorname{vert}(\mathcal K_T)}\norm z_2^2.}
+\end{equation}
+If $a,b$ are rational, $c_T^2$ is rational and can be obtained by checking
+intersections of pairs of signed strip boundaries.
+Any $N>\max T$ with $r^{2N}<c_T^2$ contains the infinite absolute peak.
+\end{theorem}
+\begin{proof}
+For $z\ne0$, let $M(z)=\max_{k\in T}|\ell_kz|$.
+The spanning assumption gives $M(z)>0$. Normalize by $M(z)$:
+$z/M(z)\in\mathcal K_T$. Consequently,
+\[
+ \inf_{z\ne0}\frac{M(z)}{\norm z_2}
+ =\left(\max_{w\in\mathcal K_T}\norm w_2\right)^{-1}.
+\]
+A convex function on a compact polytope attains a maximum at a vertex,
+so the squared norm gives~\eqref{eq:polygonconstant}. Conversely a
+maximizing vertex attains the bound, proving sharpness.
+Each vertex is an intersection of two linearly independent active
+boundaries $\ell_jz=\pm1$, $\ell_kz=\pm1$.
+For rational coefficients the intersection and its squared norm are
+rational. Enumerate such intersections and keep those satisfying every
+strip. The final peak assertion repeats the proof of
+Theorem~\ref{thm:prefix} with the observation maximum over $T$.
+\end{proof}
+
+Pairwise boundary enumeration uses $O(|T|^2)$ candidates and
+$O(|T|)$ membership checks per candidate, giving a direct
+$O(|T|^3)$ arithmetic implementation. This provides an exact elementary
+construction; planar half-plane methods can exploit the geometry further.
+
+\section{Finite and infinite quadratic sums}
+The same two-dimensional state determines complete quadratic tails.
+Let $Q$ be any symmetric real matrix. Since $r<1$, the convergent series
+\begin{equation}\label{eq:stein}
+ W=\sum_{n=0}^{\infty}(S^n)^\mathsf TQS^n
+\end{equation}
+is the unique solution of $W-S^\mathsf TWS=Q$.
+For $K\ge0$, define $W_K=\sum_{n=0}^{K-1}(S^n)^\mathsf TQS^n$,
+with $W_0=0$.
+
+\begin{proposition}[Exact finite sum]\label{prop:energy}
+\begin{align}
+ W_K&=W-(S^K)^\mathsf TWS^K,\label{eq:finiteW}\\
+ \sum_{n=0}^{K-1}z_n^\mathsf TQz_n&=z^\mathsf TW_Kz,
+ \quad z_n=S^nz,\label{eq:finiteE}\\
+ \sum_{n=0}^{K-1}z_n&=(I-S)^{-1}(I-S^K)z.\label{eq:linearsum}
+\end{align}
+Thus a cost $\sum_{n=0}^{K-1}(\kappa+\ell^\mathsf Tz_n+z_n^\mathsf TQz_n)$
+is obtained from these expressions and $K\kappa$.
+For rational input data, the result is rational. With fixed state dimension,
+repeated squaring evaluates these formulas in $O(\log(K+1))$ arithmetic
+operations after solving the fixed-size Stein system.
+\end{proposition}
+\begin{proof}
+Multiplying~\eqref{eq:stein} on both sides by $S^K$ and its transpose
+shifts the sum to indices $n\ge K$. Subtracting leaves~\eqref{eq:finiteW},
+and substitution gives~\eqref{eq:finiteE}. The finite geometric-series
+identity gives~\eqref{eq:linearsum}; $I-S$ is invertible because the
+eigenvalues of $S$ have modulus below one. The Stein equation is a
+nonsingular linear system with rational coefficients when the inputs
+are rational. Binary exponentiation gives the arithmetic-operation bound.
+\end{proof}
+
+This is the classical Stein-sum identity, included to make the joint
+peak-and-sum certificate self-contained. The arithmetic bound counts exact
+field operations. Rational numerators and denominators can grow linearly
+in $K$ in bit length, and the output representation must be charged in a
+bit-complexity analysis.
+
+\section{Worked certificate and verification}
+Take $a=3/5$, $b=1/5$, $x_0=0$, $x_1=1$. Then
+$r^2=2/5$, $R^2=25$ and $c^2=1/65$.
+The uniform prefix bound gives $N=5$. The first four values are
+\[
+ 0,\quad1,\quad\frac65,\quad\frac{26}{25}.
+\]
+Their peak is $6/5$. At the next index,
+\[
+ R^2r^8=25\left(\frac25\right)^4
+ =\frac{16}{25}<\frac{36}{25}=M_4^2.
+\]
+Four rational samples therefore certify the infinite absolute peak,
+first attained at index two. For $Q=e_1e_1^\mathsf T$, the Stein solution is
+\[
+ W=\begin{pmatrix}58/39&3/13\\3/13&7/39\end{pmatrix}.
+\]
+The initial state is $(0,5)^\mathsf T$, hence
+$\sum_{n\ge0}x_n^2=175/39$.
+
+The accompanying verifier checks 507 exact observation inequalities,
+five sharp equality witnesses, 120 rational infinite-peak certificates
+against 320-sample independent recurrence prefixes, and 720 exact finite
+square sums against direct summation. A further 2420 rational-state checks
+and twenty equality witnesses verify the strip-polygon construction. The infinite peak assertion in each
+case is supplied by~\eqref{eq:stop}; the longer prefix is an independent
+execution check. The source-derived figure uses the worked recurrence
+and its exact rational envelope certificate.
+
+\section{Context}
+Finite determination of output constraints for stable linear systems is
+part of the theory of maximal output-admissible sets; see
+Gilbert and Tan~\cite{gilbert}. The present construction specializes to
+conjugate second-order recurrences and gives a closed-form sharp
+two-sample observation constant, its exact strip-polygon extension, and
+a rational adaptive stopping certificate. The standard state representation
+and the classical Stein relation~\cite{stein} supply the complete
+finite-horizon cost alongside the peak.
+
+\begin{thebibliography}{9}
+\bibitem{gilbert} E. G. Gilbert and K. T. Tan,
+Linear systems with state and control constraints: the theory and application
+of maximal output admissible sets, IEEE Transactions on Automatic Control
+36(9) (1991), 1008--1020.
+\href{https://doi.org/10.1109/9.83532}{doi:10.1109/9.83532}.
+\bibitem{stein} P. Stein, Some general theorems on iterants,
+Journal of Research of the National Bureau of Standards 48(1)
+(1952), 82--83. \href{https://doi.org/10.6028/jres.048.010}{doi:10.6028/jres.048.010}.
+\end{thebibliography}
+\end{document}
