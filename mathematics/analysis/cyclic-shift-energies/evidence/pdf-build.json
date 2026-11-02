@@ -1,9 +1,14 @@
 {
-  "author": "lmtlssss\ud83d\udf10",
-  "characters": 11305,
+  "author": "lmtlssss🜐",
+  "characters": 14914,
   "doi": "10.5281/zenodo.23897127",
+  "mathematics_only": true,
   "native_typesetter": "Tectonic 0.17.0",
-  "pages": 5,
-  "private_terms_absent": true,
-  "slug": "cyclic-shift-energies"
+  "pages": 6,
+  "slug": "cyclic-shift-energies",
+  "title": "Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps",
+  "unresolved_references": false,
+  "layout_review": "Native page images inspected",
+  "source_derived_figure_review": "Native Blender output inspected",
+  "typesetting_issues": []
 }

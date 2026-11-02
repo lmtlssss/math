@@ -9,33 +9,32 @@
 \usepackage{microtype}
 \usepackage[hidelinks,unicode]{hyperref}
 \usepackage{fancyhdr}
-\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Finite peak certificates for damped recurrences}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Minimal peak horizons for damped recurrences}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
 \setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}\setlength{\emergencystretch}{2em}
 \newtheorem{theorem}{Theorem}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{example}[theorem]{Example}
 \DeclareMathOperator{\rank}{rank}\DeclareMathOperator{\spanop}{span}\DeclareMathOperator{\diag}{diag}
 \newcommand{\R}{\mathbb R}\newcommand{\C}{\mathbb C}\newcommand{\Z}{\mathbb Z}\newcommand{\N}{\mathbb N}\newcommand{\ip}[2]{\langle #1,#2\rangle}\newcommand{\norm}[1]{\lVert #1\rVert}\newcommand{\one}{\mathbf 1}
-\hypersetup{pdftitle={Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: linear recurrences and exact certification},pdfkeywords={linear recurrence, sharp bound, observability, peak certificate, Stein equation}}
-\title{\LARGE Sharp Two-Sample Bounds and Finite\\Peak Certificates for Damped Recurrences}
+\hypersetup{pdftitle={Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: linear recurrences and exact certification},pdfkeywords={linear recurrence, sharp bound, observability, peak certificate, Stein equation}}
+\title{\LARGE Sharp Observation Bounds and Minimal\\Peak Horizons for Damped Recurrences}
 \author{lmtlssss{\authorsymbol 🜐}}
 \date{2 November 2026\\[3pt]\small\href{https://doi.org/10.5281/zenodo.23897133}{10.5281/zenodo.23897133}}
 \begin{document}\maketitle\thispagestyle{plain}
 
 \begin{abstract}
-Consider a real second-order recurrence with distinct stable conjugate roots
-$a\pm ib$, where $b>0$ and $a^2+b^2<1$.
-We prove the sharp two-sample bound
-$\max\{x_0^2,x_1^2\}\ge
- b^2R^2/(1+a^2+b^2+2|a|)$,
-where $R^2=x_0^2+((x_1-a x_0)/b)^2$.
-It yields a finite, coefficient-dependent prefix containing the absolute
-maximum of every infinite trajectory. An adaptive rational certificate can
-terminate earlier by comparing the observed peak with the remaining
-geometric envelope. We extend the sharp observation constant to arbitrary
-finite sample sets through a two-dimensional strip polygon, and combine the
-peak certificate with exact finite quadratic-sum formulas.
-A worked rational recurrence attains its infinite absolute peak $6/5$ at
-index two; four samples certify the peak, and its infinite square sum is
-$175/39$. Exact independent computations accompany the proofs.
+For stable real second-order recurrences with conjugate roots, we determine
+exact coefficient regions where two or three initial samples preserve the
+infinite absolute peak for every initial state. After a sign change, write
+the recurrence as $x_{n+2}=q x_{n+1}-s x_n$, with $q\ge0$, $0<s<1$ and
+$q^2<4s$. The minimal horizon is two exactly when $q+s\le1$; it is three
+exactly when $q+s>1$, $q^2-sq+1-s\ge0$ and
+$q^2-q-s(1-s)\le0$. The proof reduces the infinite trajectory to an
+invariant symmetric observation hexagon and evaluates its facets explicitly.
+For $q=6/5$, $s=2/5$, the identity
+$x_3=(13/15)x_2-(2/15)x_0$ proves that three samples suffice uniformly,
+while an explicit initial state proves minimality.
+Sharp observation constants, adaptive rational certificates and finite
+quadratic sums complete the construction. Independent rational hull
+computations check all $8,478$ pairs in a stated coefficient grid.
 \end{abstract}
 \noindent\textit{Keywords.} Linear recurrence; damped oscillation; sharp
 observability bound; finite peak certificate; quadratic sums; rational arithmetic.
@@ -217,6 +216,122 @@ $O(|T|)$ membership checks per candidate, giving a direct
 $O(|T|^3)$ arithmetic implementation. This provides an exact elementary
 construction; planar half-plane methods can exploit the geometry further.
 
+\section{Exact minimal horizons in coefficient space}\label{sec:minimal}
+The observation bound supplies a uniform sufficient horizon. A different
+question asks for the shortest prefix that preserves the absolute peak
+for every initial state. We give closed coefficient regions for the first
+two possible horizons.
+
+Put $s=r^2$ and $q=2|a|$, so $0<s<1$ and $q^2<4s$.
+Changing $x_n$ to $(-1)^n x_n$ when $a<0$ preserves absolute values and
+reduces the recurrence to
+\begin{equation}\label{eq:qsrecurrence}
+ x_{n+2}=q x_{n+1}-s x_n.
+\end{equation}
+Let $N_*(q,s)$ be the least $N\ge2$ such that
+$\sup_{n\ge0}|x_n|=\max_{0\le n<N}|x_n|$ for every pair $(x_0,x_1)$.
+Existence follows from Theorem~\ref{thm:prefix}.
+
+In initial-coordinate space define
+\[
+ v_0=(1,0),\qquad v_1=(0,1),\qquad
+ v_{n+2}=qv_{n+1}-sv_n,
+\]
+so $x_n=v_n(x_0,x_1)^\mathsf T$, and set
+$H_N=\operatorname{conv}\{\pm v_0,\ldots,\pm v_{N-1}\}$.
+This is the polar form of a finite output-admissibility constraint.
+The invariant-set interpretation is classical~\cite{gilbert,ossareh}.
+
+\begin{lemma}[First redundant observation]\label{lem:hullstop}
+For every $N\ge2$, the first $N$ samples preserve the infinite absolute
+peak for every initial state if and only if $v_N\in H_N$.
+\end{lemma}
+\begin{proof}
+Right multiplication by
+$A=\begin{pmatrix}0&-s\\1&q\end{pmatrix}$ sends $v_j$ to $v_{j+1}$.
+If $v_N\in H_N$, all generators of $H_NA$ belong to $H_N$ and hence
+$H_NA\subseteq H_N$. Every future observation row then lies in $H_N$.
+Taking support functions in an arbitrary initial-state direction proves
+that its absolute output is bounded by the observed prefix maximum.
+Conversely, if $v_N\notin H_N$, separation of a point from a compact
+convex set supplies a direction $z$ with
+$v_Nz>\max_{j<N}|v_jz|$. The trajectory with initial vector $z$ violates
+the proposed prefix bound. This proves necessity.
+\end{proof}
+
+\begin{theorem}[Two- and three-sample coefficient regions]\label{thm:minimalregions}
+For $q\ge0$, $0<s<1$ and $q^2<4s$,
+\begin{align}
+ N_*(q,s)=2
+ &\quad\Longleftrightarrow\quad q+s\le1,\label{eq:N2}\\
+ N_*(q,s)=3
+ &\quad\Longleftrightarrow\quad
+ \begin{cases}
+ q+s>1,\\
+ q^2-sq+1-s\ge0,\\
+ q^2-q-s(1-s)\le0.
+ \end{cases}\label{eq:N3}
+\end{align}
+All displayed boundary equalities are included. Outside these two regions,
+$N_*(q,s)\ge4$.
+\end{theorem}
+\begin{proof}
+The polygon $H_2$ is the unit $\ell^1$ ball. Since $v_2=(-s,q)$,
+Lemma~\ref{lem:hullstop} gives~\eqref{eq:N2}.
+
+Now assume $q+s>1$. Then $q>0$ and
+$q<2\sqrt s<1+s$. The six points
+$\pm(1,0),\pm(0,1),\pm(-s,q)$ are the vertices of $H_3$.
+Its three pairs of facet inequalities are
+\begin{equation}\label{eq:hexagonfacets}
+ |x+y|\le1,\qquad |(q-1)x+sy|\le s,\qquad
+ |qx+(s-1)y|\le q.
+\end{equation}
+The corresponding boundary lines join each adjacent pair in the stated
+centrally symmetric hexagon; the strict conditions $q+s>1$ and
+$q<1+s$ keep every vertex exposed.
+
+Substitute $v_3=(-qs,q^2-s)$ into~\eqref{eq:hexagonfacets}. The three
+conditions become
+\[
+ |q^2-qs-s|\le1,\qquad |q-s|\le1,\qquad
+ |s(1-s)-q^2|\le q.
+\]
+The middle condition follows from $s<1$ and $q<1+s$.
+The upper side of the first condition is automatic: the convex quadratic
+$q^2-sq-s$ is at most $1$ on $0\le q\le2\sqrt s$, because its endpoint
+values are $-s$ and $3s-2s\sqrt s$, and
+$1-3s+2s\sqrt s=(1-\sqrt s)^2(1+2\sqrt s)\ge0$.
+Its lower side is precisely $q^2-sq+1-s\ge0$.
+
+For the last condition, $q>1-s$ gives
+$q^2+q\ge(1-s)(2-s)\ge s(1-s)$, so its upper side is automatic.
+Its remaining side is $q^2-q-s(1-s)\le0$.
+Thus $v_3\in H_3$ is equivalent to the two remaining displayed
+inequalities. Since $v_2\notin H_2$, Lemma~\ref{lem:hullstop} proves
+that the minimal horizon is exactly three.
+\end{proof}
+
+\begin{corollary}[A shortest uniform certificate]\label{cor:threeexact}
+For $q=6/5$ and $s=2/5$, every trajectory satisfies
+\[
+ \boxed{\sup_{n\ge0}|x_n|=\max\{|x_0|,|x_1|,|x_2|\}.}
+\]
+Three is the shortest uniform prefix length.
+\end{corollary}
+\begin{proof}
+Here $q+s=8/5$, $q^2-sq+1-s=39/25>0$, and
+$q^2-q-s(1-s)=0$, so Theorem~\ref{thm:minimalregions} applies.
+The explicit redundancy witness is
+\[
+ x_3=\frac{13}{15}x_2-\frac{2}{15}x_0.
+\]
+Its absolute coefficient sum is one, which places $v_3$ on a facet of
+$H_3$ and makes the convex-hull invariance directly visible.
+The initial pair $(-1,1)$ gives $x_2=8/5$, so two samples are insufficient.
+\end{proof}
+
+
 \section{Finite and infinite quadratic sums}
 The same two-dimensional state determines complete quadratic tails.
 Let $Q$ be any symmetric real matrix. Since $r<1$, the convergent series
@@ -268,8 +383,9 @@ Their peak is $6/5$. At the next index,
  R^2r^8=25\left(\frac25\right)^4
  =\frac{16}{25}<\frac{36}{25}=M_4^2.
 \]
-Four rational samples therefore certify the infinite absolute peak,
-first attained at index two. For $Q=e_1e_1^\mathsf T$, the Stein solution is
+This envelope test uses four rational samples. Corollary~\ref{cor:threeexact}
+strengthens the conclusion to the shortest uniform prefix of three samples,
+with the same peak $6/5$ first attained at index two. For $Q=e_1e_1^\mathsf T$, the Stein solution is
 \[
  W=\begin{pmatrix}58/39&3/13\\3/13&7/39\end{pmatrix}.
 \]
@@ -282,18 +398,27 @@ against 320-sample independent recurrence prefixes, and 720 exact finite
 square sums against direct summation. A further 2420 rational-state checks
 and twenty equality witnesses verify the strip-polygon construction. The infinite peak assertion in each
 case is supplied by~\eqref{eq:stop}; the longer prefix is an independent
-execution check. The source-derived figure uses the worked recurrence
-and its exact rational envelope certificate.
+execution check. The source-derived figure uses the worked recurrence, its shortest
+three-sample certificate and the exact observation hexagon.
+
+The coefficient-region verifier compares Theorem~\ref{thm:minimalregions}
+with an independently constructed rational convex hull at $8,478$ pairs
+$q=i/80$, $s=j/80$ with $0\le i<160$, $1\le j<80$ and $q^2<4s$.
+It finds $2,869$ horizon-two cases, $3,014$ horizon-three cases and $2,595$
+cases requiring at least four samples. It checks the explicit boundary
+identity and $101$ generated observation rows for $q=6/5$, $s=2/5$.
 
 \section{Context}
-Finite determination of output constraints for stable linear systems is
-part of the theory of maximal output-admissible sets; see
-Gilbert and Tan~\cite{gilbert}. The present construction specializes to
-conjugate second-order recurrences and gives a closed-form sharp
-two-sample observation constant, its exact strip-polygon extension, and
-a rational adaptive stopping certificate. The standard state representation
-and the classical Stein relation~\cite{stein} supply the complete
-finite-horizon cost alongside the peak.
+Finite determination and maximal output-admissible sets are classical
+methods for stable linear systems~\cite{gilbert}. Ossareh and Kolmanovsky
+study complexity bounds for their admissibility indices using matrix-power
+and Lyapunov constructions~\cite{ossareh}. Lemma~\ref{lem:hullstop} is
+this invariant-set mechanism in polar coordinates. The principal
+contribution is the explicit necessary-and-sufficient coefficient
+classification in Theorem~\ref{thm:minimalregions}, with its shortest
+rational example. The sharp observation constants and exact certificates
+supply complementary descriptions. The Stein relation~\cite{stein}
+provides the classical finite-sum calculation.
 
 \begin{thebibliography}{9}
 \bibitem{gilbert} E. G. Gilbert and K. T. Tan,
@@ -304,5 +429,9 @@ of maximal output admissible sets, IEEE Transactions on Automatic Control
 \bibitem{stein} P. Stein, Some general theorems on iterants,
 Journal of Research of the National Bureau of Standards 48(1)
 (1952), 82--83. \href{https://doi.org/10.6028/jres.048.010}{doi:10.6028/jres.048.010}.
+\bibitem{ossareh} H. R. Ossareh and I. Kolmanovsky,
+On complexity bounds for the maximal admissible set of linear time-invariant
+systems, arXiv:2302.02246v2 (2023).
+\href{https://arxiv.org/abs/2302.02246}{arXiv:2302.02246}.
 \end{thebibliography}
 \end{document}

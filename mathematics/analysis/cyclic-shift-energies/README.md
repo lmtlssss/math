@@ -1,19 +1,25 @@
-# Exact Cyclic-Shift Energies: Minimal State and Integral Bounds
+# Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps
 
-**lmtlssss🜐 · 2 November 2026 · Version 1.0.0**  
+**lmtlssss🜐 · 2 November 2026 · Version 1.0.0**
 DOI: [10.5281/zenodo.23897127](https://doi.org/10.5281/zenodo.23897127)
 
-Frequency-wise Gram ranks give the minimum dimension of a linear summary preserving all real-superposition quadratic costs. A common profile admits one retained potential for exact coordinate moves. Integer occupancy gives a sharp spectral residue bound.
+A cyclotomic divisibility criterion decides equality in an integer-occupancy spectral bound. At prime periods, algebraic norms yield a quantitative positive gap for nonflat spectra. The bound is attained at exactly five occupancies in a complete 210-state example. Minimal linear state and retained-potential identities supply the representation framework.
+
+## Principal contribution
+
+The principal result is the quantitative cyclotomic spectral gap, its equality obstruction and the attained five-cycle certificate. The Fourier diagonalization, positive-semidefinite rank argument, cyclotomic irreducibility and field-norm integrality are established ingredients and receive attribution.
 
 ## Files
 
-`paper.tex` is the mathematical manuscript. `verify.py` reconstructs the exact examples and independent comparisons. `evidence/verification.json` contains its observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.
+`paper.tex` is the mathematical manuscript. `verify.py` reconstructs the foundational examples; `verify_extension.py` reconstructs the principal discovery and its independent comparisons. `evidence/verification.json` and `evidence/discovery.json` contain the observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.
 
 The release includes `paper.pdf`, `00-cover.png` at native 3840-pixel width, `cyclic-shift-energies.blend`, and `source-and-proof.zip`. The saved scene and image embed the publication DOI. The figure follows the author's established mathematical visual series.
 
 ## Reproduce
 
-Run `python3 verify.py --output evidence/verification.json` from this directory. Python 3.11 or later is sufficient; the cyclic-shift verifier also requires SymPy as listed in `requirements.txt`. The exact checks are: 6822 direct coordinate evaluations; 1200 retained-potential updates; 19437 exact occupancies; 32 exact frequency-rank instances.
+Run `python3 verify.py --output evidence/verification.json`, then `python3 verify_extension.py`, from this directory. The second command writes the current figure certificate. Use Python 3.11 or later and the dependencies in `requirements.txt`. The exact checks are: 6822 direct coordinate evaluations; 1200 retained-potential updates; 19437 exact occupancies; 32 exact frequency-rank instances.
+
+The principal-discovery checks are: 162 exact prime binary norm certificates; 7,172 supplementary primitive-root numerical cross-checks of exact polynomial divisibility; all 210 integer occupancies in the attained-gap example.
 
 Typeset with `xelatex -interaction=nonstopmode -halt-on-error paper.tex` twice. The manuscript uses Latin Modern and Noto Sans Symbols, following earlier notes in the series. The release PDF was also built natively with `tectonic --keep-logs paper.tex` (Tectonic 0.17.0).
 

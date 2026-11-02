@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "exact_parameter_pairs": 8478,
+  "classification": {
+    "N2": 2869,
+    "N3": 3014,
+    "N_at_least4": 2595
+  },
+  "example": {
+    "q": "6/5",
+    "s": "2/5",
+    "minimal_uniform_horizon": 3,
+    "x3_identity": "(13/15)*x2-(2/15)*x0",
+    "N2_separating_initial_values": [
+      "-1",
+      "1"
+    ],
+    "separating_x2": "8/5",
+    "specific_initial_values": [
+      "0",
+      "1"
+    ],
+    "specific_peak": "6/5",
+    "specific_peak_index": 2
+  },
+  "rational_hull_points": [
+    [
+      "-1",
+      "0"
+    ],
+    [
+      "0",
+      "-1"
+    ],
+    [
+      "2/5",
+      "-6/5"
+    ],
+    [
+      "1",
+      "0"
+    ],
+    [
+      "0",
+      "1"
+    ],
+    [
+      "-2/5",
+      "6/5"
+    ]
+  ]
+}

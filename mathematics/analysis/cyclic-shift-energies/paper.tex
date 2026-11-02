@@ -9,30 +9,30 @@
 \usepackage{microtype}
 \usepackage[hidelinks,unicode]{hyperref}
 \usepackage{fancyhdr}
-\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Exact cyclic-shift energies}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Cyclic-shift energies and cyclotomic gaps}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
 \setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}\setlength{\emergencystretch}{2em}
 \newtheorem{theorem}{Theorem}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{example}[theorem]{Example}
 \DeclareMathOperator{\rank}{rank}\DeclareMathOperator{\spanop}{span}\DeclareMathOperator{\diag}{diag}
 \newcommand{\R}{\mathbb R}\newcommand{\C}{\mathbb C}\newcommand{\Z}{\mathbb Z}\newcommand{\N}{\mathbb N}\newcommand{\ip}[2]{\langle #1,#2\rangle}\newcommand{\norm}[1]{\lVert #1\rVert}\newcommand{\one}{\mathbf 1}
-\hypersetup{pdftitle={Exact Cyclic-Shift Energies: Minimal State and Integral Bounds},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: harmonic analysis and discrete optimization},pdfkeywords={cyclic shifts, quadratic forms, circulant matrices, exact state, integer occupancy}}
-\title{\LARGE Exact Cyclic-Shift Energies:\\Minimal State and Integral Bounds}
+\hypersetup{pdftitle={Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: harmonic analysis and discrete optimization},pdfkeywords={cyclic shifts, quadratic forms, circulant matrices, exact state, integer occupancy}}
+\title{\LARGE Cyclic-Shift Energies:\\Minimal State and Cyclotomic Gaps}
 \author{lmtlssss{\authorsymbol 🜐}}
 \date{2 November 2026\\[3pt]\small\href{https://doi.org/10.5281/zenodo.23897127}{10.5281/zenodo.23897127}}
 \begin{document}\maketitle\thispagestyle{plain}
 
 \begin{abstract}
-We give an exact representation of cyclic-shift quadratic costs that separates
-linear response state from pairwise interactions. For real vector-valued profiles
-on $\Z/P\Z$ and a positive semidefinite shift-invariant quadratic form, the minimum
-dimension of a linear summary preserving the cost of every real superposition is
-$\sum_{k=0}^{P-1}\rank G_k$, where $G_k$ is the frequency-wise Gram matrix.
-For a common profile with fixed real weights, one correlation kernel and one
-retained potential determine every single-coordinate cost and admit an $O(P)$
-exact update. For unweighted copies, integer occupancy gives a spectral lower
-bound with the sharp residue term $r(P-r)/P$, where $r=N\bmod P$.
-A spectrum-flat family attains the bound exactly at the balanced occupancies.
-The paper includes proofs, integer and rational verification, and a
-source-derived figure.
+We study quadratic costs of integer occupancies on a cyclic group. For a
+positive semidefinite circulant form, we give an exact cyclotomic criterion
+for equality in the integral spectral bound. At a prime period, a nonempty
+proper binary occupancy has every nonconstant Fourier coefficient nonzero;
+therefore a nonflat spectrum forces a positive gap. We quantify that gap
+using the algebraic norm of the occupancy polynomial, the geometric mean
+of the active spectral differences, and an even-integer norm obstruction.
+For the five-cycle form $3I+T_1+T_{-1}$ and total mass six, the strengthened
+bound is exactly $38$ and has five minimizers among $210$ occupancies.
+The paper also gives the minimum linear state for all real superpositions
+of translated profiles and exact retained-potential coordinate updates.
+Proofs, exact verification source and a certificate-derived figure are included.
 \end{abstract}
 \noindent\textit{Keywords.} Cyclic shifts; quadratic forms; sufficient linear
 state; circulant matrices; discrete optimization; integer occupancy.
@@ -240,57 +240,157 @@ positive semidefinite $K$. When $\lambda_*>0$, this occupancy is unique.
 The residue term describes exactly the integrality obstruction to that
 uniform assignment when $P$ does not divide $N$.
 
+\section{Cyclotomic obstructions and a quantitative prime-period gap}\label{sec:cyclotomic}
+The integer constraint carries information beyond the Euclidean residue
+term. We now use that information to decide equality and to strengthen
+the bound for prime periods. Cyclotomic divisibility and vanishing sums
+of roots of unity have a classical theory; see Lam and Leung~\cite{lamleung}.
+The contribution here is their explicit combination with the spectral
+occupancy bound.
+
+For a balanced occupancy write $h=q\one+b$, where
+$b\in\{0,1\}^P$ and $\one^\mathsf Tb=r$. Put
+$B(X)=\sum_{u=0}^{P-1}b_uX^u$ and $\zeta_P=e^{2\pi i/P}$.
+Let $\lambda_k$ be the eigenvalue of $K$ at frequency $k$.
+
+\begin{proposition}[Exact equality obstruction]\label{prop:cyclotomic}
+Suppose $\lambda_*>0$ and $0<r<P$. Equality in
+\eqref{eq:lower} holds exactly for balanced occupancies whose polynomial
+$B$ satisfies
+\[
+ \Phi_{P/\gcd(P,k)}(X)\mid B(X)
+ \quad\text{for each }k\in\{1,\ldots,P-1\}
+ \text{ with }\lambda_k>\lambda_*.
+\]
+Here $\Phi_d$ is the $d$th cyclotomic polynomial and divisibility is over
+$\mathbb Q[X]$. If $P$ is prime, equality is possible exactly when all
+nonconstant eigenvalues equal $\lambda_*$.
+\end{proposition}
+\begin{proof}
+Theorem~\ref{thm:occupancy} reduces equality to a balanced occupancy whose
+nonconstant Fourier support lies in the $\lambda_*$ eigenspace.
+At nonzero $k$, the Fourier coefficient is $P^{-1/2}B(\zeta_P^k)$.
+The root $\zeta_P^k$ has order $P/\gcd(P,k)$, and its minimal polynomial
+over $\mathbb Q$ is the indicated cyclotomic polynomial. This proves the
+divisibility criterion. For prime $P=\ell$, a polynomial of degree at
+most $\ell-1$ vanishing at any nontrivial $\ell$th root is a scalar
+multiple of $1+X+\cdots+X^{\ell-1}$. The coefficients of a nonempty proper
+indicator are not all equal, so none of these values vanish. Thus every
+nonconstant eigenvalue must be minimal. The converse follows from
+Theorem~\ref{thm:occupancy}.
+\end{proof}
+
+The prime condition has content. For $P=4$ take $B(X)=1+X^2$ and a
+circulant form with eigenvalues $(3,2,1,2)$. Its first row is
+$(2,1/2,0,1/2)$. The occupancy $(1,0,1,0)$ has energy $4$ and attains
+\eqref{eq:lower}, although the nonconstant spectrum has two distinct values.
+The zero at the primitive fourth roots is exactly the factor $\Phi_4$.
+
+\begin{theorem}[Cyclotomic spectral gap]\label{thm:cyclogap}
+Let $P=\ell$ be prime, $N=q\ell+r$ with $0<r<\ell$, and $\lambda_*>0$.
+Suppose the nonconstant spectrum is not flat. Define
+\[
+ \mathcal D=\{k:1\le k<\ell,\ \lambda_k>\lambda_*\},\qquad
+ t=|\mathcal D|,\qquad m=\min\{r,\ell-r\},
+\]
+so $1\le t<\ell-1$, and put
+\begin{equation}\label{eq:gamma}
+ \Gamma_\ell(r)=\frac{t}{\ell}
+ \left(\prod_{k\in\mathcal D}(\lambda_k-\lambda_*)\right)^{1/t}
+ m^{-2(\ell-1-t)/t}.
+\end{equation}
+Every nonnegative integer occupancy of total mass $N$ satisfies
+\begin{equation}\label{eq:cyclogap}
+ \boxed{E\ge\frac{\lambda_0N^2}{\ell}
+ +\lambda_*\frac{r(\ell-r)}{\ell}
+ +\min\{2\lambda_*,\Gamma_\ell(r)\}.}
+\end{equation}
+For a balanced occupancy, the final minimum may be replaced by
+$\Gamma_\ell(r)$.
+\end{theorem}
+\begin{proof}
+First suppose the occupancy is balanced. The algebraic integer
+$B(\zeta_\ell)$ is nonzero by Proposition~\ref{prop:cyclotomic}.
+Its field norm is a nonzero integer. Consequently,
+\begin{equation}\label{eq:normproduct}
+ \prod_{k=1}^{\ell-1}|B(\zeta_\ell^k)|^2
+ =\left|\operatorname{Norm}_{\mathbb Q(\zeta_\ell)/\mathbb Q}
+       B(\zeta_\ell)\right|^2\ge1.
+\end{equation}
+The triangle inequality applied either to the indicator or to its
+complement gives $|B(\zeta_\ell^k)|\le m$ for every nonzero $k$.
+It follows that
+\[
+ \prod_{k\in\mathcal D}|B(\zeta_\ell^k)|^2
+ \ge m^{-2(\ell-1-t)}.
+\]
+The arithmetic--geometric mean inequality therefore gives
+\[
+ \frac1\ell\sum_{k\in\mathcal D}
+   (\lambda_k-\lambda_*)|B(\zeta_\ell^k)|^2
+ \ge\Gamma_\ell(r).
+\]
+The left side is exactly the spectral excess above the first two terms
+of~\eqref{eq:cyclogap} for a balanced occupancy.
+
+For an unbalanced occupancy, $\sum h_u^2$ exceeds the balanced minimum
+by a positive even integer: $h_u^2\equiv h_u\pmod2$, and both occupancies
+have the same total mass. Hence its centered squared norm exceeds
+$r(\ell-r)/\ell$ by at least $2$. The spectral bound then gives an excess
+of at least $2\lambda_*$. Combining the two cases proves the theorem.
+\end{proof}
+
+\begin{example}[An attained arithmetic gap]\label{ex:primegap}
+Take $\ell=5$, $N=6$ and $K=3I+T_1+T_{-1}$.
+Then $\lambda_0=5$,
+$\lambda_*=(5-\sqrt5)/2$, and the other two nonconstant eigenvalues are
+$(5+\sqrt5)/2$. Thus $r=m=1$, $t=2$ and
+$\Gamma_5(1)=2\sqrt5/5<2\lambda_*$. Formula~\eqref{eq:cyclogap} becomes
+\[
+ E\ge36+\frac{4}{5}\frac{5-\sqrt5}{2}
+       +\frac{2\sqrt5}{5}=38.
+\]
+Exactly five occupancies attain $38$: the cyclic shifts of
+$(2,1,1,1,1)$. Each is balanced and has $|B(\zeta_5^k)|=1$ for every
+nonzero $k$, so all steps in the balanced gap calculation are equalities.
+An unbalanced occupancy has strictly larger lower bound because
+$2\lambda_*>\Gamma_5(1)$. The figure enumerates all
+$\binom{10}{4}=210$ occupancies, their twenty energy levels and these five
+minimizers.
+\end{example}
+
+
 \section{Exact examples and verification}
-Take $P=16$, $N=64$, $A=I$, and
-$p=(2,1,0,\ldots,0)$. Its circulant correlation symbol is
-\[
- \lambda_k=|2+e^{-2\pi i k/16}|^2
- =5+4\cos(2\pi k/16).
-\]
-Every eigenvalue is positive; the constant eigenvalue is nine and the
-smallest eigenvalue is one. Corollary~\ref{cor:scalar} therefore gives a
-minimum all-superposition linear summary of sixteen real coordinates.
+A second exact example connects the representation and occupancy results.
+Take $P=16$, $N=64$, $A=I$ and $p=(2,1,0,\ldots,0)$. Its correlation
+symbol is $\lambda_k=5+4\cos(2\pi k/16)>0$, so the minimum linear state
+dimension is sixteen. Aligned shifts have energy $5\cdot64^2=20480$.
+Uniform occupancy, four copies at each shift, gives a constant aggregate
+profile of value twelve and energy $16\cdot12^2=2304$, which attains the
+constant-mode lower bound $9\cdot64^2/16$. The retained kernel and
+potential use $32$ scalar entries in place of $N^2P=65536$ pair-kernel
+entries, with the preprocessing costs stated in Section~3.
 
-Put four copies at every shift. Each output position receives four
-contributions of weight two and four of weight one. Thus
-\[
- h=(4,\ldots,4),\qquad
- \sum_jT_{d_j}p=(12,\ldots,12),\qquad E=16\cdot12^2=2304.
-\]
-Theorem~\ref{thm:occupancy} gives the same lower bound,
-$\lambda_0N^2/P=9\cdot64^2/16=2304$, so this assignment is globally
-optimal. The occupancy is unique, while permutations of labelled copies
-produce multiple shift vectors with that occupancy.
-
-If all copies are aligned, the only nonzero output values are $128$ and
-$64$, giving $E=128^2+64^2=20480$. These are two exact evaluations of the
-same quadratic objective on the same profile family.
-
-The standard pair-kernel table has $64^2\cdot16=65536$ scalar entries.
-The common-profile kernel and retained potential use $2\cdot16=32$.
-Weights and shifts occupy their separate $O(N)$ arrays, and construction
-cost is charged as in Theorem~\ref{thm:update}. The sixteen-coordinate
-minimum and the thirty-two-entry implementation refer respectively to
-the linear-summary contract and the named kernel-plus-potential arrays.
-
-The companion verifier uses integer and rational arithmetic. It checks
-6822 coordinate costs against direct profile summation and filtering,
-1200 retained-potential updates against reconstruction, and 19437 integer
-occupancies against~\eqref{eq:flat}. Thirty-two independently generated
-two-component, four-position examples check~\eqref{eq:rank} using exact
-Gaussian-integer matrix ranks. The figure is generated from the
-$P=16$, $N=64$ exact occupancy certificate.
+The foundational verifier compares $6822$ complete coordinate costs,
+$1200$ retained-potential updates, $19437$ exact occupancies and $32$
+frequency-rank constructions. The extension checks $162$ exact prime
+binary norm certificates and every one of the $210$ occupancies in
+Example~\ref{ex:primegap}. It also performs $7172$ supplementary numerical
+primitive-root cross-checks against exact cyclotomic remainders for periods
+two through nine. The current figure is generated from the complete
+$210$-occupancy certificate and its five exact minimizers.
 
 \section{Relation to established methods}
-Fourier diagonalization of circulant forms is classical~\cite{gray}.
-Quadratic optimization over unit-modulus variables and coordinate
-methods have a substantial literature; Ragi, Chong and Mittelmann
-provide approximation methods and guarantees for a related unimodular
-problem~\cite{ragi}. Here a coordinate is a cyclic shift, which ties its
-phase across all frequencies. The results specify an exact linear-state
-contract, a complete retained-coordinate identity with charged storage,
-and a sharp integer-occupancy certificate. Their proofs are independent
-of an approximation or a claim of general global coordinate convergence.
+Fourier diagonalization and circulant spectra are classical~\cite{gray}.
+Related unimodular quadratic optimization is treated by Ragi, Chong and
+Mittelmann~\cite{ragi}. Cyclotomic divisibility and vanishing sums of roots
+of unity belong to the theory developed by Lam and Leung~\cite{lamleung}.
+The principal contribution is Theorem~\ref{thm:cyclogap}: it combines a
+field-norm product certificate, active spectral differences and the even
+integer occupancy gap to give a quantitative strengthening of the spectral
+bound. Proposition~\ref{prop:cyclotomic} characterizes equality, and the
+five-cycle example attains the new bound exactly. The earlier sections
+supply a precise representation and update contract for the same costs.
 
 \begin{thebibliography}{9}
 \bibitem{gray} R. M. Gray, \emph{Toeplitz and Circulant Matrices: A Review},
@@ -300,5 +400,9 @@ Foundations and Trends in Communications and Information Theory 2(3)
 Polynomial-time methods to solve unimodular quadratic programs with performance
 guarantees, IEEE Transactions on Aerospace and Electronic Systems 55(5)
 (2019), 2118--2127. \href{https://doi.org/10.1109/TAES.2018.2881366}{doi:10.1109/TAES.2018.2881366}.
+\bibitem{lamleung} T. Y. Lam and K. H. Leung,
+On vanishing sums of roots of unity, Journal of Algebra 224(1)
+(2000), 91--109.
+\href{https://doi.org/10.1006/jabr.1999.8089}{doi:10.1006/jabr.1999.8089}.
 \end{thebibliography}
 \end{document}

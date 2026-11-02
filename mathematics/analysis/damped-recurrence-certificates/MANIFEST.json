@@ -1,18 +1,18 @@
 {
   "schema": "mathematics.source.v1",
-  "title": "Sharp Two-Sample Bounds and Finite Peak Certificates for Damped Recurrences",
+  "title": "Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences",
   "doi": "10.5281/zenodo.23897133",
   "version": "1.0.0",
   "files": [
     {
       "path": "CITATION.bib",
-      "bytes": 307,
-      "sha256": "09e44eaee99c861177bc3f845e74ede18cbae34ec532ca1de8c86dab8684da4d"
+      "bytes": 305,
+      "sha256": "7843f93be4937e510312875c693e3742a5969be5cc72bdfadafe464eeddf8a4f"
     },
     {
       "path": "CITATION.cff",
-      "bytes": 390,
-      "sha256": "e8fdc1fe994f4b3a7fc7b10b8c45877d6f4c9ac08bf9595f8c6fbe5e91631551"
+      "bytes": 388,
+      "sha256": "dd54f0683974438e857cdf45700985fa45149e2ac496e71fc2daa0d1605ba6ab"
     },
     {
       "path": "LICENSE.md",
@@ -21,28 +21,38 @@
     },
     {
       "path": "Makefile",
-      "bytes": 196,
-      "sha256": "2673b339d49296898a6fb9d4296e11e041422ede7d3a6733df44bf5320b8f16e"
+      "bytes": 225,
+      "sha256": "832793da2a6bc4e3751d13137299eeb81256f72811aea1c56200578808854a95"
     },
     {
       "path": "README.md",
-      "bytes": 2617,
-      "sha256": "20340e8c49afbb464bc07ee4e0db791abfad2af500f49ad625dda388257995cc"
+      "bytes": 3545,
+      "sha256": "e98153d7b48099b5f055cc55c88bd8ccf88555e52b4acb8d4e453ccbf816096e"
     },
     {
       "path": "VERIFICATION.md",
-      "bytes": 760,
-      "sha256": "30027ba9687eab09f2ccaba7b1433d8a1e87f8d5d5814cd9d46285768000bb9a"
+      "bytes": 658,
+      "sha256": "dc0e3c66a541f396c7b1155c84ecfad6c321909a8e2013a6a76215c131f58ab4"
     },
     {
       "path": "VERIFICATION_PLAN.md",
-      "bytes": 968,
-      "sha256": "982c72e63624e64c560e4599118d79ef7bb923827ffb5a7deaf15e3d785c88eb"
+      "bytes": 1253,
+      "sha256": "86e463322663c150eed615ac86f96dc398f31166e4b86305eba82f2fb1887b53"
+    },
+    {
+      "path": "evidence/NOVELTY.md",
+      "bytes": 1532,
+      "sha256": "888a1f6563e23f0193726c7a25f242e874654f21d55d2fb38386262596c9806c"
     },
     {
       "path": "evidence/PRIOR_ART.md",
-      "bytes": 804,
-      "sha256": "db60fe0f1928d8f2360049dd63965789aa6a8b498d276867dc599448f324bccd"
+      "bytes": 881,
+      "sha256": "728c0332400cd31a29dd09f97788f321f882ef092a08bcbaec7030d8f2ddea51"
+    },
+    {
+      "path": "evidence/discovery.json",
+      "bytes": 728,
+      "sha256": "c2361ee34878f0dc49260e8de3cc6b95107e7e3212c7a2bd6b5ca19222e78e62"
     },
     {
       "path": "evidence/environment.json",
@@ -51,18 +61,18 @@
     },
     {
       "path": "evidence/figure.json",
-      "bytes": 1474,
-      "sha256": "9719c8151ac6f5a34c5706c4e37b61c82e20f3fdc37e3bb781ac1976bebf6e80"
+      "bytes": 8645,
+      "sha256": "cf1bd666c46923ff8f809be8ec5748b9a5091d6cafe344119c70476dbf5da235"
     },
     {
       "path": "evidence/pdf-build.json",
-      "bytes": 230,
-      "sha256": "7169d402a24d8c1621ae76c400b5d1fbe66bcc51b6a85d1f85f4a216653f4dbb"
+      "bytes": 488,
+      "sha256": "b06cb03a503b93d57ed94b20792b6473ac0ca2226c139d6de836803db20a5537"
     },
     {
       "path": "evidence/render-receipt.json",
-      "bytes": 898,
-      "sha256": "bbf0a342090c968d4ed2f7d3b107e77803619c1716a82b59c034644923a49e5e"
+      "bytes": 897,
+      "sha256": "54fcbd289674f98c6dcfbd36c859fc8abd32c27fb2cc09b81b07e5a511788a27"
     },
     {
       "path": "evidence/verification.json",
@@ -71,13 +81,13 @@
     },
     {
       "path": "metadata.json",
-      "bytes": 602,
-      "sha256": "44ece1de77edb35658e3f409fb0d790154a9b377a2162ebe24283369efe6ff8e"
+      "bytes": 1398,
+      "sha256": "078aa15dbb3cfc83e06e8f00abf7fb93b52f6cb5fe6308a3482fc43315e857d7"
     },
     {
       "path": "paper.tex",
-      "bytes": 14287,
-      "sha256": "b5def1fc8698d3e1a470fd89b796764ff157842e17bff5eb7b09e2b354a31a7d"
+      "bytes": 19670,
+      "sha256": "90a0f15d2a8055809be8cbf31d1eb7370ba4ec994f09d5db83b52f694d1e0a60"
     },
     {
       "path": "requirements.txt",
@@ -90,9 +100,14 @@
       "sha256": "34cccf82b4d4626b01404499fcfa2ca55af34505c883c2d978a757dea370c222"
     },
     {
+      "path": "verify_extension.py",
+      "bytes": 2498,
+      "sha256": "d1b1d636f1698c09f4720b6acfb7e83e8d9413fc572d397efdd614157ccd5357"
+    },
+    {
       "path": "visual/build_scene.py",
-      "bytes": 2609,
-      "sha256": "0b81984f7cecc58dad20173073222012c53004e1ea5d7553aeb8b574c4fa2a88"
+      "bytes": 2699,
+      "sha256": "9883953d6e41a333b85438098bc0758a277008201e1e86d68fc319f9825cd6f6"
     },
     {
       "path": "visual/scene_common.py",

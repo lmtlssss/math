@@ -1,18 +1,18 @@
 {
   "schema": "mathematics.source.v1",
-  "title": "Exact Amplitude Elimination under Robust and Quantized Constraints",
+  "title": "Robust Amplitude Elimination and Exact Lattice-Phase Selection",
   "doi": "10.5281/zenodo.23897131",
   "version": "1.0.0",
   "files": [
     {
       "path": "CITATION.bib",
-      "bytes": 301,
-      "sha256": "cd7f2deedeca71abec4f4ef223cd330b8ca9f82d10c58c3bab1032c1b517db52"
+      "bytes": 297,
+      "sha256": "4e52dec1ce805a8af9302b7beb6da31462e46f82660155791fc0bc8a7e08b382"
     },
     {
       "path": "CITATION.cff",
-      "bytes": 384,
-      "sha256": "7c81e8430a5ea752f37fb30bdf9d837fa5a35d22443a6891a0c9be369d6f8066"
+      "bytes": 380,
+      "sha256": "abefbcdbd08f04fc825929bf3b15931533fcc47f66eaa3f95d93b07fdcc48c4c"
     },
     {
       "path": "LICENSE.md",
@@ -21,28 +21,38 @@
     },
     {
       "path": "Makefile",
-      "bytes": 196,
-      "sha256": "2673b339d49296898a6fb9d4296e11e041422ede7d3a6733df44bf5320b8f16e"
+      "bytes": 225,
+      "sha256": "832793da2a6bc4e3751d13137299eeb81256f72811aea1c56200578808854a95"
     },
     {
       "path": "README.md",
-      "bytes": 2566,
-      "sha256": "215ca900112e0c34c82601083fdcf30def0a9de7b9a5d3a0a4b6828d3f8a24ad"
+      "bytes": 3439,
+      "sha256": "46de6bdda3294e47a6866341506dbcf4e8a5bdc2de67923e40bf048c0aab51a3"
     },
     {
       "path": "VERIFICATION.md",
-      "bytes": 747,
-      "sha256": "88d859f8e85af5db758b618e45585eace054d6fb3bfbccd599930a5fbf479575"
+      "bytes": 602,
+      "sha256": "61321b4bba766d5acbde55fd5aca250f369f553e91d4622dcba51c72628daa3f"
     },
     {
       "path": "VERIFICATION_PLAN.md",
-      "bytes": 934,
-      "sha256": "49301c62ad38445e42dd829eb743a1c0d589adfc78eaad07beb7d8b5999cfe59"
+      "bytes": 1236,
+      "sha256": "2588daa0a9dcc95958ebc074ee781bb546a4fc7b7af355dfeb11b26bcd2a0f35"
+    },
+    {
+      "path": "evidence/NOVELTY.md",
+      "bytes": 1386,
+      "sha256": "83c9ac36c2cc1f46f022e85ec4b55223b53be8207d5f75a5b207938973e7da9d"
     },
     {
       "path": "evidence/PRIOR_ART.md",
-      "bytes": 623,
-      "sha256": "1c5c0742bfc02f71f2bcf0daf2e0c911511470e8df15a8b298483f1ac15e6450"
+      "bytes": 791,
+      "sha256": "69a67e7a690782d2cd1e6152a7b146e4dc4d51919ce82ca16f73723219177015"
+    },
+    {
+      "path": "evidence/discovery.json",
+      "bytes": 2225,
+      "sha256": "a912a720f5daabe40dd33b75602898ec2696ee6dfccab2ef2be6586e33237c2c"
     },
     {
       "path": "evidence/environment.json",
@@ -51,18 +61,18 @@
     },
     {
       "path": "evidence/figure.json",
-      "bytes": 2608,
-      "sha256": "34840ca4cdb16bf67a52187253f30ef8c17eda18ab808189678a1d100fff7cf6"
+      "bytes": 11812,
+      "sha256": "af9bc2d722052e92b8400b2b2e9053bba4d1fa2562567f5ce89c491163597f28"
     },
     {
       "path": "evidence/pdf-build.json",
-      "bytes": 233,
-      "sha256": "949c877970ad20b3b33c954e62eba82bebeb07092b9fedfad928a75ee86793ce"
+      "bytes": 480,
+      "sha256": "91e4a90faf1e3eb59db5188341ac4ecf6cf5f722eb4c88f3a1f6b9b02270c299"
     },
     {
       "path": "evidence/render-receipt.json",
-      "bytes": 890,
-      "sha256": "99e4d52d758200e6c5886627566afe1c321f3c900c31dc2871e78409f12a4b06"
+      "bytes": 886,
+      "sha256": "576246dc17d7421f9322f5f0b40a4849a6457941fbc26aa882a1c38aaf512bdf"
     },
     {
       "path": "evidence/verification.json",
@@ -71,13 +81,13 @@
     },
     {
       "path": "metadata.json",
-      "bytes": 599,
-      "sha256": "ceb63ba441dba92bd9bd9471a094c9bf9d3ded7b9eb68dfc2d4a07bf3c4d4011"
+      "bytes": 1382,
+      "sha256": "96bebed2a8053622059b825077c311648ed05d7066a8df5731024eb94f68da91"
     },
     {
       "path": "paper.tex",
-      "bytes": 15528,
-      "sha256": "6cf6b6daae22f8676588c9e2303f83d4ce64d56b806a2b5888e4ffdce6c3ed36"
+      "bytes": 21429,
+      "sha256": "e71d346ec69e5d1976e0fb01d67c01b97e6abfa1a1f5aadb7a512a2b7b8c12bb"
     },
     {
       "path": "requirements.txt",
@@ -90,9 +100,14 @@
       "sha256": "c3ed10c66829979757aa877a6410481da78e0763a80830efa6eed0a82559fcb1"
     },
     {
+      "path": "verify_extension.py",
+      "bytes": 4655,
+      "sha256": "30e68de12b94e32edc34d03a39debc3cada07ccfd912bc1f4bd2a6acb2d54959"
+    },
+    {
       "path": "visual/build_scene.py",
-      "bytes": 2433,
-      "sha256": "346d232cd72a4de8243f90d466f6453b9b74a056a18346c5d5dddff189a22e5a"
+      "bytes": 2858,
+      "sha256": "82649f4db8db52aa17738c90f58a001e6c3b984a0f96f396d64fc87aee7107d8"
     },
     {
       "path": "visual/scene_common.py",

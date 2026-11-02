@@ -1,136 +1,761 @@
 {
+  "status": "PASS",
   "designs": [
+    [
+      "A",
+      "1",
+      "3/2",
+      "1"
+    ],
+    [
+      "B",
+      "21/20",
+      "7/5",
+      "19/20"
+    ],
+    [
+      "C",
+      "5/4",
+      "8/5",
+      "4/5"
+    ],
+    [
+      "D",
+      "11/10",
+      "23/20",
+      "9/10"
+    ]
+  ],
+  "spacing": "1/5",
+  "breakpoints": [
+    "0",
+    "1/20",
+    "1/10",
+    "3/20",
+    "1/5"
+  ],
+  "winner_segments": [
     {
-      "name": "A",
-      "m": "1",
-      "e": "1",
-      "a_continuous": "1",
-      "continuous_value": "1",
-      "a_grid": "1",
-      "grid_value": "1"
+      "left": "0",
+      "right": "1/20",
+      "design": "A",
+      "k": 5,
+      "alpha": "1"
     },
     {
-      "name": "B",
-      "m": "21/20",
-      "e": "27/25",
-      "a_continuous": "20/21",
-      "continuous_value": "48/49",
-      "a_grid": "1",
-      "grid_value": "27/25"
+      "left": "1/20",
+      "right": "1/15",
+      "design": "B",
+      "k": 5,
+      "alpha": "19/20"
     },
     {
-      "name": "C",
-      "m": "4/5",
-      "e": "3/5",
-      "a_continuous": "5/4",
-      "continuous_value": "15/16",
-      "a_grid": "13/10",
-      "grid_value": "507/500"
+      "left": "1/15",
+      "right": "1/10",
+      "design": "C",
+      "k": 6,
+      "alpha": "4/5"
     },
     {
-      "name": "D",
-      "m": "7/10",
-      "e": "147/250",
-      "a_continuous": "10/7",
-      "continuous_value": "6/5",
-      "a_grid": "3/2",
-      "grid_value": "1323/1000"
+      "left": "1/10",
+      "right": "3/20",
+      "design": "D",
+      "k": 5,
+      "alpha": "9/10"
     },
     {
-      "name": "E",
-      "m": "4/5",
-      "e": "96/125",
-      "a_continuous": "5/4",
-      "continuous_value": "6/5",
-      "a_grid": "13/10",
-      "grid_value": "4056/3125"
-    },
-    {
-      "name": "F",
-      "m": "9/10",
-      "e": "243/250",
-      "a_continuous": "10/9",
-      "continuous_value": "6/5",
-      "a_grid": "6/5",
-      "grid_value": "4374/3125"
-    },
-    {
-      "name": "G",
-      "m": "1",
-      "e": "6/5",
-      "a_continuous": "1",
-      "continuous_value": "6/5",
-      "a_grid": "1",
-      "grid_value": "6/5"
-    },
-    {
-      "name": "H",
-      "m": "11/10",
-      "e": "363/250",
-      "a_continuous": "10/11",
-      "continuous_value": "6/5",
-      "a_grid": "1",
-      "grid_value": "363/250"
-    },
-    {
-      "name": "I",
-      "m": "6/5",
-      "e": "216/125",
-      "a_continuous": "5/6",
-      "continuous_value": "6/5",
-      "a_grid": "9/10",
-      "grid_value": "4374/3125"
-    },
-    {
-      "name": "J",
-      "m": "13/10",
-      "e": "507/250",
-      "a_continuous": "10/13",
-      "continuous_value": "6/5",
-      "a_grid": "4/5",
-      "grid_value": "4056/3125"
-    },
-    {
-      "name": "K",
-      "m": "7/5",
-      "e": "294/125",
-      "a_continuous": "5/7",
-      "continuous_value": "6/5",
-      "a_grid": "4/5",
-      "grid_value": "4704/3125"
-    },
-    {
-      "name": "L",
-      "m": "3/2",
-      "e": "27/10",
-      "a_continuous": "2/3",
-      "continuous_value": "6/5",
-      "a_grid": "7/10",
-      "grid_value": "1323/1000"
+      "left": "3/20",
+      "right": "1/5",
+      "design": "C",
+      "k": 6,
+      "alpha": "4/5"
     }
   ],
-  "grid": [
-    "1/2",
-    "3/5",
-    "7/10",
-    "4/5",
-    "9/10",
-    "1",
-    "11/10",
-    "6/5",
-    "13/10",
-    "7/5",
-    "3/2",
-    "8/5",
-    "17/10",
-    "9/5",
-    "19/10",
-    "2"
+  "boundary_winners": [
+    {
+      "theta": "0",
+      "winners": [
+        [
+          "A",
+          5,
+          "1"
+        ]
+      ]
+    },
+    {
+      "theta": "1/20",
+      "winners": [
+        [
+          "B",
+          5,
+          "21/20"
+        ]
+      ]
+    },
+    {
+      "theta": "1/10",
+      "winners": [
+        [
+          "D",
+          5,
+          "11/10"
+        ]
+      ]
+    },
+    {
+      "theta": "3/20",
+      "winners": [
+        [
+          "D",
+          5,
+          "23/20"
+        ]
+      ]
+    }
   ],
-  "grid_step": "1/10",
-  "lower_floor": "1",
-  "continuous_winner": "C",
-  "grid_winner": "A",
-  "full_grid_points": 192,
-  "eliminated_candidates": 12
+  "independent_origin_comparisons": 1996,
+  "persistent_reversal_checks": 425,
+  "all_boundary_winners": [
+    {
+      "theta": "0",
+      "winners": [
+        "A"
+      ]
+    },
+    {
+      "theta": "1/20",
+      "winners": [
+        "B"
+      ]
+    },
+    {
+      "theta": "1/15",
+      "winners": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "theta": "1/10",
+      "winners": [
+        "D"
+      ]
+    },
+    {
+      "theta": "3/20",
+      "winners": [
+        "D"
+      ]
+    }
+  ],
+  "selection_probabilities": {
+    "A": "1/4",
+    "B": "1/12",
+    "C": "5/12",
+    "D": "1/4"
+  },
+  "expected_optimum_quadratic_cost": "18688271/17280000",
+  "independent_grid_enumeration_cases": 400,
+  "phase_representatives": [
+    {
+      "theta": "1/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "1/400",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "1/240",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "7/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "3/400",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "11/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "13/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "1/80",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "17/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "19/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "7/400",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "23/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "1/48",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "9/400",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "29/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "31/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "11/400",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "7/240",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "37/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "13/400",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "41/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "43/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "3/80",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "47/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "49/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "17/400",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "53/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "11/240",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "19/400",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "59/1200",
+      "interval": 0,
+      "winner": "A"
+    },
+    {
+      "theta": "61/1200",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "21/400",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "13/240",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "67/1200",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "23/400",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "71/1200",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "73/1200",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "1/16",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "77/1200",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "79/1200",
+      "interval": 1,
+      "winner": "B"
+    },
+    {
+      "theta": "27/400",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "83/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "17/240",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "29/400",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "89/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "91/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "31/400",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "19/240",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "97/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "33/400",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "101/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "103/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "7/80",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "107/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "109/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "37/400",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "113/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "23/240",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "39/400",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "119/1200",
+      "interval": 2,
+      "winner": "C"
+    },
+    {
+      "theta": "121/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "41/400",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "5/48",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "127/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "43/400",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "131/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "133/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "9/80",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "137/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "139/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "47/400",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "143/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "29/240",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "49/400",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "149/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "151/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "51/400",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "31/240",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "157/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "53/400",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "161/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "163/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "11/80",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "167/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "169/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "57/400",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "173/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "7/48",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "59/400",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "179/1200",
+      "interval": 3,
+      "winner": "D"
+    },
+    {
+      "theta": "181/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "61/400",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "37/240",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "187/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "63/400",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "191/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "193/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "13/80",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "197/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "199/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "67/400",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "203/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "41/240",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "69/400",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "209/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "211/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "71/400",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "43/240",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "217/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "73/400",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "221/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "223/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "3/16",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "227/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "229/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "77/400",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "233/1200",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "47/240",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "79/400",
+      "interval": 4,
+      "winner": "C"
+    },
+    {
+      "theta": "239/1200",
+      "interval": 4,
+      "winner": "C"
+    }
+  ]
 }

@@ -1,7 +1,7 @@
-# Executed verification
+# Verification record
 
-The actual `verify.py` run completed successfully. 2400 direct grid instances, including 1533 feasible cases; 200 exact independently propagated state-scaling steps; exact design reversal and empty-grid interval.
+The manuscript contains the proofs. `verify.py` checks the retained foundational constructions. `verify_extension.py` checks the principal result against independently evaluated whole objects and produces the current figure certificate.
 
-The verifier output is `evidence/verification.json`. Its exact figure inputs are `evidence/figure.json`. These examples test implementations of the proved statements; mathematical claims are established by the proofs in `paper.tex`.
+An exact four-design phase diagram, independent origin comparisons and 400 direct grid enumerations; 425 strict refinement-reversal comparisons; exact boundary ties and one-sided feasibility events.
 
-`visual/build_scene.py` constructs its geometry from the same certificate. Native render, source-style preservation and release hashes are recorded in the accompanying render receipt and release manifest. PDF rendering is reviewed separately from mathematical verification.
+Exact records: `evidence/verification.json` and `evidence/discovery.json`. Native render and PDF receipts are added at release construction.

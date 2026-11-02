@@ -4,6 +4,10 @@
 
 Ceiling at an exact grid boundary; positive origins; empty scenario intersections; upper bounds excluding the rounded point; design-order reversal; denominator positivity; uncertainty across grid cells.
 
+## Principal-discovery failure modes
+
+Coincident affine costs; isolated feasible boundary points; ceilings at exact residues; common-origin dependence; feasibility loss at an upper endpoint; zero-origin refinement with repeated exact alignments; rational exponent assumptions for exact expected cost.
+
 ## Acceptance
 
 The manuscript supplies the proofs. The executable compares the derived formulas with independently evaluated whole objects. Numerical checks use integers, rational fractions or exact Gaussian-integer ranks. Worked examples produce the figure certificate. The PDF, code, citations, metadata and figure use the same definitions, coefficients and DOI. Public artifacts are mathematical and standalone.

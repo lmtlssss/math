@@ -1,7 +1,7 @@
-# Executed verification
+# Verification record
 
-The actual `verify.py` run completed successfully. 507 observation inequalities; 5 two-sample equality witnesses; 2420 strip-polygon inequalities and 20 equality witnesses; 120 exact peak certificates; 720 finite energy sums.
+The manuscript contains the proofs. `verify.py` checks the retained foundational constructions. `verify_extension.py` checks the principal result against independently evaluated whole objects and produces the current figure certificate.
 
-The verifier output is `evidence/verification.json`. Its exact figure inputs are `evidence/figure.json`. These examples test implementations of the proved statements; mathematical claims are established by the proofs in `paper.tex`.
+8,478 exact rational coefficient pairs against an independently constructed convex hull: 2,869 horizon-two, 3,014 horizon-three and 2,595 requiring at least four samples; an explicit irredundancy witness and 101 observation rows for the rational example.
 
-`visual/build_scene.py` constructs its geometry from the same certificate. Native render, source-style preservation and release hashes are recorded in the accompanying render receipt and release manifest. PDF rendering is reviewed separately from mathematical verification.
+Exact records: `evidence/verification.json` and `evidence/discovery.json`. Native render and PDF receipts are added at release construction.
