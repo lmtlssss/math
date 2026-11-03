@@ -1,0 +1,16 @@
+{
+  "scene_objects": 1632,
+  "state_objects": 343,
+  "embedded_certificate_matches": true,
+  "external_libraries": 0,
+  "external_fonts": 0,
+  "engine": "CYCLES",
+  "device": "CPU",
+  "resolution": [
+    3840,
+    2705
+  ],
+  "portable_render_path": "//00-cover.png",
+  "mathematical_scope_scan": "clear",
+  "strings_inspected": 17841
+}
