@@ -9,6 +9,13 @@ Exact coefficient inequalities classify the stable conjugate-root recurrences wi
 
 The principal result is the closed necessary-and-sufficient coefficient classification for minimal horizons two and three, including all boundary equalities. General finite determination, polar invariant sets and Stein identities are classical. The paper gives the exact second-order regions rather than presenting those general tools as new.
 
+## Full-resolution mathematical figure
+
+![Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences](figures/00-cover-4k.png)
+
+[Download original 3840 × 2705 PNG](figures/00-cover-4k.png) · [Zenodo archival PNG](https://zenodo.org/api/records/23900237/files/00-cover.png/content) · [GitHub release assets](https://github.com/lmtlssss/math/releases/tag/damped-recurrence-certificates-v1.0.1)
+
+
 ## Files
 
 `paper.tex` is the mathematical manuscript. `verify.py` reconstructs the foundational examples; `verify_extension.py` reconstructs the principal discovery and its independent comparisons. `evidence/verification.json` and `evidence/discovery.json` contain the observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.

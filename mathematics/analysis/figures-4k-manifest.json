@@ -1,0 +1,33 @@
+{
+  "schema": "mathematics.figure.gallery.v1",
+  "source": "native Blender render; identical files to Zenodo archival PNGs",
+  "figures": [
+    {
+      "paper": "cyclic-shift-energies",
+      "repository_path": "mathematics/analysis/cyclic-shift-energies/figures/00-cover-4k.png",
+      "width": 3840,
+      "height": 2705,
+      "bytes": 9177945,
+      "sha256": "422cb8f42b2e2120d184f465c33f75ac18abd8f87fb032b801ce31e4cf262aa0",
+      "zenodo_doi": "10.5281/zenodo.23897127"
+    },
+    {
+      "paper": "homogeneous-amplitude-elimination",
+      "repository_path": "mathematics/analysis/homogeneous-amplitude-elimination/figures/00-cover-4k.png",
+      "width": 3840,
+      "height": 2705,
+      "bytes": 8314540,
+      "sha256": "5d5827c5e38568e04df7472154af0e0d708574180be8f51b4e0baf5ca1182e07",
+      "zenodo_doi": "10.5281/zenodo.23897131"
+    },
+    {
+      "paper": "damped-recurrence-certificates",
+      "repository_path": "mathematics/analysis/damped-recurrence-certificates/figures/00-cover-4k.png",
+      "width": 3840,
+      "height": 2705,
+      "bytes": 8097274,
+      "sha256": "6695d18a65941cb12cf246645a678a10f969aa69d1dcad7ab1864e9e9cff3ac1",
+      "zenodo_doi": "10.5281/zenodo.23900237"
+    }
+  ]
+}
