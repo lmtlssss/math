@@ -9,6 +9,13 @@ A cyclotomic divisibility criterion decides equality in an integer-occupancy spe
 
 The principal result is the quantitative cyclotomic spectral gap, its equality obstruction and the attained five-cycle certificate. The Fourier diagonalization, positive-semidefinite rank argument, cyclotomic irreducibility and field-norm integrality are established ingredients and receive attribution.
 
+## Full-resolution mathematical figure
+
+![Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps](figures/00-cover-4k.png)
+
+[Download original 3840 × 2705 PNG](figures/00-cover-4k.png) · [Zenodo archival PNG](https://zenodo.org/api/records/23897127/files/00-cover.png/content) · [GitHub release assets](https://github.com/lmtlssss/math/releases/tag/cyclic-shift-energies-v1.0.0)
+
+
 ## Files
 
 `paper.tex` is the mathematical manuscript. `verify.py` reconstructs the foundational examples; `verify_extension.py` reconstructs the principal discovery and its independent comparisons. `evidence/verification.json` and `evidence/discovery.json` contain the observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.

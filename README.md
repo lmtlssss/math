@@ -84,3 +84,11 @@ A complete exact selection law for a translating common lattice reduces finite r
 [Paper and exact source](mathematics/analysis/damped-recurrence-certificates/README.md) · [DOI](https://doi.org/10.5281/zenodo.23900237) · [Release](https://github.com/lmtlssss/math/releases/tag/damped-recurrence-certificates-v1.0.1)
 
 Exact coefficient inequalities classify the stable conjugate-root recurrences with minimal uniform peak horizon two or three. A symmetric observation hexagon supplies necessity and sufficiency. An explicit rational boundary example has shortest uniform horizon three. Sharp observation constants, rational adaptive certificates and exact Stein sums accompany the new coefficient-region result.
+
+## Download the original 4K mathematical figures
+
+Each file is the full **3840 × 2705** native PNG, also archived on Zenodo.
+
+- [Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps — full 4K PNG](mathematics/analysis/cyclic-shift-energies/figures/00-cover-4k.png) · [Zenodo](https://doi.org/10.5281/zenodo.23897127)
+- [Robust Amplitude Elimination and Exact Lattice-Phase Selection — full 4K PNG](mathematics/analysis/homogeneous-amplitude-elimination/figures/00-cover-4k.png) · [Zenodo](https://doi.org/10.5281/zenodo.23897131)
+- [Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences — full 4K PNG](mathematics/analysis/damped-recurrence-certificates/figures/00-cover-4k.png) · [Zenodo](https://doi.org/10.5281/zenodo.23900237)

@@ -9,6 +9,13 @@ A complete exact selection law for a translating common lattice reduces finite r
 
 The principal contributions are the common-lattice phase-selection law, its exact probability and expectation formula, and the persistent-refinement reversal theorem. Scalar monotonicity, interval elimination, homogeneity and line-envelope geometry are established foundations, not separate originality claims.
 
+## Full-resolution mathematical figure
+
+![Robust Amplitude Elimination and Exact Lattice-Phase Selection](figures/00-cover-4k.png)
+
+[Download original 3840 × 2705 PNG](figures/00-cover-4k.png) · [Zenodo archival PNG](https://zenodo.org/api/records/23897131/files/00-cover.png/content) · [GitHub release assets](https://github.com/lmtlssss/math/releases/tag/homogeneous-amplitude-elimination-v1.0.0)
+
+
 ## Files
 
 `paper.tex` is the mathematical manuscript. `verify.py` reconstructs the foundational examples; `verify_extension.py` reconstructs the principal discovery and its independent comparisons. `evidence/verification.json` and `evidence/discovery.json` contain the observed results; `evidence/figure.json` is the figure certificate. `visual/build_scene.py` and `visual/scene_common.py` construct the native mathematical diagram from that certificate.

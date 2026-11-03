@@ -2,6 +2,29 @@
 
 Exact finite representations, arithmetic spectral gaps, lattice-phase selection and minimal recurrence horizons.
 
+## Full-resolution figure gallery
+
+All three images below are the original **3840 × 2705 PNGs**. Open the image file to select **Download raw file** in GitHub.
+
+### Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps
+
+[Download original 4K PNG](cyclic-shift-energies/figures/00-cover-4k.png) · [DOI](https://doi.org/10.5281/zenodo.23897127)
+
+![Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps](cyclic-shift-energies/figures/00-cover-4k.png)
+
+### Robust Amplitude Elimination and Exact Lattice-Phase Selection
+
+[Download original 4K PNG](homogeneous-amplitude-elimination/figures/00-cover-4k.png) · [DOI](https://doi.org/10.5281/zenodo.23897131)
+
+![Robust Amplitude Elimination and Exact Lattice-Phase Selection](homogeneous-amplitude-elimination/figures/00-cover-4k.png)
+
+### Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences
+
+[Download original 4K PNG](damped-recurrence-certificates/figures/00-cover-4k.png) · [DOI](https://doi.org/10.5281/zenodo.23900237)
+
+![Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences](damped-recurrence-certificates/figures/00-cover-4k.png)
+
+
 ### Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps
 
 [Paper and exact source](cyclic-shift-energies/README.md) · [DOI](https://doi.org/10.5281/zenodo.23897127) · [Release](https://github.com/lmtlssss/math/releases/tag/cyclic-shift-energies-v1.0.0)
