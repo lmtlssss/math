@@ -1,10 +1,10 @@
 # Analysis
 
-Exact finite representations, arithmetic spectral gaps, lattice-phase selection and minimal recurrence horizons.
+Exact finite representations, arithmetic spectral gaps, lattice-phase selection, minimal recurrence horizons and affine-cycle cut identities.
 
 ## Full-resolution figure gallery
 
-All three images below are the original **3840 × 2705 PNGs**. Open the image file to select **Download raw file** in GitHub.
+All four images below are the original **3840 × 2705 PNGs**. Open the image file to select **Download raw file** in GitHub.
 
 ### Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps
 
@@ -25,6 +25,12 @@ All three images below are the original **3840 × 2705 PNGs**. Open the image fi
 ![Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences](damped-recurrence-certificates/figures/00-cover-4k.png)
 
 
+### Affine Cycles: Exact Cut Defects and Minimal Retained State
+
+[Download original 4K PNG](affine-cycles/figures/00-cover-4k.png) · [DOI](https://doi.org/10.5281/zenodo.23931722)
+
+![Affine Cycles: Exact Cut Defects and Minimal Retained State](affine-cycles/figures/00-cover-4k.png)
+
 ### Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps
 
 [Paper and exact source](cyclic-shift-energies/README.md) · [DOI](https://doi.org/10.5281/zenodo.23897127) · [Release](https://github.com/lmtlssss/math/releases/tag/cyclic-shift-energies-v1.0.0)
@@ -42,3 +48,9 @@ A complete exact selection law for a translating common lattice reduces finite r
 [Paper and exact source](damped-recurrence-certificates/README.md) · [DOI](https://doi.org/10.5281/zenodo.23900237) · [Release](https://github.com/lmtlssss/math/releases/tag/damped-recurrence-certificates-v1.0.1)
 
 Exact coefficient inequalities classify the stable conjugate-root recurrences with minimal uniform peak horizon two or three. A symmetric observation hexagon supplies necessity and sufficiency. An explicit rational boundary example has shortest uniform horizon three. Sharp observation constants, rational adaptive certificates and exact Stein sums accompany the new coefficient-region result.
+
+### Affine Cycles: Exact Cut Defects and Minimal Retained State
+
+[Paper and exact source](affine-cycles/README.md) · [DOI](https://doi.org/10.5281/zenodo.23931722) · [Release](https://github.com/lmtlssss/math/releases/tag/affine-cycles-v1.0.0)
+
+A transported cyclic cut changes the accumulated affine cost by the prefix-cost row applied to the full-cycle displacement. Exact rank formulas give the minimum linear summaries for all cut defects and all transported cut totals. An affine consistency criterion includes cut-invariant cycles without fixed points. Polynomial derivative coefficients extend the minimum-state result.

@@ -1,0 +1,544 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\newfontfamily\authorsymbol{Noto Sans Symbols}[Scale=MatchUppercase]
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\itshape Affine cycles and minimal retained state}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{1.2em}\setlength{\parskip}{0pt}\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{example}[theorem]{Example}\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\rank}{rank}\DeclareMathOperator{\im}{im}\DeclareMathOperator{\spanop}{span}\DeclareMathOperator{\diag}{diag}
+\newcommand{\R}{\mathbb R}\newcommand{\Q}{\mathbb Q}\newcommand{\Z}{\mathbb Z}\newcommand{\N}{\mathbb N}\newcommand{\id}{\mathrm{id}}
+\hypersetup{pdftitle={Affine Cycles: Exact Cut Defects and Minimal Retained State},pdfauthor={lmtlssss🜐},pdfsubject={Mathematics: affine composition and minimal linear summaries},pdfkeywords={affine maps, cyclic composition, accumulated costs, minimal linear state, exact arithmetic}}
+\title{\LARGE Affine Cycles:\\Exact Cut Defects and Minimal Retained State}
+\author{lmtlssss{\authorsymbol 🜐}}
+\date{3 November 2026\\[3pt]\small\href{https://doi.org/10.5281/zenodo.23931722}{10.5281/zenodo.23931722}}
+\begin{document}\maketitle\thispagestyle{plain}
+
+\begin{abstract}
+An ordered cycle of affine maps carries a scalar cost at each step. We
+compare each cyclic rotation at the initial state transported to its cut.
+For affine costs, the complete family of cut defects is exactly
+$R((M-I)x+b)$, where $x\mapsto Mx+b$ is the full cycle and the rows of
+$R$ are the accumulated prefix-cost coefficients. Thus the minimum
+linear summary of the initial state has dimension $\rank(R(M-I))$,
+even when the decoder is arbitrary. The affine system
+$R(M-I)x=-Rb$ classifies all cut-invariant states. It can have solutions
+when the full cycle has no fixed point. We also give the minimum summary
+for all transported cut totals, exact interval-substitution formulas,
+and polynomial-cost boundary identities. For polynomial defects,
+a finite matrix of derivative coefficients determines the minimum
+linear dimension. A rational three-dimensional example has a
+one-dimensional defect summary and a plane of cut-invariant states
+without a fixed point. Exact coefficient certificates and a
+source-derived mathematical figure accompany the proofs.
+\end{abstract}
+\noindent\textit{Keywords.} Affine maps; cyclic composition; accumulated
+costs; minimal linear state; exact arithmetic; polynomial invariance.
+
+\section{An ordered cycle and its transported cuts}
+Fix a dimension $d\ge1$ and a word of length $n\ge1$. For
+$0\le i<n$, let
+\[
+ f_i(x)=A_i x+b_i,\qquad c_i(x)=a_i^{\mathsf T}x+\alpha_i,
+ \qquad x\in\R^d.
+\]
+The cost $c_i$ is evaluated at the state \emph{before} applying $f_i$.
+No sign condition is imposed on the scalar costs. Define the prefix
+state and prefix cost by
+\begin{equation}\label{eq:prefix}
+ \begin{aligned}
+ P_0(x)&=x,&P_k&=f_{k-1}\circ\cdots\circ f_0,\\
+ C_0(x)&=0,&C_k(x)&=\sum_{i=0}^{k-1}c_i(P_i(x)).
+ \end{aligned}
+\end{equation}
+Write
+\[
+ P_k(x)=M_kx+p_k,\qquad C_k(x)=r_k^{\mathsf T}x+\sigma_k,
+ \qquad F=P_n,
+\]
+and abbreviate $M=M_n$, $b=p_n$, $C=C_n$, and
+$N=M-I$. The full-cycle displacement is
+\begin{equation}\label{eq:displacement}
+ \delta(x)=F(x)-x=Nx+b.
+\end{equation}
+Every prefix is defined by composition, so these expressions remain
+valid when a local or prefix matrix is singular.
+
+A cut at $k$, with $0\le k<n$, puts the steps in the order
+$k,k+1,\ldots,n-1,0,\ldots,k-1$. Let $C^{[k]}(y)$ denote the total cost
+of that rotated word when its initial state is $y$.
+The \emph{transported cut total} and the \emph{cut defect} are
+\begin{equation}\label{eq:defectdef}
+ T_k(x)=C^{[k]}(P_k(x)),\qquad D_k(x)=T_k(x)-C(x).
+\end{equation}
+In particular, $T_0=C$ and $D_0=0$. The comparison in
+\eqref{eq:defectdef} uses the state reached at the cut. A comparison
+that resets every rotated word to the same initial state defines a
+different family of functions.
+
+We call $x$ \emph{cut-invariant} when $D_k(x)=0$ for all $k$.
+This concerns the accumulated costs. A fixed point satisfies the
+additional state equation $F(x)=x$.
+
+\section{The exact cut-defect identity}
+The boundary identity uses only the addition of local costs. We first
+state it in a form that also applies beyond affine costs.
+
+\begin{lemma}[Boundary identity]\label{lem:boundary}
+For arbitrary state maps and scalar local costs for which the
+compositions are defined,
+\begin{equation}\label{eq:boundary}
+ \boxed{D_k(x)=C_k(F(x))-C_k(x),\qquad 0\le k<n.}
+\end{equation}
+\end{lemma}
+\begin{proof}
+Let $S_k=f_{n-1}\circ\cdots\circ f_k$ be the suffix state map.
+Let $B_k(y)$ be the cost of that suffix, started at $y$.
+The original word consists of the prefix followed by the suffix, hence
+\[
+ F=S_k\circ P_k,\qquad C(x)=C_k(x)+B_k(P_k(x)).
+\]
+The rotated word consists of the same suffix followed by the same
+prefix. Starting it at $P_k(x)$ therefore gives
+\[
+ T_k(x)=B_k(P_k(x))+C_k(S_k(P_k(x)))
+       =B_k(P_k(x))+C_k(F(x)).
+\]
+Subtracting the preceding expression for $C(x)$ proves
+\eqref{eq:boundary}. This argument uses composition and addition and
+requires no inverse map.
+\end{proof}
+
+Stack the nontrivial prefix rows into
+\begin{equation}\label{eq:RK}
+ R=\begin{bmatrix}r_1^{\mathsf T}\\\vdots\\r_{n-1}^{\mathsf T}\end{bmatrix},
+ \qquad K=RN,\qquad h=Rb,
+ \qquad D(x)=(D_1(x),\ldots,D_{n-1}(x))^{\mathsf T}.
+\end{equation}
+For $n=1$, these are empty-row matrices and an empty vector, with rank
+zero.
+
+\begin{theorem}[Cut defects and cut-invariant states]\label{thm:cut}
+For affine state maps and affine local costs,
+\begin{equation}\label{eq:main}
+ \boxed{D(x)=R\delta(x)=Kx+h.}
+\end{equation}
+The cut-invariant set is nonempty exactly when
+\begin{equation}\label{eq:consistency}
+ h\in\im K,
+ \quad\text{equivalently}\quad
+ \rank[\,K\mid h\,]=\rank K.
+\end{equation}
+When it is nonempty, it is the affine space
+\begin{equation}\label{eq:zero}
+ x_*+\ker K,\qquad Kx_*=-h,
+\end{equation}
+of dimension $d-\rank K$. Every fixed point is cut-invariant.
+\end{theorem}
+\begin{proof}
+By Lemma~\ref{lem:boundary} and the affine form of $C_k$,
+\[
+ D_k(x)=r_k^{\mathsf T}(Mx+b)+\sigma_k
+              -r_k^{\mathsf T}x-\sigma_k
+       =r_k^{\mathsf T}(Nx+b).
+\]
+Stacking these identities proves \eqref{eq:main}. Cut invariance is
+therefore exactly the linear system $Kx=-h$. Its solvability,
+solution space and dimension are given by \eqref{eq:consistency},
+\eqref{eq:zero}, and rank--nullity. A fixed point has
+$\delta(x)=0$, so \eqref{eq:main} makes every defect zero.
+\end{proof}
+
+The entire prefix coefficient family is applied only to the attainable
+affine displacement set $b+\im N$. Directions outside this set do not
+increase the dimension needed to distinguish the defects.
+The offset $h$ affects the zero-defect equation, but its presence does
+not add an unknown coordinate to the initial state.
+
+\begin{corollary}[When cost invariance forces state closure]\label{cor:closure}
+Suppose the full cycle has a fixed point $x_0$. The cut-invariant set
+coincides with the fixed-point set exactly when
+\begin{equation}\label{eq:observability}
+ \rank(RN)=\rank N.
+\end{equation}
+In particular, this holds if $R$ is injective on $\im N$.
+\end{corollary}
+\begin{proof}
+Since $Nx_0=-b$, the fixed-point set is $x_0+\ker N$ and
+Theorem~\ref{thm:cut} makes the cut-invariant set $x_0+\ker(RN)$.
+The inclusion $\ker N\subseteq\ker(RN)$ is automatic. The two kernels
+are equal exactly when their dimensions are equal, which is
+\eqref{eq:observability}. This is also the condition that the
+restriction of $R$ to $\im N$ be injective.
+\end{proof}
+
+\section{Minimum linear state under an explicit recovery contract}
+We measure the number of real coordinates retained by a linear summary.
+The map family and its coefficients are fixed and known to the decoder.
+
+\begin{definition}[Linear summary]\label{def:summary}
+For a function $H:\R^d\to\R^m$, a linear summary of dimension $q$ is
+a linear map $S:\R^d\to\R^q$ and a function
+$g:\R^q\to\R^m$ such that $H(x)=g(Sx)$ for every $x\in\R^d$.
+The decoder $g$ may be arbitrary. Dimension zero denotes a constant
+summary.
+\end{definition}
+
+\begin{lemma}[Affine recovery rank]\label{lem:rank}
+For $H(x)=Lx+a$, the minimum linear-summary dimension is $\rank L$.
+\end{lemma}
+\begin{proof}
+If $v\in\ker S$, then $S(x+v)=Sx$ for every $x$; the recovery
+contract gives $H(x+v)=H(x)$, hence $Lv=0$. Thus
+$\ker S\subseteq\ker L$ and $q\ge\rank S\ge\rank L$.
+Conversely, let the rows of $S$ be a basis of the row space of $L$.
+There is a matrix $B$ with $L=BS$, and the decoder
+$g(z)=Bz+a$ recovers $H$. This uses $\rank L$ coordinates.
+\end{proof}
+
+\begin{theorem}[Minimum retained state]\label{thm:minimal}
+Under Definition~\ref{def:summary}, the exact minimum dimensions are
+\begin{align}
+ q_{\mathrm{defect}}&=\rank\bigl(R(M-I)\bigr),\label{eq:minD}\\
+ q_{\mathrm{total}}&=\rank\begin{bmatrix}r_n^{\mathsf T}\\R(M-I)\end{bmatrix}.
+ \label{eq:minT}
+\end{align}
+The first formula recovers all cut defects. The second recovers all
+transported cut totals $(T_0,\ldots,T_{n-1})$. A basis of the respective
+row space gives an attaining summary in each case.
+\end{theorem}
+\begin{proof}
+Equation~\eqref{eq:main} and Lemma~\ref{lem:rank} give
+\eqref{eq:minD}. The vector of transported totals has linear part
+\[
+ L_T=\begin{bmatrix}
+ r_n^{\mathsf T}\\
+ r_n^{\mathsf T}+r_1^{\mathsf T}N\\
+ \vdots\\
+ r_n^{\mathsf T}+r_{n-1}^{\mathsf T}N
+ \end{bmatrix}.
+\]
+Subtract its first row from every other row. These elementary row
+operations preserve rank and yield the matrix in \eqref{eq:minT}.
+Lemma~\ref{lem:rank} then proves both the lower bound and attainability.
+\end{proof}
+
+The retained state is a linear image of the initial state, and recovery
+holds over all real initial states. The dimension counts real linear
+coordinates. Arbitrary nonlinear encodings, bit storage and recovery
+on a finite input set define separate contracts. Recovery of $Ru$
+for every unconstrained displacement $u\in\R^d$ has minimum
+dimension $\rank R$. Recovery on the attainable displacements of
+the given cycle has the generally smaller rank in \eqref{eq:minD}.
+This explicit recovery contract follows the distinction used for
+minimal linear state in the preceding cyclic-shift note~\cite{cyclic}.
+
+\section{Chronological composition and exact substitutions}
+An affine word is fully represented by a tuple
+$(A,b,r,\sigma)$ with state map $x\mapsto Ax+b$ and cost
+$x\mapsto r^{\mathsf T}x+\sigma$.
+The chronological product means that the left tuple acts first.
+
+\begin{proposition}[Affine state and cost composition]\label{prop:compose}
+The chronological product is
+\begin{equation}\label{eq:product}
+ (A,b,r,\sigma)\star(B,c,s,\tau)
+ =\bigl(BA,\ Bb+c,\ r+A^{\mathsf T}s,\
+             \sigma+\tau+s^{\mathsf T}b\bigr).
+\end{equation}
+It is associative, with identity $(I,0,0,0)$.
+\end{proposition}
+\begin{proof}
+The resulting state is $B(Ax+b)+c$. The resulting cost is
+$r^{\mathsf T}x+\sigma+s^{\mathsf T}(Ax+b)+\tau$, which gives
+\eqref{eq:product}. For any two represented pairs $(f,c)$ and $(g,e)$,
+the product represents $(g\circ f,c+e\circ f)$. Applying a third pair
+$(h,a)$ in either grouping gives the state $h\circ g\circ f$ and the
+cost $c+e\circ f+a\circ g\circ f$. Thus the product is associative.
+The identity follows from the same representation.
+\end{proof}
+
+For homogeneous coordinates $\widetilde x=(x,1)^{\mathsf T}$, put
+\[
+ H_f=\begin{bmatrix}A&b\\0&1\end{bmatrix},
+ \qquad \lambda_c=[\,r^{\mathsf T}\ \sigma\,].
+\]
+Then \eqref{eq:product} is simply
+$(H_f,\lambda_c)\star(H_g,\lambda_e)
+=(H_gH_f,\lambda_c+\lambda_eH_f)$.
+This representation also makes the chronological order explicit.
+
+\begin{proposition}[One interval substitution]\label{prop:substitution}
+Let a word be the prefix $P$, then an interval $V$, then the suffix $S$.
+Use $P,V,S$ also for their state maps, and write $C_P,C_V,C_S$ for
+their costs. Replace $V,C_V$ by $V',C_{V'}$. With $y=P(x)$, the exact
+change in total cost is
+\begin{equation}\label{eq:substitution}
+ C'(x)-C(x)=C_{V'}(y)-C_V(y)+C_S(V'(y))-C_S(V(y)).
+\end{equation}
+If $C_S(z)=s^{\mathsf T}z+\tau$, its last two terms reduce to
+$s^{\mathsf T}(V'(y)-V(y))$.
+If the suffix state map has linear part $A_S$, the final state changes by
+$A_S(V'(y)-V(y))$.
+\end{proposition}
+\begin{proof}
+The original total cost is $C_P(x)+C_V(y)+C_S(V(y))$; its replacement
+is $C_P(x)+C_{V'}(y)+C_S(V'(y))$. Their difference gives
+\eqref{eq:substitution}. Subtraction cancels the constant part of an
+affine suffix cost or suffix state map, yielding the remaining formulas.
+\end{proof}
+
+Associativity permits a balanced binary tree of ordered interval
+summaries. A tree with $n$ leaves stores $2n-1$ summaries; its root is
+the full word. A leaf replacement requires recomputation only on its
+ancestor path. A recursively balanced tree has height
+$\lceil\log_2 n\rceil$, so one replacement changes at most that many
+internal products. For $k$ replaced leaves the number of distinct
+changed internal nodes is at most
+$\min\{n-1,k\lceil\log_2 n\rceil\}$.
+These are algebraic product counts; the cost of rational arithmetic
+also depends on coefficient bit length. Ordered associative prefix
+products and their tree organization are established constructions;
+see Blelloch~\cite{blelloch}. The formulas above specify the state and
+cost algebra to which they apply.
+
+\section{Polynomial costs and the exact derivative criterion}
+Lemma~\ref{lem:boundary} remains valid for arbitrary local costs.
+For affine state maps and polynomial local costs of degree at most
+$p$, every prefix cost and every cut defect has degree at most $p$.
+
+For quadratic costs, represent a word by $(A,b,Q,u,v)$, where
+$Q=Q^{\mathsf T}$ and
+\[
+ f(x)=Ax+b,\qquad c(x)=x^{\mathsf T}Qx+2u^{\mathsf T}x+v.
+\]
+Composing this word first and $(B,c,K,w,z)$ second gives
+\begin{equation}\label{eq:quadraticproduct}
+ \begin{aligned}
+ A_{\rm new}&=BA,& b_{\rm new}&=Bb+c,\\
+ Q_{\rm new}&=Q+A^{\mathsf T}KA,
+ &u_{\rm new}&=u+A^{\mathsf T}(Kb+w),\\
+ v_{\rm new}&=v+b^{\mathsf T}Kb+2w^{\mathsf T}b+z.
+ \end{aligned}
+\end{equation}
+These identities follow by expanding the second cost at $Ax+b$.
+Their associativity follows from the same state-and-cost
+representation as Proposition~\ref{prop:compose}.
+
+If $C_k(x)=x^{\mathsf T}Q_kx+2u_k^{\mathsf T}x+v_k$, then the boundary
+identity yields
+\begin{equation}\label{eq:quadraticboundary}
+ D_k(x)=2(Q_kx+u_k)^{\mathsf T}\delta(x)
+                    +\delta(x)^{\mathsf T}Q_k\delta(x).
+\end{equation}
+Equivalently, $D_k(x)=x^{\mathsf T}H_kx+2g_k^{\mathsf T}x+\beta_k$, with
+\begin{equation}\label{eq:quadraticcoeff}
+ \begin{aligned}
+ H_k&=M^{\mathsf T}Q_kM-Q_k,\\
+ g_k&=M^{\mathsf T}(Q_kb+u_k)-u_k,\\
+ \beta_k&=b^{\mathsf T}Q_kb+2u_k^{\mathsf T}b.
+ \end{aligned}
+\end{equation}
+Unlike an affine defect, a quadratic defect can depend on the initial
+state in addition to its cycle displacement. The following theorem
+still gives an exact finite rank criterion.
+
+\begin{theorem}[Polynomial minimum linear dimension]\label{thm:polynomial}
+Let $H=(H_1,\ldots,H_m):\R^d\to\R^m$ be a polynomial map.
+Form a matrix $\mathcal G_H$ whose rows are indexed by pairs
+$(i,\alpha)$ and whose $j$th entry in that row is the coefficient
+of $x^\alpha$ in $\partial H_i/\partial x_j$. Include all monomials
+that occur in these derivatives. Then
+\begin{equation}\label{eq:polyrank}
+ \boxed{q_{\min}(H)=\rank\mathcal G_H.}
+\end{equation}
+For quadratic cut defects with coefficients \eqref{eq:quadraticcoeff},
+this becomes
+\begin{equation}\label{eq:quadrank}
+ q_{\mathrm{defect}}=
+ \rank\begin{bmatrix}H_1\\g_1^{\mathsf T}\\\vdots\\H_{n-1}\\g_{n-1}^{\mathsf T}\end{bmatrix}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+For $v\in\R^d$, let $\partial_v H_i=\sum_jv_j\partial H_i/\partial x_j$.
+The definition of $\mathcal G_H$ gives
+\[
+ U:=\ker\mathcal G_H
+   =\{v:\partial_vH_i\equiv0\text{ for every }i\}.
+\]
+If $H(x)=g(Sx)$ and $v\in\ker S$, then
+$H_i(x+tv)=H_i(x)$ for all $x,t$. Differentiate this polynomial
+identity at $t=0$. It gives $v\in U$, so
+$\ker S\subseteq U$ and $q\ge d-\dim U=\rank\mathcal G_H$.
+This step does not differentiate the arbitrary decoder.
+
+Conversely, if $v\in U$, then the polynomial
+$t\mapsto H_i(x+tv)$ has zero derivative for all real $t$, and is
+constant. Hence $H$ is constant on each coset of $U$. Choose a
+surjective linear map $S:\R^d\to\R^{d-\dim U}$ with kernel $U$.
+Define $g(Sx)=H(x)$. Constancy on cosets makes $g$ well-defined and
+proves attainability. For a quadratic component,
+$\partial_vD_k(x)=2x^{\mathsf T}H_kv+2g_k^{\mathsf T}v$.
+It vanishes identically exactly when $H_kv=0$ and
+$g_k^{\mathsf T}v=0$. Stacking these conditions proves
+\eqref{eq:quadrank}.
+\end{proof}
+
+\section{A cut-invariant plane without a fixed point}
+We now give all local maps and costs for the principal example.
+Coordinates $(x,y,z)$ denote the input to the indicated local step.
+\begin{equation}\label{eq:examplemaps}
+ \begin{array}{c|c|c}
+ i&f_i(x,y,z)&c_i(x,y,z)\\\hline
+ 0&(x+y,\ y,\ z)&x+y\\
+ 1&(x,\ y+1,\ z+x)&x+z\\
+ 2&(x,\ y,\ z-y)&3x-2z\\
+ 3&(2x-2y+2,\ y,\ z-x+y)&-2x+4y+3z
+ \end{array}
+\end{equation}
+The prefix state maps are
+\[
+ \begin{aligned}
+ P_1(x,y,z)&=(x+y,y,z),\\
+ P_2(x,y,z)&=(x+y,y+1,z+x+y),\\
+ P_3(x,y,z)&=(x+y,y+1,z+x-1),\\
+ F(x,y,z)&=(2x,y+1,z).
+ \end{aligned}
+\]
+Direct summation gives
+\begin{equation}\label{eq:examplecosts}
+ \begin{aligned}
+ C_1&=x+y,& C_2&=2x+2y+z,\\
+ C_3&=3x+3y-z,& C&=4x+5y+2z+1.
+ \end{aligned}
+\end{equation}
+Thus
+\begin{equation}\label{eq:examplematrices}
+ R=\begin{bmatrix}1&1&0\\2&2&1\\3&3&-1\end{bmatrix},\quad
+ N=\diag(1,0,0),\quad b=\begin{bmatrix}0\\1\\0\end{bmatrix},\quad
+ K=\begin{bmatrix}1&0&0\\2&0&0\\3&0&0\end{bmatrix}.
+\end{equation}
+The prefix row rank is two, whereas $\rank K=1$ and
+$h=(1,2,3)^{\mathsf T}$. Consequently,
+\begin{equation}\label{eq:exampledefects}
+ \boxed{D(x,y,z)=(x+1)(1,2,3)^{\mathsf T}.}
+\end{equation}
+The exact linear summary is $S(x,y,z)=x$; its decoder multiplies
+$x+1$ by $(1,2,3)^{\mathsf T}$. Cut-invariant states form the entire
+plane $x=-1$. The equation $F(x,y,z)=(x,y,z)$ requires $y+1=y$, so
+this cycle has no fixed point. Along the cut-invariant plane, its
+nonzero displacement is $(-1,1,0)$, which lies in $\ker R$.
+
+For all transported cut totals, Theorem~\ref{thm:minimal} gives rank two:
+\[
+ \rank\begin{bmatrix}4&5&2\\1&0&0\\2&0&0\\3&0&0\end{bmatrix}=2.
+\]
+An attaining summary is $(x,5y+2z)$. The first coordinate determines
+the defects, while both coordinates determine $C$ in
+\eqref{eq:examplecosts} and hence every transported cut total.
+
+For the rational initial state $(2,-1,3)$, a direct pass through the
+four original local steps gives costs $1,4,-5,10$, with total $10$.
+Running the rotated words at their transported states gives
+\[
+ (T_0,T_1,T_2,T_3)=(10,13,16,19).
+\]
+The defects $(3,6,9)$ agree with \eqref{eq:exampledefects}.
+At $(-1,0,0)$, all four transported totals equal $-3$.
+
+The accompanying figure enumerates all $343$ states in
+$\{-3,-2,-1,0,1,2,3\}^3$. Their cut defects take exactly seven
+values, indexed by $t=x+1\in\{-2,-1,0,1,2,3,4\}$.
+Each value has exactly $49$ preimages in this grid. The $49$ gold
+states form the zero-defect fibre $x=-1$. The figure's scalar count
+$q_{\mathrm{defect}}=1$ follows from the theorem for all real states;
+the finite grid displays its fibres.
+
+\section{Consistency, singular prefixes and polynomial separation}
+\begin{example}[Affine inconsistency]\label{ex:inconsistent}
+Keep the maps in \eqref{eq:examplemaps} and replace
+$c_2(x,y,z)$ by $3x+y-2z$. The prefix costs become
+\[
+ C_1=x+y,\quad C_2=2x+2y+z,\quad C_3=3x+4y-z+1.
+\]
+The new defects are
+$(x+1,2x+2,3x+4)^{\mathsf T}$. Their linear coefficient matrix
+still has rank one, but adjoining the constant column gives rank two.
+The first defect forces $x=-1$, at which the third defect is one.
+Thus the cut-invariant set is empty. The full cost changes by
+$y+1$, as Proposition~\ref{prop:substitution} also gives directly.
+\end{example}
+
+\begin{example}[A singular prefix]\label{ex:singular}
+On $\R^2$, take
+\[
+ f_0(x,y)=(x,0),\quad c_0(x,y)=x+y,\qquad
+ f_1(x,y)=(0,y+1),\quad c_1(x,y)=2x+y.
+\]
+Here $P_1$ is singular, $F(x,y)=(0,1)$ and $C(x,y)=3x+y$.
+The rotated word started at $P_1(x,y)=(x,0)$ has cost $2x+1$.
+Therefore $D_1(x,y)=1-x-y$, exactly as
+$r_1^{\mathsf T}\delta(x,y)$ predicts. The cut-invariant line
+$x+y=1$ contains the single fixed point $(0,1)$.
+\end{example}
+
+\begin{example}[Quadratic defects distinguish two rank questions]\label{ex:quadratic}
+On $\R^2$, let $f_0$ be the identity with cost $c_0(x,y)=xy$;
+let the second cost be zero. If $f_1(x,y)=(x+1,y)$, then
+$D_1(x,y)=y$, with minimum linear-summary dimension one.
+If instead $f_1(x,y)=(2x,y)$, then $D_1(x,y)=xy$.
+Its displacement linear part has rank one, while its derivative
+coefficient matrix has rank two: $\partial_x(xy)=y$ and
+$\partial_y(xy)=x$. Theorem~\ref{thm:polynomial} proves that two
+linear coordinates are necessary and sufficient. Thus the affine
+rank formula has exactly the stated affine-cost scope.
+\end{example}
+
+\section{Exact certificates and relation to established methods}
+The verifier uses rational arithmetic. One construction composes state
+and cost coefficients by \eqref{eq:product} and
+\eqref{eq:quadraticproduct}. A second, independent construction expands
+local trajectories as multivariate polynomials and executes each
+rotation at its symbolically transported state. Coefficient equality
+establishes each certified identity for every initial state of the
+specified word.
+
+The evidence covers five named examples and $64$ deterministically
+generated rational words, of dimensions one through three and lengths
+one through six. These $69$ words supply $165$ nontrivial exact cut
+identities and their zero-cut normalizations. Exact row reduction
+checks the ranks and consistency conditions. Direct trajectory
+enumeration checks all $343$ figure states and their four transported
+cut totals. The source includes the generator, seed and coefficient
+construction. The certificates establish these examples; the proofs
+establish the general theorems.
+
+Affine composition, rank--nullity, polynomial differentiation and
+associative prefix products are established ingredients. This note
+combines them for the transported-cut comparison: the boundary defect,
+its restricted displacement rank, the consistency classification,
+and the separate minimum dimensions for defects and totals. The
+polynomial derivative criterion extends the same linear-summary
+contract. The preceding cyclic-shift note specifies a related recovery
+contract~\cite{cyclic}; Blelloch gives the broader associative-prefix
+framework~\cite{blelloch}.
+
+\begin{thebibliography}{9}
+\bibitem{cyclic} lmtlssss{\authorsymbol 🜐},
+\emph{Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps},
+version 1.0.0, Zenodo (2026).
+\href{https://doi.org/10.5281/zenodo.23897127}{doi:10.5281/zenodo.23897127}.
+\bibitem{blelloch} G. E. Blelloch,
+\emph{Prefix Sums and Their Applications}, Technical Report
+CMU-CS-90-190, School of Computer Science, Carnegie Mellon University
+(November 1990).
+\href{https://www.cs.cmu.edu/afs/cs.cmu.edu/project/scandal/public/papers/CMU-CS-90-190.html}{Official report record}.
+\end{thebibliography}
+\end{document}

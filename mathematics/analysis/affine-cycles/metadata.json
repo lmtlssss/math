@@ -1,0 +1,34 @@
+{
+  "title": "Affine Cycles: Exact Cut Defects and Minimal Retained State",
+  "slug": "affine-cycles",
+  "short_title": "Affine cycles and minimal retained state",
+  "author": "lmtlssss🜐",
+  "date": "2026-11-03",
+  "version": "1.0.0",
+  "license": "cc-by-4.0",
+  "type": "preprint",
+  "keywords": [
+    "affine maps",
+    "cyclic composition",
+    "accumulated costs",
+    "minimal linear state",
+    "exact arithmetic",
+    "polynomial invariance"
+  ],
+  "doi": "10.5281/zenodo.23931722",
+  "repository_path": "mathematics/analysis/affine-cycles",
+  "zenodo_record_id": 23931722,
+  "abstract": "An ordered cycle of affine maps carries affine accumulated costs. The exact change in accumulated cost at a cyclic cut, with the initial state transported to that cut, is the prefix-cost row applied to the full-cycle displacement. A rank formula gives the minimum linear summary for all cut defects, and a second rank formula gives the minimum summary for all transported cut totals. An affine consistency criterion classifies every cut-invariant initial state, including cycles without fixed points. Chronological affine-cost composition, exact interval substitutions, quadratic boundary identities and a polynomial derivative criterion complete the framework. Exact rational coefficient certificates and a source-derived mathematical figure accompany the proofs.",
+  "principal_contribution": "The explicit transported-cut identity, its minimum linear recovery rank, the cut-invariant affine solution space, and the distinct recovery rank for all cut totals are proved together. Polynomial derivative coefficients give the corresponding minimum linear dimension for polynomial outputs. Affine composition, rank-nullity, polynomial differentiation and associative prefix products are established ingredients. The release gives full proofs and exact coefficient certificates.",
+  "figure": {
+    "resolution": [
+      3840,
+      2705
+    ],
+    "source_style": "tensor-note-v1.0.0",
+    "source_certificate": "evidence/figure.json",
+    "state_count": 343,
+    "defect_values": 7,
+    "zero_defect_states": 49
+  }
+}

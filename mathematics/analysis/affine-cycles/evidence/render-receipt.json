@@ -1,0 +1,30 @@
+{
+  "blender": "5.2.3 LTS",
+  "engine": "CYCLES",
+  "render_device": "CPU",
+  "threads": 4,
+  "samples": 32,
+  "source_style": "tensor-note-v1.0.0",
+  "source_style_sha256": "b9e3c857d3e700f8db7f95cd32c283264d10b1944a287b3fd72670370b491417",
+  "original_settings": {
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      2200,
+      1550
+    ],
+    "view_transform": "Standard",
+    "world": "Technical stage / graphite"
+  },
+  "resolution": [
+    3840,
+    2705
+  ],
+  "certificate_sha256": "fb633ebd7f89e559f8dffd2fda322c45389aa9ca1b87f91028cedb9f85b4787f",
+  "png_sha256": "4f48b62d08455013a046d005afff08fb22899b03d01d03f66da1f4275062c5ad",
+  "blend_sha256": "558aa761a17a5fc74ef241a120af970da95e1af760be36e2ff6f80a6060f54ad",
+  "source_template_preserved": true,
+  "font_assets_distributed": false,
+  "objects": 1632,
+  "title": "Affine Cycles: Exact Cut Defects and Minimal Retained State",
+  "doi": "10.5281/zenodo.23931722"
+}

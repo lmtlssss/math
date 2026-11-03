@@ -28,6 +28,15 @@
       "bytes": 8097274,
       "sha256": "6695d18a65941cb12cf246645a678a10f969aa69d1dcad7ab1864e9e9cff3ac1",
       "zenodo_doi": "10.5281/zenodo.23900237"
+    },
+    {
+      "paper": "affine-cycles",
+      "repository_path": "mathematics/analysis/affine-cycles/figures/00-cover-4k.png",
+      "width": 3840,
+      "height": 2705,
+      "bytes": 8483468,
+      "sha256": "4f48b62d08455013a046d005afff08fb22899b03d01d03f66da1f4275062c5ad",
+      "zenodo_doi": "10.5281/zenodo.23931722"
     }
   ]
 }

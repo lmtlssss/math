@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Please cite the manuscript and its exact mathematical certificates using this record."
+title: "Affine Cycles: Exact Cut Defects and Minimal Retained State"
+authors:
+  - name: "lmtlssss🜐"
+version: "1.0.0"
+date-released: "2026-11-03"
+doi: "10.5281/zenodo.23931722"
+url: "https://doi.org/10.5281/zenodo.23931722"
+license: "CC-BY-4.0"
+type: dataset
+keywords:
+  - affine maps
+  - cyclic composition
+  - accumulated costs
+  - minimal linear state
+  - exact arithmetic

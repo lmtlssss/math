@@ -1,0 +1,113 @@
+{
+  "schema": "mathematics.source.v1",
+  "title": "Affine Cycles: Exact Cut Defects and Minimal Retained State",
+  "doi": "10.5281/zenodo.23931722",
+  "version": "1.0.0",
+  "files": [
+    {
+      "path": "CITATION.bib",
+      "bytes": 384,
+      "sha256": "287984855bbf0081ba69c16f45043c6957f2d2c457f1e83c09f4b01c6cbddd2e"
+    },
+    {
+      "path": "CITATION.cff",
+      "bytes": 494,
+      "sha256": "1e500b910482b20495e9a8f235d94dee1ad0915f0019870a11862f35ed689be2"
+    },
+    {
+      "path": "LICENSE.md",
+      "bytes": 1516,
+      "sha256": "4563820479b5ef88abf776a5688f09856358a3382a2484e9ac00799a1db3871f"
+    },
+    {
+      "path": "Makefile",
+      "bytes": 553,
+      "sha256": "9a10a2b547ff6c5bb70551051847f5b9529a263d0dd17d2d23cb96000307c33f"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6317,
+      "sha256": "81f4cbb385cdc2095875f2252bd16f5b16eb7422cf246fe866fada765103a63b"
+    },
+    {
+      "path": "VERIFICATION.md",
+      "bytes": 2259,
+      "sha256": "194e0b5a6aefd98eb270326b4770f533e5e725c0c52225baa89a4a572f3b59f7"
+    },
+    {
+      "path": "VERIFICATION_PLAN.md",
+      "bytes": 1485,
+      "sha256": "e89b51c2d017796a867040b0326f33f04cd4dc43134d0b9c417b9baeeeb309f0"
+    },
+    {
+      "path": "evidence/PRIOR_ART.md",
+      "bytes": 1955,
+      "sha256": "e89ff3980894ac00b72a256afb170a194852f4d0680647651dacff1e2fc41336"
+    },
+    {
+      "path": "evidence/PROOF_REVIEW.md",
+      "bytes": 4775,
+      "sha256": "21d59530d3178dd7855008f83558990e1612b412210767243383d6506ad019f7"
+    },
+    {
+      "path": "evidence/figure.json",
+      "bytes": 106724,
+      "sha256": "fb633ebd7f89e559f8dffd2fda322c45389aa9ca1b87f91028cedb9f85b4787f"
+    },
+    {
+      "path": "evidence/render-receipt.json",
+      "bytes": 936,
+      "sha256": "ec8c4464411412dd9e4fcf1a662310f56736b1696712974fd38c08971437d8ce"
+    },
+    {
+      "path": "evidence/scene-audit.json",
+      "bytes": 337,
+      "sha256": "fb12931f7708e143fd0eccc1d233f6712bd32d7f588e2c4e00db34830c1cb7c2"
+    },
+    {
+      "path": "evidence/verification.json",
+      "bytes": 226950,
+      "sha256": "42b139eb0ddd8a0289ac06b805d9fcbeb5f0e224c285580a4b5df7599c3632f3"
+    },
+    {
+      "path": "figures/00-cover-4k.png",
+      "bytes": 8483468,
+      "sha256": "4f48b62d08455013a046d005afff08fb22899b03d01d03f66da1f4275062c5ad"
+    },
+    {
+      "path": "metadata.json",
+      "bytes": 2116,
+      "sha256": "861099dded25491d12079314379dc765e8232a2da48cbf766afa3acd4f90acaa"
+    },
+    {
+      "path": "package_release.py",
+      "bytes": 1363,
+      "sha256": "6f41d6672d5ebdeecfcf0c73336a85767dadf8b063e514990de99314553d95db"
+    },
+    {
+      "path": "paper.tex",
+      "bytes": 23911,
+      "sha256": "a2a93af2df43f1abbfdff31a15cb9bd55319dd314a9fe2577251fa3d45083e5d"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 194,
+      "sha256": "79151433a7d8a61440a0bfca046673d9675465559d142beea0bf91381139cef3"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 12731,
+      "sha256": "eef7e36d90beba4e90bcdce692d127ad7f5078b94d4f4ceef34257a892d32da4"
+    },
+    {
+      "path": "visual/build_scene.py",
+      "bytes": 4461,
+      "sha256": "14123cf570553ed4389a932ebb685c4ddc0f6dea8074c640bbee2423be726d38"
+    },
+    {
+      "path": "visual/scene_common.py",
+      "bytes": 7919,
+      "sha256": "337cdeecd9499637adeb4aa2bb869f47df6f882e795643729b304d5b419bccb3"
+    }
+  ]
+}

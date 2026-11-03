@@ -85,6 +85,12 @@ A complete exact selection law for a translating common lattice reduces finite r
 
 Exact coefficient inequalities classify the stable conjugate-root recurrences with minimal uniform peak horizon two or three. A symmetric observation hexagon supplies necessity and sufficiency. An explicit rational boundary example has shortest uniform horizon three. Sharp observation constants, rational adaptive certificates and exact Stein sums accompany the new coefficient-region result.
 
+### Affine Cycles: Exact Cut Defects and Minimal Retained State
+
+[Paper and exact source](mathematics/analysis/affine-cycles/README.md) · [DOI](https://doi.org/10.5281/zenodo.23931722) · [Release](https://github.com/lmtlssss/math/releases/tag/affine-cycles-v1.0.0)
+
+A transported cyclic cut changes the accumulated affine cost by the prefix-cost row applied to the full-cycle displacement. Exact rank formulas give the minimum linear summaries for all cut defects and all transported cut totals. An affine consistency criterion includes cut-invariant cycles without fixed points. Polynomial derivative coefficients extend the minimum-state result.
+
 ## Download the original 4K mathematical figures
 
 Each file is the full **3840 × 2705** native PNG, also archived on Zenodo.
@@ -92,3 +98,4 @@ Each file is the full **3840 × 2705** native PNG, also archived on Zenodo.
 - [Cyclic-Shift Energies: Minimal State and Cyclotomic Gaps — full 4K PNG](mathematics/analysis/cyclic-shift-energies/figures/00-cover-4k.png) · [Zenodo](https://doi.org/10.5281/zenodo.23897127)
 - [Robust Amplitude Elimination and Exact Lattice-Phase Selection — full 4K PNG](mathematics/analysis/homogeneous-amplitude-elimination/figures/00-cover-4k.png) · [Zenodo](https://doi.org/10.5281/zenodo.23897131)
 - [Sharp Observation Bounds and Minimal Peak Horizons for Damped Recurrences — full 4K PNG](mathematics/analysis/damped-recurrence-certificates/figures/00-cover-4k.png) · [Zenodo](https://doi.org/10.5281/zenodo.23900237)
+- [Affine Cycles: Exact Cut Defects and Minimal Retained State — full 4K PNG](mathematics/analysis/affine-cycles/figures/00-cover-4k.png) · [Zenodo](https://doi.org/10.5281/zenodo.23931722)
