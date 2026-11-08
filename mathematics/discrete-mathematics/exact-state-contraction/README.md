@@ -1,6 +1,6 @@
 # ᑕ. — Exact State Contraction
 
-**Pronounced TAA.** Terminology proposal 1.0 · 8 November 2026 · lmtlssss🜐
+**Pronounced TAA.** Terminology proposal 1.0 · 8 November 2026 · lmtlssss🜐 · DOI: [10.5281/zenodo.24054438](https://doi.org/10.5281/zenodo.24054438)
 
 ᑕ. names an exact contraction of a computation's state relative to a stated observation contract. The retained transition and observation maps commute with the original computation. The definition gives equality of each finite observation trace. An affine extension composes the exact chronological cost, including the state-dependent cross-terms.
 
