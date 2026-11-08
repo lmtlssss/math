@@ -91,6 +91,10 @@ Exact coefficient inequalities classify the stable conjugate-root recurrences wi
 
 A transported cyclic cut changes the accumulated affine cost by the prefix-cost row applied to the full-cycle displacement. Exact rank formulas give the minimum linear summaries for all cut defects and all transported cut totals. An affine consistency criterion includes cut-invariant cycles without fixed points. Polynomial derivative coefficients extend the minimum-state result.
 
+## Public verification circuits
+
+[Colony G1 — 18 reproducible Circom sources](colony/g1/README.md). These are the exact local fixtures used in the 21-case comparison. The repository includes their Circom library dependencies and rerun paths for the published `speedrunpapi` clips.
+
 ## Download the original 4K mathematical figures
 
 Each file is the full **3840 × 2705** native PNG, also archived on Zenodo.
