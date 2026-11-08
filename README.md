@@ -2,6 +2,14 @@
 
 Mathematical papers by **lmtlssss🜐**.
 
+
+## ᑕ. · Exact State Contraction (TAA)
+
+[Definition, theorem, paper and exact verifier](mathematics/discrete-mathematics/exact-state-contraction/)  
+8 November 2026 · Version 1.0.0
+
+An observation-relative state quotient preserves finite traces. Retained affine costs compose with their complete cross-terms. The paper proposes ᑕ. as a term for the exact contraction contract.
+
 ## Mathematics · Algebra
 
 [Exact nonnegative rank of a twelve-state composition tensor](mathematics/algebra/twelve-state-composition-tensor/)  

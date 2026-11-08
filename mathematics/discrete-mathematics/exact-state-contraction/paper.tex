@@ -1,0 +1,138 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=19mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setmonofont{Latin Modern Mono}
+\newfontfamily\taafont{DejaVu Sans}
+\usepackage{amsmath,amssymb,amsthm,microtype}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newcommand{\TAA}{\mathsf{TAA}}
+\hypersetup{pdftitle={Exact State Contraction: Definition and Notation},pdfauthor={lmtlssss}}
+\title{{\taafont ᑕ.}\\Exact State Contraction\\\large A definition, preservation theorem, and notation proposal}
+\author{lmtlssss}
+\date{8 November 2026 \quad Version 1.0}
+\begin{document}
+\maketitle
+\begin{abstract}
+We define exact state contraction relative to a declared observation contract.
+The retained transition and observation maps commute with the full system.
+This identity preserves every finite observation trace by induction.
+An affine interval extension carries a quadratic accumulated cost through the
+same associative composition, including cross-terms. We distinguish output
+preservation from witness-count preservation and specify the printed notation
+{\taafont ᑕ.}, spoken TAA. This paper names a contract and gives its elementary
+preservation theorem; it does not claim priority for quotient systems,
+bisimulation, or affine composition.
+\end{abstract}
+
+\section{The contract}
+Let $M=(S,U,F,Y,G)$ be an input-driven system. A state $s\in S$ and an
+input $u\in U$ produce the next state $F(s,u)$ and an observation $G(s,u)$.
+The observation identifies the property to preserve.
+\begin{definition}[Exact state contraction]
+An exact state contraction of $M$ for $G$ consists of a set $Q$, a
+surjection $\pi:S\rightarrow Q$, and maps
+$\bar F:Q\times U\rightarrow Q$ and $\bar G:Q\times U\rightarrow Y$ such that
+\begin{equation}\label{eq:contract}
+ \pi(F(s,u))=\bar F(\pi(s),u),\qquad
+ G(s,u)=\bar G(\pi(s),u)
+ \quad (s\in S,u\in U).
+\end{equation}
+We denote the tuple by $\TAA_G(M)=(Q,\pi,\bar F,\bar G)$.
+Its printed operator name is {\taafont ᑕ.}, pronounced TAA.
+\end{definition}
+
+The subscript $G$ is necessary. A contraction can preserve one observation
+while losing information required for another.
+
+\begin{theorem}[Trace preservation]
+For each initial state $s_0$ and finite input word, the system $M$ and
+its contraction give equal observations at every step when the retained
+initial state is $\pi(s_0)$.
+\end{theorem}
+\begin{proof}
+Assume $q_k=\pi(s_k)$. The first identity in (\ref{eq:contract}) gives
+$q_{k+1}=\bar F(q_k,u_k)=\pi(F(s_k,u_k))=\pi(s_{k+1})$.
+The second identity gives
+$\bar G(q_k,u_k)=G(s_k,u_k)$.
+Since $q_0=\pi(s_0)$, induction proves both statements for each step.
+\end{proof}
+
+For relations with multiple witnesses, preservation of the set of output
+values does not prove preservation of witness multiplicity. A claim of
+unique witness requires a bijection of the applicable witness fibers or an
+independent exact count. A claim of unique output requires equality of the
+applicable output sets.
+
+\section{Retained affine cost}
+An interval $A$ carries the state transition
+$T_A(x)=F_Ax+b_A$ and the cost
+$J_A(x)=x^\mathsf{T}Q_Ax+q_A^\mathsf{T}x+d_A$, with $Q_A$ symmetric.
+For interval $B$ after $A$, define
+$T_{BA}=T_B\circ T_A$ and $J_{BA}=J_A+J_B\circ T_A$.
+\begin{proposition}[Quadratic energy composition]
+The composed coefficients are
+\begin{align*}
+F_{BA}&=F_BF_A,&b_{BA}&=F_Bb_A+b_B,\\
+Q_{BA}&=Q_A+F_A^\mathsf{T}Q_BF_A,\\
+q_{BA}&=q_A+F_A^\mathsf{T}(q_B+2Q_Bb_A),\\
+d_{BA}&=d_A+d_B+q_B^\mathsf{T}b_A+b_A^\mathsf{T}Q_Bb_A.
+\end{align*}
+This composition is associative and gives the exact chronological cost
+for each input state.
+\end{proposition}
+\begin{proof}
+Substitute $F_Ax+b_A$ into $J_B$ and collect quadratic,
+linear, and constant coefficients. The displayed formulas result.
+For a third interval $C$, both groupings give the transition
+$T_C\circ T_B\circ T_A$ and cost
+$J_A+J_B\circ T_A+J_C\circ T_B\circ T_A$.
+Therefore both groupings agree as functions.
+\end{proof}
+
+\paragraph{Example.}
+Let $T_A(x)=2x+1$, $J_A(x)=x^2+1$,
+$T_B(y)=3y-2$, and $J_B(y)=2y^2+3y+4$.
+Then $T_{BA}(x)=6x+1$ and
+$J_{BA}(x)=9x^2+14x+10$.
+At $x=2$, the direct costs are 5 and 69, giving 74.
+The retained polynomial also gives 74. The companion verifier checks
+the exact rational identities and a family of associative compositions.
+
+\section{Certificates and meaning}
+A {\taafont ᑕ.} certificate states the artifact digest, claim,
+admissible input domain, observation contract, checker version, verdict,
+and evidence digest. The signature authenticates the issuer's statement;
+the independent checker establishes whether the evidence supports the
+declared claim. A transparency receipt records registration under one
+service's policy. None of these substitutes for the others.
+
+The word \emph{exact} is relative to the declared observation and domain.
+The definition gives no claim that arbitrary systems admit a small
+retained state or that arbitrary program properties are efficiently
+decidable.
+
+\section{Symbol and prior results}
+The symbol {\taafont ᑕ.} consists of U+1455 CANADIAN SYLLABICS TA and
+U+002E FULL STOP. The existing glyph has a linguistic identity in the
+Unified Canadian Aboriginal Syllabics block. This paper assigns a
+mathematical use to those characters; it does not claim to create them.
+The software identifier is \texttt{taa}, with the versioned name
+\texttt{taa.exact-state-contraction.v1}.
+
+The author's earlier work proved retained affine-cost identities,
+minimal linear recovery ranks, and exact coefficient certificates for
+specific contracts \cite{affine}. Established quotient structures,
+bisimulation, automata minimization, and affine composition remain
+the mathematical background of this proposal.
+
+\begin{thebibliography}{9}
+\bibitem{affine} lmtlssss, \emph{Affine Cycles: Exact Cut Defects and Minimal
+Retained State}, Zenodo (2026), DOI: \href{https://doi.org/10.5281/zenodo.23931722}{10.5281/zenodo.23931722}.
+\bibitem{unicode} Unicode Consortium, \emph{Unified Canadian Aboriginal Syllabics}, Unicode Character Database, U+1455.
+\bibitem{scitt} IETF, \emph{An Architecture for Trustworthy and Transparent Digital Supply Chains}, RFC 9943 (2026).
+\end{thebibliography}
+\end{document}
